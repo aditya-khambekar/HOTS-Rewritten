@@ -77,6 +77,38 @@ public class SuperstructureSetpoints {
               Value.zero() // Intake_L4_Speed: -0.875 * 20 = -17.5 RPS
           );
 
+    // L1 State
+    public static final SuperstructureState L1_NO_OUTTAKE =
+            new SuperstructureState(
+                    Value.of(0.15), // L1_Proportion
+                    Rotation2d.fromDegrees(215), // Wrist_L1_Proportion: 30 - 230 * 1.0 = -200.0 degrees
+                    Value.zero() // Intake_L1_Speed: 0.2 * 20 = 4.0 RPS
+            );
+
+    // L2 State
+    public static final SuperstructureState L2_NO_OUTTAKE =
+            new SuperstructureState(
+                    Value.of(0.2893), // L2_Proportion
+                    Rotation2d.fromDegrees(215), // Wrist_L2_Proportion: 30 - 230 * 0.95 = -188.5 degrees
+                    Value.zero() // Intake_L2_Speed: -0.875 * 20 = -17.5 RPS
+            );
+
+    // L3 State
+    public static final SuperstructureState L3_NO_OUTTAKE =
+            new SuperstructureState(
+                    Value.of(0.496), // L3_Proportion
+                    Rotation2d.fromDegrees(215), // Wrist_L3_Proportion: 30 - 230 * 0.95 = -188.5 degrees
+                    Value.zero() // Intake_L3_Speed: -0.875 * 20 = -17.5 RPS
+            );
+
+    // L4 State
+    public static final SuperstructureState L4_NO_OUTTAKE =
+            new SuperstructureState(
+                    Value.of(0.85635), // L4_Proportion
+                    Rotation2d.fromDegrees(230), // Wrist_L4_Proportion: 30 - 230 * 1.0 = -200.0 degrees
+                    Value.zero() // Intake_L4_Speed: -0.875 * 20 = -17.5 RPS
+            );
+
   // L2_ALGAE State
   public static final SuperstructureState L2_ALGAE =
       new SuperstructureState(
