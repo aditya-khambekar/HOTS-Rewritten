@@ -28,10 +28,12 @@ import org.littletonrobotics.junction.wpilog.WPILOGReader;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 import org.team4639.BuildConstants;
 import org.team4639.lib.error.Errors;
+import org.team4639.lib.statebased.StateFactory;
 import org.team4639.lib.statebased.StateMachine;
 import org.team4639.lib.util.AllianceFlipUtil;
 import org.team4639.robot.Constants;
-import org.team4639.robot.statemachine.States;
+import org.team4639.robot.statemachine.ReefscapeStates;
+import org.team4639.robot.statemachine.StateControls;
 import org.team4639.robot.subsystems.drive.generated.TunerConstants;
 
 /**
@@ -146,7 +148,7 @@ public class Robot extends LoggedRobot {
   @Override
   public void autonomousInit() {
     autonomousCommand = robotContainer.getAutonomousCommand();
-    StateMachine.setState(States.NONE);
+    StateMachine.setState(StateControls.getAutoStartState());
     // schedule the autonomous command (example)
     if (autonomousCommand != null) {
       autonomousCommand.schedule();
@@ -177,7 +179,7 @@ public class Robot extends LoggedRobot {
     if (autonomousCommand != null) {
       autonomousCommand.cancel();
     }
-    StateMachine.setState(States.determineState());
+    StateMachine.setState(StateControls.getTeleopStartState());
   }
 
   /** This function is called periodically during operator control. */

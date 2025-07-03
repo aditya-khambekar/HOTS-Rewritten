@@ -18,8 +18,7 @@ import org.team4639.robot.robot.Subsystems;
 import org.team4639.robot.subsystems.superstructure.Superstructure;
 import org.team4639.robot.subsystems.superstructure.SuperstructureSetpoints;
 
-public class States {
-
+public class ReefscapeStates{
   public static State IDLE;
   public static State NONE = new State("NONE");
   public static State HP_LEFT;
@@ -44,7 +43,7 @@ public class States {
   public static State REJECT_ALGAE;
   public static State MICROADJUSTMENTS;
 
-  public static void initStaticStates() {
+  public static void init() {
     IDLE =
         new State("IDLE")
             .whileTrue(SuperstructureCommands.IDLE)
@@ -52,26 +51,26 @@ public class States {
             .onTrigger(DriveTriggers.closeToLeftStation, () -> HP_LEFT)
             .withEndCondition(Controls.intake, () -> HP_NODIR)
             .withEndCondition(Subsystems.wrist::hasCoral, () -> CORAL_STOW)
-            .withEndCondition(Controls.LEFT_HP, States::pathFindToHPLeft)
-            .withEndCondition(Controls.RIGHT_HP, States::pathFindToHPRight)
+            .withEndCondition(Controls.LEFT_HP, ReefscapeStates::pathFindToHPLeft)
+            .withEndCondition(Controls.RIGHT_HP, ReefscapeStates::pathFindToHPRight)
             .withEndCondition(
                 Controls.REEF_AB,
-                () -> States.pathFindToReefAlgae(TargetPositions.REEF_AB))
+                () -> ReefscapeStates.pathFindToReefAlgae(TargetPositions.REEF_AB))
             .withEndCondition(
                 Controls.REEF_CD,
-                () -> States.pathFindToReefAlgae(TargetPositions.REEF_CD))
+                () -> ReefscapeStates.pathFindToReefAlgae(TargetPositions.REEF_CD))
             .withEndCondition(
                 Controls.REEF_EF,
-                () -> States.pathFindToReefAlgae(TargetPositions.REEF_EF))
+                () -> ReefscapeStates.pathFindToReefAlgae(TargetPositions.REEF_EF))
             .withEndCondition(
                 Controls.REEF_GH,
-                () -> States.pathFindToReefAlgae(TargetPositions.REEF_GH))
+                () -> ReefscapeStates.pathFindToReefAlgae(TargetPositions.REEF_GH))
             .withEndCondition(
                 Controls.REEF_IJ,
-                () -> States.pathFindToReefAlgae(TargetPositions.REEF_IJ))
+                () -> ReefscapeStates.pathFindToReefAlgae(TargetPositions.REEF_IJ))
             .withEndCondition(
                 Controls.REEF_KL,
-                () -> States.pathFindToReefAlgae(TargetPositions.REEF_KL));
+                () -> ReefscapeStates.pathFindToReefAlgae(TargetPositions.REEF_KL));
 
     HP_LEFT =
         new State("HP_LEFT")
@@ -138,7 +137,7 @@ public class States {
                 SuperstructureCommands.ELEVATOR_READY,
                 Subsystems.dashboardOutputs.displayUpcomingReefLevel(),
                 LEDCommands.aligning())
-            .onTrigger(Controls.alignRight, () -> States.CORAL_SCORE_ALIGN_RIGHT)
+            .onTrigger(Controls.alignRight, () -> ReefscapeStates.CORAL_SCORE_ALIGN_RIGHT)
             .onTrigger(Controls.REEF_A, () -> pathFindToReef(TargetPositions.REEF_A))
             .onTrigger(Controls.REEF_B, () -> pathFindToReef(TargetPositions.REEF_B))
             .onTrigger(Controls.REEF_C, () -> pathFindToReef(TargetPositions.REEF_C))
@@ -164,7 +163,7 @@ public class States {
                 SuperstructureCommands.ELEVATOR_READY,
                 Subsystems.dashboardOutputs.displayUpcomingReefLevel(),
                 LEDCommands.aligning())
-            .onTrigger(Controls.alignLeft, () -> States.CORAL_SCORE_ALIGN_LEFT)
+            .onTrigger(Controls.alignLeft, () -> ReefscapeStates.CORAL_SCORE_ALIGN_LEFT)
             .onTrigger(Controls.REEF_A, () -> pathFindToReef(TargetPositions.REEF_A))
             .onTrigger(Controls.REEF_B, () -> pathFindToReef(TargetPositions.REEF_B))
             .onTrigger(Controls.REEF_C, () -> pathFindToReef(TargetPositions.REEF_C))

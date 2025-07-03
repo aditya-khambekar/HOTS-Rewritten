@@ -49,7 +49,8 @@ import org.team4639.robot.commands.LEDCommands;
 import org.team4639.robot.commands.SuperstructureCommands;
 import org.team4639.robot.constants.FieldConstants;
 import org.team4639.robot.constants.IDs;
-import org.team4639.robot.statemachine.States;
+import org.team4639.robot.statemachine.ReefscapeStates;
+import org.team4639.robot.statemachine.StateControls;
 import org.team4639.robot.subsystems.DashboardOutputs;
 import org.team4639.robot.subsystems.LimelightFlash;
 import org.team4639.robot.subsystems.ReefTracker;
@@ -80,8 +81,6 @@ public class RobotContainer {
 
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser;
-
-  private final boolean dummySuperstructure = true;
 
   protected final Field2d field = new Field2d();
 
@@ -180,16 +179,12 @@ public class RobotContainer {
     Subsystems.limelightFlash = new LimelightFlash(VisionConstants.cameraBackName);
     Subsystems.leds = new PhysicalLEDStrip(9, 96);
 
-    VisionUpdates.addConsumer(Subsystems.drive);
-    VisionUpdates.addConsumer(VisionPoses.frontCamerasPoseEstimate);
-
     // Configure the button bindings
     configureButtonBindings();
-    SuperstructureCommands.initCommands();
-    FieldConstants.init();
-    FieldConstants.initAlgaeLocations();
-    Subsystems.reefTracker.resetReefTracker();
-    States.initStaticStates();
+    // Anything else that needs to be initialized
+    initRobotOperations();
+    // initialize state machine
+    StateControls.initStateMachine();
     // I truly have no idea why calling this variable instantiates FieldConstants but it works so.
     double x = FieldConstants.fieldLength;
 
@@ -224,6 +219,15 @@ public class RobotContainer {
     autoChooser.addOption(
         "Drive SysId (Dynamic Reverse)",
         Subsystems.drive.sysIdDynamic(SysIdRoutine.Direction.kReverse));
+  }
+
+  private void initRobotOperations() {
+    VisionUpdates.addConsumer(Subsystems.drive);
+    VisionUpdates.addConsumer(VisionPoses.frontCamerasPoseEstimate);
+    SuperstructureCommands.initCommands();
+    FieldConstants.init();
+    FieldConstants.initAlgaeLocations();
+    Subsystems.reefTracker.resetReefTracker();
   }
 
   /**
