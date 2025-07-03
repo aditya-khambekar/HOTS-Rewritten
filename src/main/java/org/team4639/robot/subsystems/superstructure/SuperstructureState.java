@@ -5,4 +5,4 @@ import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Dimensionless;
 
 public record SuperstructureState(
-    Dimensionless elevatorProportion, Rotation2d wristRotation, AngularVelocity wheelSpeed) {}
+    Dimensionless elevatorProportion, Rotation2d wristRotation, Dimensionless wheelDutyCyle) {}

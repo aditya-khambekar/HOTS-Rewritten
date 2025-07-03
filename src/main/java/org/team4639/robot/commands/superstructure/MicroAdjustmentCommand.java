@@ -40,7 +40,7 @@ public class MicroAdjustmentCommand extends SuperstructureCommandBase {
     Subsystems.wrist.setWristSetpoint(wristSetpoint);
 
     // UNTUNED
-    if (Controls.outtake.getAsBoolean()) Subsystems.roller.setVelocity(RotationsPerSecond.of(15));
+    if (Controls.outtake.getAsBoolean()) Subsystems.roller.setDutyCycle(Value.of(0.5));
   }
 
   @Override

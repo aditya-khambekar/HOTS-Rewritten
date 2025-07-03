@@ -127,7 +127,7 @@ public class SuperstructureCommand extends SuperstructureCommandBase {
         if (flash) Subsystems.limelightFlash.flash();
         Subsystems.wrist.setWristSetpoint(setpoint.wristRotation());
         Subsystems.elevator.setPercentageRaw(setpoint.elevatorProportion());
-        Subsystems.roller.setVelocity(setpoint.wheelSpeed());
+        Subsystems.roller.setDutyCycle(setpoint.wheelDutyCyle());
       }
       case DONE -> {
         // at this point the command will be ended, but we do these just to make sure nothing
@@ -135,7 +135,7 @@ public class SuperstructureCommand extends SuperstructureCommandBase {
         Subsystems.wrist.setWristSetpoint(setpoint.wristRotation());
         Subsystems.elevator.setPercentageRaw(setpoint.elevatorProportion());
         ;
-        Subsystems.roller.setVelocity(setpoint.wheelSpeed());
+        Subsystems.roller.setDutyCycle(setpoint.wheelDutyCyle());
       }
       case STOPPED -> {
         Subsystems.wrist.setWristDutyCycle(Value.zero());
