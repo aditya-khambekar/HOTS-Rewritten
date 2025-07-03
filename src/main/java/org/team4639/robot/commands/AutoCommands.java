@@ -40,7 +40,7 @@ public class AutoCommands {
     return (Subsystems.drive
             .defer(
                 () ->
-                    DriveCommands.PIDtowithVelocityReset(
+                    DriveCommands.PIDtoWithVelocityReset(
                         Subsystems.drive, Subsystems.drive.getPose(), pose))
             .deadlineFor(SuperstructureCommands.algaeStow()))
         .andThen(
@@ -63,7 +63,7 @@ public class AutoCommands {
     return Subsystems.drive
         .defer(
             () ->
-                DriveCommands.PIDtowithVelocityReset(
+                DriveCommands.PIDtoWithVelocityReset(
                     Subsystems.drive,
                     Subsystems.drive.getPose(),
                     Subsystems.drive
@@ -83,7 +83,7 @@ public class AutoCommands {
             Subsystems.drive
                 .defer(
                     () ->
-                        DriveCommands.PIDtowithVelocityReset(
+                        DriveCommands.PIDtoWithVelocityReset(
                             Subsystems.drive,
                             Subsystems.drive.getPose(),
                             Subsystems.drive

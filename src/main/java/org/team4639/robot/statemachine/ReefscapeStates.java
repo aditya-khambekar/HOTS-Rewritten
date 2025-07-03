@@ -18,7 +18,7 @@ import org.team4639.robot.robot.Subsystems;
 import org.team4639.robot.subsystems.superstructure.Superstructure;
 import org.team4639.robot.subsystems.superstructure.SuperstructureSetpoints;
 
-public class ReefscapeStates{
+public class ReefscapeStates {
   public static State IDLE;
   public static State NONE = new State("NONE");
   public static State HP_LEFT;
@@ -297,8 +297,7 @@ public class ReefscapeStates{
   public static State pathFindToHPLeft() {
     return new State("PATHFIND_TO_HP_LEFT")
         .withDeadline(
-            DriveCommands.pathFindToHP(
-                Subsystems.drive, TargetPositions.HP_LEFT.getPose()),
+            DriveCommands.pathFindToHP(Subsystems.drive, TargetPositions.HP_LEFT.getPose()),
             () -> HP_LEFT)
         .whileTrue(SuperstructureCommands.HP)
         .onEmergency(() -> IDLE);
@@ -307,8 +306,7 @@ public class ReefscapeStates{
   public static State pathFindToHPRight() {
     return new State("PATHFIND_TO_HP_RIGHT")
         .withDeadline(
-            DriveCommands.pathFindToHP(
-                Subsystems.drive, TargetPositions.HP_RIGHT.getPose()),
+            DriveCommands.pathFindToHP(Subsystems.drive, TargetPositions.HP_RIGHT.getPose()),
             () -> HP_RIGHT)
         .whileTrue(SuperstructureCommands.HP)
         .onEmergency(() -> IDLE);

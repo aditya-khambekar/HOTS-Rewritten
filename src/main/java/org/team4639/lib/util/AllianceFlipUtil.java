@@ -25,8 +25,8 @@ public class AllianceFlipUtil {
 
   public static Pose2d flip(Pose2d pose) {
     return new Pose2d(
-            FieldConstants.fieldLength - pose.getX(),
-            FieldConstants.fieldWidth - pose.getY(),
-            pose.getRotation().plus(Rotation2d.k180deg));
+        FieldConstants.fieldLength - pose.getX(),
+        FieldConstants.fieldWidth - pose.getY(),
+        pose.getRotation().plus(Rotation2d.k180deg));
   }
 }

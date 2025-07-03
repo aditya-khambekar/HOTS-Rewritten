@@ -95,7 +95,7 @@ public class TeleopPathGenerator {
           .andThen(
               Subsystems.drive.defer(
                   () ->
-                      DriveCommands.PIDtowithVelocityReset(
+                      DriveCommands.PIDtoWithVelocityReset(
                           Subsystems.drive, Subsystems.drive.getPose(), endingPose))));
     }
 
@@ -110,7 +110,7 @@ public class TeleopPathGenerator {
         .andThen(
             Subsystems.drive.defer(
                 () ->
-                    DriveCommands.PIDtowithVelocityReset(
+                    DriveCommands.PIDtoWithVelocityReset(
                         Subsystems.drive, Subsystems.drive.getPose(), endingPose)));
   }
 

@@ -112,12 +112,10 @@ public class AutoGenerator {
         case OUT_ALGAE -> (pathCommand.deadlineFor(SuperstructureCommands.algaeStow()))
             .andThen(
                 switch (ending) {
-                  case ALGSC1 -> AutoCommands.scoreBarge(
-                      TargetPositions.BARGE_FARCAGE.getPose());
+                  case ALGSC1 -> AutoCommands.scoreBarge(TargetPositions.BARGE_FARCAGE.getPose());
                   case ALGSC2 -> AutoCommands.scoreBarge(
                       TargetPositions.BARGE_MIDDLECAGE.getPose());
-                  case ALGSC3 -> AutoCommands.scoreBarge(
-                      TargetPositions.BARGE_CLOSECAGE.getPose());
+                  case ALGSC3 -> AutoCommands.scoreBarge(TargetPositions.BARGE_CLOSECAGE.getPose());
                   default -> throw new IllegalArgumentException("what the fuck");
                 });
       };

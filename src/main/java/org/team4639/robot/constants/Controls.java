@@ -60,4 +60,8 @@ public class Controls {
 
   public static final Trigger LEFT_HP = RobotContainer.driver.leftBumper();
   public static final Trigger RIGHT_HP = RobotContainer.driver.rightBumper();
+
+  public static final class VisionDemoControls {
+    public static final Trigger DEMO_ON = new Trigger(() -> false);
+  }
 }
