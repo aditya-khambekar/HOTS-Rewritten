@@ -6,7 +6,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import java.util.HashMap;
 import java.util.Map;
-import org.team4639.robot.constants.FieldConstants;
+
+import org.team4639.robot.constants.Targets;
 
 /** Tracks reef. */
 public class ReefTracker extends SubsystemBase {
@@ -50,40 +51,40 @@ public class ReefTracker extends SubsystemBase {
 
   public void resetReefTracker() {
     reefs.put(
-        FieldConstants.TargetPositions.REEF_A.getPose(),
+        Targets.TargetPositions.REEF_A.getPose(),
         new boolean[] {false, false, false, false});
     reefs.put(
-        FieldConstants.TargetPositions.REEF_B.getPose(),
+        Targets.TargetPositions.REEF_B.getPose(),
         new boolean[] {false, false, false, false});
     reefs.put(
-        FieldConstants.TargetPositions.REEF_C.getPose(),
+        Targets.TargetPositions.REEF_C.getPose(),
         new boolean[] {false, false, false, false});
     reefs.put(
-        FieldConstants.TargetPositions.REEF_D.getPose(),
+        Targets.TargetPositions.REEF_D.getPose(),
         new boolean[] {false, false, false, false});
     reefs.put(
-        FieldConstants.TargetPositions.REEF_E.getPose(),
+        Targets.TargetPositions.REEF_E.getPose(),
         new boolean[] {false, false, false, false});
     reefs.put(
-        FieldConstants.TargetPositions.REEF_F.getPose(),
+        Targets.TargetPositions.REEF_F.getPose(),
         new boolean[] {false, false, false, false});
     reefs.put(
-        FieldConstants.TargetPositions.REEF_G.getPose(),
+        Targets.TargetPositions.REEF_G.getPose(),
         new boolean[] {false, false, false, false});
     reefs.put(
-        FieldConstants.TargetPositions.REEF_H.getPose(),
+        Targets.TargetPositions.REEF_H.getPose(),
         new boolean[] {false, false, false, false});
     reefs.put(
-        FieldConstants.TargetPositions.REEF_I.getPose(),
+        Targets.TargetPositions.REEF_I.getPose(),
         new boolean[] {false, false, false, false});
     reefs.put(
-        FieldConstants.TargetPositions.REEF_J.getPose(),
+        Targets.TargetPositions.REEF_J.getPose(),
         new boolean[] {false, false, false, false});
     reefs.put(
-        FieldConstants.TargetPositions.REEF_K.getPose(),
+        Targets.TargetPositions.REEF_K.getPose(),
         new boolean[] {false, false, false, false});
     reefs.put(
-        FieldConstants.TargetPositions.REEF_L.getPose(),
+        Targets.TargetPositions.REEF_L.getPose(),
         new boolean[] {false, false, false, false});
   }
 

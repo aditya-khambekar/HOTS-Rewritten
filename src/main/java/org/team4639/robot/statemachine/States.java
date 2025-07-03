@@ -11,6 +11,7 @@ import org.team4639.robot.commands.SuperstructureCommands;
 import org.team4639.robot.commands.superstructure.MicroAdjustmentCommand;
 import org.team4639.robot.constants.Controls;
 import org.team4639.robot.constants.FieldConstants;
+import org.team4639.robot.constants.Targets;
 import org.team4639.robot.modaltriggers.DriveTriggers;
 import org.team4639.robot.robot.RobotContainer;
 import org.team4639.robot.robot.Subsystems;
@@ -55,22 +56,22 @@ public class States {
             .withEndCondition(Controls.RIGHT_HP, States::pathFindToHPRight)
             .withEndCondition(
                 Controls.REEF_AB,
-                () -> States.pathFindToReefAlgae(FieldConstants.TargetPositions.REEF_AB))
+                () -> States.pathFindToReefAlgae(Targets.TargetPositions.REEF_AB))
             .withEndCondition(
                 Controls.REEF_CD,
-                () -> States.pathFindToReefAlgae(FieldConstants.TargetPositions.REEF_CD))
+                () -> States.pathFindToReefAlgae(Targets.TargetPositions.REEF_CD))
             .withEndCondition(
                 Controls.REEF_EF,
-                () -> States.pathFindToReefAlgae(FieldConstants.TargetPositions.REEF_EF))
+                () -> States.pathFindToReefAlgae(Targets.TargetPositions.REEF_EF))
             .withEndCondition(
                 Controls.REEF_GH,
-                () -> States.pathFindToReefAlgae(FieldConstants.TargetPositions.REEF_GH))
+                () -> States.pathFindToReefAlgae(Targets.TargetPositions.REEF_GH))
             .withEndCondition(
                 Controls.REEF_IJ,
-                () -> States.pathFindToReefAlgae(FieldConstants.TargetPositions.REEF_IJ))
+                () -> States.pathFindToReefAlgae(Targets.TargetPositions.REEF_IJ))
             .withEndCondition(
                 Controls.REEF_KL,
-                () -> States.pathFindToReefAlgae(FieldConstants.TargetPositions.REEF_KL));
+                () -> States.pathFindToReefAlgae(Targets.TargetPositions.REEF_KL));
 
     HP_LEFT =
         new State("HP_LEFT")
@@ -113,18 +114,18 @@ public class States {
                 LEDCommands.hasCoral())
             .onTrigger(Controls.alignLeft, () -> CORAL_SCORE_ALIGN_LEFT)
             .onTrigger(Controls.alignRight, () -> CORAL_SCORE_ALIGN_RIGHT)
-            .onTrigger(Controls.REEF_A, () -> pathFindToReef(FieldConstants.TargetPositions.REEF_A))
-            .onTrigger(Controls.REEF_B, () -> pathFindToReef(FieldConstants.TargetPositions.REEF_B))
-            .onTrigger(Controls.REEF_C, () -> pathFindToReef(FieldConstants.TargetPositions.REEF_C))
-            .onTrigger(Controls.REEF_D, () -> pathFindToReef(FieldConstants.TargetPositions.REEF_D))
-            .onTrigger(Controls.REEF_E, () -> pathFindToReef(FieldConstants.TargetPositions.REEF_E))
-            .onTrigger(Controls.REEF_F, () -> pathFindToReef(FieldConstants.TargetPositions.REEF_F))
-            .onTrigger(Controls.REEF_G, () -> pathFindToReef(FieldConstants.TargetPositions.REEF_G))
-            .onTrigger(Controls.REEF_H, () -> pathFindToReef(FieldConstants.TargetPositions.REEF_H))
-            .onTrigger(Controls.REEF_I, () -> pathFindToReef(FieldConstants.TargetPositions.REEF_I))
-            .onTrigger(Controls.REEF_J, () -> pathFindToReef(FieldConstants.TargetPositions.REEF_J))
-            .onTrigger(Controls.REEF_K, () -> pathFindToReef(FieldConstants.TargetPositions.REEF_K))
-            .onTrigger(Controls.REEF_L, () -> pathFindToReef(FieldConstants.TargetPositions.REEF_L))
+            .onTrigger(Controls.REEF_A, () -> pathFindToReef(Targets.TargetPositions.REEF_A))
+            .onTrigger(Controls.REEF_B, () -> pathFindToReef(Targets.TargetPositions.REEF_B))
+            .onTrigger(Controls.REEF_C, () -> pathFindToReef(Targets.TargetPositions.REEF_C))
+            .onTrigger(Controls.REEF_D, () -> pathFindToReef(Targets.TargetPositions.REEF_D))
+            .onTrigger(Controls.REEF_E, () -> pathFindToReef(Targets.TargetPositions.REEF_E))
+            .onTrigger(Controls.REEF_F, () -> pathFindToReef(Targets.TargetPositions.REEF_F))
+            .onTrigger(Controls.REEF_G, () -> pathFindToReef(Targets.TargetPositions.REEF_G))
+            .onTrigger(Controls.REEF_H, () -> pathFindToReef(Targets.TargetPositions.REEF_H))
+            .onTrigger(Controls.REEF_I, () -> pathFindToReef(Targets.TargetPositions.REEF_I))
+            .onTrigger(Controls.REEF_J, () -> pathFindToReef(Targets.TargetPositions.REEF_J))
+            .onTrigger(Controls.REEF_K, () -> pathFindToReef(Targets.TargetPositions.REEF_K))
+            .onTrigger(Controls.REEF_L, () -> pathFindToReef(Targets.TargetPositions.REEF_L))
             .withEndCondition(Subsystems.wrist::doesNotHaveCoral, () -> IDLE)
             .onEmergency(() -> REJECT_CORAL);
 
@@ -138,18 +139,18 @@ public class States {
                 Subsystems.dashboardOutputs.displayUpcomingReefLevel(),
                 LEDCommands.aligning())
             .onTrigger(Controls.alignRight, () -> States.CORAL_SCORE_ALIGN_RIGHT)
-            .onTrigger(Controls.REEF_A, () -> pathFindToReef(FieldConstants.TargetPositions.REEF_A))
-            .onTrigger(Controls.REEF_B, () -> pathFindToReef(FieldConstants.TargetPositions.REEF_B))
-            .onTrigger(Controls.REEF_C, () -> pathFindToReef(FieldConstants.TargetPositions.REEF_C))
-            .onTrigger(Controls.REEF_D, () -> pathFindToReef(FieldConstants.TargetPositions.REEF_D))
-            .onTrigger(Controls.REEF_E, () -> pathFindToReef(FieldConstants.TargetPositions.REEF_E))
-            .onTrigger(Controls.REEF_F, () -> pathFindToReef(FieldConstants.TargetPositions.REEF_F))
-            .onTrigger(Controls.REEF_G, () -> pathFindToReef(FieldConstants.TargetPositions.REEF_G))
-            .onTrigger(Controls.REEF_H, () -> pathFindToReef(FieldConstants.TargetPositions.REEF_H))
-            .onTrigger(Controls.REEF_I, () -> pathFindToReef(FieldConstants.TargetPositions.REEF_I))
-            .onTrigger(Controls.REEF_J, () -> pathFindToReef(FieldConstants.TargetPositions.REEF_J))
-            .onTrigger(Controls.REEF_K, () -> pathFindToReef(FieldConstants.TargetPositions.REEF_K))
-            .onTrigger(Controls.REEF_L, () -> pathFindToReef(FieldConstants.TargetPositions.REEF_L))
+            .onTrigger(Controls.REEF_A, () -> pathFindToReef(Targets.TargetPositions.REEF_A))
+            .onTrigger(Controls.REEF_B, () -> pathFindToReef(Targets.TargetPositions.REEF_B))
+            .onTrigger(Controls.REEF_C, () -> pathFindToReef(Targets.TargetPositions.REEF_C))
+            .onTrigger(Controls.REEF_D, () -> pathFindToReef(Targets.TargetPositions.REEF_D))
+            .onTrigger(Controls.REEF_E, () -> pathFindToReef(Targets.TargetPositions.REEF_E))
+            .onTrigger(Controls.REEF_F, () -> pathFindToReef(Targets.TargetPositions.REEF_F))
+            .onTrigger(Controls.REEF_G, () -> pathFindToReef(Targets.TargetPositions.REEF_G))
+            .onTrigger(Controls.REEF_H, () -> pathFindToReef(Targets.TargetPositions.REEF_H))
+            .onTrigger(Controls.REEF_I, () -> pathFindToReef(Targets.TargetPositions.REEF_I))
+            .onTrigger(Controls.REEF_J, () -> pathFindToReef(Targets.TargetPositions.REEF_J))
+            .onTrigger(Controls.REEF_K, () -> pathFindToReef(Targets.TargetPositions.REEF_K))
+            .onTrigger(Controls.REEF_L, () -> pathFindToReef(Targets.TargetPositions.REEF_L))
             .withEndCondition(Subsystems.wrist::doesNotHaveCoral, () -> IDLE)
             .onEmergency(() -> CORAL_STOW)
             .onAccelerationLimit(() -> CORAL_STOW);
@@ -164,18 +165,18 @@ public class States {
                 Subsystems.dashboardOutputs.displayUpcomingReefLevel(),
                 LEDCommands.aligning())
             .onTrigger(Controls.alignLeft, () -> States.CORAL_SCORE_ALIGN_LEFT)
-            .onTrigger(Controls.REEF_A, () -> pathFindToReef(FieldConstants.TargetPositions.REEF_A))
-            .onTrigger(Controls.REEF_B, () -> pathFindToReef(FieldConstants.TargetPositions.REEF_B))
-            .onTrigger(Controls.REEF_C, () -> pathFindToReef(FieldConstants.TargetPositions.REEF_C))
-            .onTrigger(Controls.REEF_D, () -> pathFindToReef(FieldConstants.TargetPositions.REEF_D))
-            .onTrigger(Controls.REEF_E, () -> pathFindToReef(FieldConstants.TargetPositions.REEF_E))
-            .onTrigger(Controls.REEF_F, () -> pathFindToReef(FieldConstants.TargetPositions.REEF_F))
-            .onTrigger(Controls.REEF_G, () -> pathFindToReef(FieldConstants.TargetPositions.REEF_G))
-            .onTrigger(Controls.REEF_H, () -> pathFindToReef(FieldConstants.TargetPositions.REEF_H))
-            .onTrigger(Controls.REEF_I, () -> pathFindToReef(FieldConstants.TargetPositions.REEF_I))
-            .onTrigger(Controls.REEF_J, () -> pathFindToReef(FieldConstants.TargetPositions.REEF_J))
-            .onTrigger(Controls.REEF_K, () -> pathFindToReef(FieldConstants.TargetPositions.REEF_K))
-            .onTrigger(Controls.REEF_L, () -> pathFindToReef(FieldConstants.TargetPositions.REEF_L))
+            .onTrigger(Controls.REEF_A, () -> pathFindToReef(Targets.TargetPositions.REEF_A))
+            .onTrigger(Controls.REEF_B, () -> pathFindToReef(Targets.TargetPositions.REEF_B))
+            .onTrigger(Controls.REEF_C, () -> pathFindToReef(Targets.TargetPositions.REEF_C))
+            .onTrigger(Controls.REEF_D, () -> pathFindToReef(Targets.TargetPositions.REEF_D))
+            .onTrigger(Controls.REEF_E, () -> pathFindToReef(Targets.TargetPositions.REEF_E))
+            .onTrigger(Controls.REEF_F, () -> pathFindToReef(Targets.TargetPositions.REEF_F))
+            .onTrigger(Controls.REEF_G, () -> pathFindToReef(Targets.TargetPositions.REEF_G))
+            .onTrigger(Controls.REEF_H, () -> pathFindToReef(Targets.TargetPositions.REEF_H))
+            .onTrigger(Controls.REEF_I, () -> pathFindToReef(Targets.TargetPositions.REEF_I))
+            .onTrigger(Controls.REEF_J, () -> pathFindToReef(Targets.TargetPositions.REEF_J))
+            .onTrigger(Controls.REEF_K, () -> pathFindToReef(Targets.TargetPositions.REEF_K))
+            .onTrigger(Controls.REEF_L, () -> pathFindToReef(Targets.TargetPositions.REEF_L))
             .withEndCondition(Subsystems.wrist::doesNotHaveCoral, () -> IDLE)
             .onEmergency(() -> CORAL_STOW)
             .onAccelerationLimit(() -> CORAL_STOW);
@@ -282,7 +283,7 @@ public class States {
             .onEmergency(() -> CORAL_STOW);
   }
 
-  public static State pathFindToReef(FieldConstants.TargetPositions reef) {
+  public static State pathFindToReef(Targets.TargetPositions reef) {
     var pose = reef.getPose();
     return new State("PATHFIND_TO_REEF")
         .withDeadline(
@@ -298,7 +299,7 @@ public class States {
     return new State("PATHFIND_TO_HP_LEFT")
         .withDeadline(
             DriveCommands.pathFindToHP(
-                Subsystems.drive, FieldConstants.TargetPositions.CORALSTATION_LEFT.getPose()),
+                Subsystems.drive, Targets.TargetPositions.HP_LEFT.getPose()),
             () -> HP_LEFT)
         .whileTrue(SuperstructureCommands.HP)
         .onEmergency(() -> IDLE);
@@ -308,13 +309,13 @@ public class States {
     return new State("PATHFIND_TO_HP_RIGHT")
         .withDeadline(
             DriveCommands.pathFindToHP(
-                Subsystems.drive, FieldConstants.TargetPositions.CORALSTATION_RIGHT.getPose()),
+                Subsystems.drive, Targets.TargetPositions.HP_RIGHT.getPose()),
             () -> HP_RIGHT)
         .whileTrue(SuperstructureCommands.HP)
         .onEmergency(() -> IDLE);
   }
 
-  public static State pathFindToReefAlgae(FieldConstants.TargetPositions reefCenter) {
+  public static State pathFindToReefAlgae(Targets.TargetPositions reefCenter) {
     return new State("PATHFIND_TO_REEF_CENTER")
         .withDeadline(
             DriveCommands.pathFindToReefCenter(Subsystems.drive, reefCenter.getPose()),

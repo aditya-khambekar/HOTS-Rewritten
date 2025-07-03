@@ -8,6 +8,7 @@ import java.util.Set;
 import org.team4639.robot.commands.superstructure.HomingCommand;
 import org.team4639.robot.commands.superstructure.SuperstructureCommand;
 import org.team4639.robot.constants.FieldConstants;
+import org.team4639.robot.constants.Targets;
 import org.team4639.robot.robot.Subsystems;
 import org.team4639.robot.subsystems.superstructure.Superstructure;
 import org.team4639.robot.subsystems.superstructure.SuperstructureSetpoints;
@@ -195,12 +196,12 @@ public class SuperstructureCommands {
 
                   return drivePose.nearest(
                       List.of(
-                          FieldConstants.TargetPositions.REEF_AB.getPose(),
-                          FieldConstants.TargetPositions.REEF_CD.getPose(),
-                          FieldConstants.TargetPositions.REEF_EF.getPose(),
-                          FieldConstants.TargetPositions.REEF_GH.getPose(),
-                          FieldConstants.TargetPositions.REEF_IJ.getPose(),
-                          FieldConstants.TargetPositions.REEF_KL.getPose()));
+                          Targets.TargetPositions.REEF_AB.getPose(),
+                          Targets.TargetPositions.REEF_CD.getPose(),
+                          Targets.TargetPositions.REEF_EF.getPose(),
+                          Targets.TargetPositions.REEF_GH.getPose(),
+                          Targets.TargetPositions.REEF_IJ.getPose(),
+                          Targets.TargetPositions.REEF_KL.getPose()));
                 })
             .withName("ALGAE_INTAKE");
   }
@@ -289,12 +290,12 @@ public class SuperstructureCommands {
 
           return drivePose.nearest(
               List.of(
-                  FieldConstants.TargetPositions.REEF_AB.getPose(),
-                  FieldConstants.TargetPositions.REEF_CD.getPose(),
-                  FieldConstants.TargetPositions.REEF_EF.getPose(),
-                  FieldConstants.TargetPositions.REEF_GH.getPose(),
-                  FieldConstants.TargetPositions.REEF_IJ.getPose(),
-                  FieldConstants.TargetPositions.REEF_KL.getPose()));
+                  Targets.TargetPositions.REEF_AB.getPose(),
+                  Targets.TargetPositions.REEF_CD.getPose(),
+                  Targets.TargetPositions.REEF_EF.getPose(),
+                  Targets.TargetPositions.REEF_GH.getPose(),
+                  Targets.TargetPositions.REEF_IJ.getPose(),
+                  Targets.TargetPositions.REEF_KL.getPose()));
         });
   }
 
@@ -304,12 +305,12 @@ public class SuperstructureCommands {
         () -> {
           return pose.nearest(
               List.of(
-                  FieldConstants.TargetPositions.REEF_AB.getPose(),
-                  FieldConstants.TargetPositions.REEF_CD.getPose(),
-                  FieldConstants.TargetPositions.REEF_EF.getPose(),
-                  FieldConstants.TargetPositions.REEF_GH.getPose(),
-                  FieldConstants.TargetPositions.REEF_IJ.getPose(),
-                  FieldConstants.TargetPositions.REEF_KL.getPose()));
+                  Targets.TargetPositions.REEF_AB.getPose(),
+                  Targets.TargetPositions.REEF_CD.getPose(),
+                  Targets.TargetPositions.REEF_EF.getPose(),
+                  Targets.TargetPositions.REEF_GH.getPose(),
+                  Targets.TargetPositions.REEF_IJ.getPose(),
+                  Targets.TargetPositions.REEF_KL.getPose()));
         });
   }
 }

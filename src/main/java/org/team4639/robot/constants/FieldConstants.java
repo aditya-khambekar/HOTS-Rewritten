@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.*;
-import org.team4639.lib.util.PoseUtil;
+
 import org.team4639.robot.commands.SuperstructureCommands;
 
 /**
@@ -234,84 +234,31 @@ public class FieldConstants {
       new Transform2d(Units.inchesToMeters(16), 0, Rotation2d.kZero);
   static Transform2d fromBarge = new Transform2d(Units.inchesToMeters(-39), 0, Rotation2d.kZero);
 
-  public static enum TargetPositions {
-    REEF_AB(FieldConstants.Reef.centerFaces[0].transformBy((FieldConstants.fromReef))),
-    REEF_CD(FieldConstants.Reef.centerFaces[5].transformBy((FieldConstants.fromReef))),
-    REEF_EF(FieldConstants.Reef.centerFaces[4].transformBy((FieldConstants.fromReef))),
-    REEF_GH(FieldConstants.Reef.centerFaces[3].transformBy((FieldConstants.fromReef))),
-    REEF_IJ(FieldConstants.Reef.centerFaces[2].transformBy((FieldConstants.fromReef))),
-    REEF_KL(FieldConstants.Reef.centerFaces[1].transformBy((FieldConstants.fromReef))),
-
-    REEF_A(PoseUtil.ReefRelativeLeftOf(REEF_AB.getPose())),
-    REEF_B(PoseUtil.ReefRelativeRightOf(REEF_AB.getPose())),
-    REEF_C(PoseUtil.ReefRelativeLeftOf(REEF_CD.getPose())),
-    REEF_D(PoseUtil.ReefRelativeRightOf(REEF_CD.getPose())),
-    REEF_E(PoseUtil.ReefRelativeLeftOf(REEF_EF.getPose())),
-    REEF_F(PoseUtil.ReefRelativeRightOf(REEF_EF.getPose())),
-    REEF_G(PoseUtil.ReefRelativeLeftOf(REEF_GH.getPose())),
-    REEF_H(PoseUtil.ReefRelativeRightOf(REEF_GH.getPose())),
-    REEF_I(PoseUtil.ReefRelativeLeftOf(REEF_IJ.getPose())),
-    REEF_J(PoseUtil.ReefRelativeRightOf(REEF_IJ.getPose())),
-    REEF_K(PoseUtil.ReefRelativeLeftOf(REEF_KL.getPose())),
-    REEF_L(PoseUtil.ReefRelativeRightOf(REEF_KL.getPose())),
-
-    PROCESSOR(FieldConstants.Processor.centerFace.transformBy(FieldConstants.fromProcessor)),
-
-    CORALSTATION_LEFT(
-        FieldConstants.CoralStation.leftCenterFace.transformBy(FieldConstants.fromCoralStation)),
-    CORALSTATION_RIGHT(
-        FieldConstants.CoralStation.rightCenterFace.transformBy(FieldConstants.fromCoralStation)),
-
-    BARGE_FARCAGE(
-        new Pose2d(FieldConstants.Barge.farCage, Rotation2d.kZero).transformBy(fromBarge)),
-    BARGE_MIDDLECAGE(
-        new Pose2d(FieldConstants.Barge.middleCage, Rotation2d.kZero).transformBy(fromBarge)),
-    BARGE_CLOSECAGE(
-        new Pose2d(FieldConstants.Barge.closeCage, Rotation2d.kZero).transformBy(fromBarge));
-
-    TargetPositions(Pose2d pose, Pose2d leftPose, Pose2d rightPose) {
-      this.leftPose = leftPose;
-      this.rightPose = rightPose;
-      this.Pose = pose;
-    }
-
-    TargetPositions(Pose2d pose) {
-      this(pose, PoseUtil.ReefRelativeLeftOf(pose), PoseUtil.ReefRelativeRightOf(pose));
-    }
-
-    public Pose2d getPose() {
-      return Pose;
-    }
-
-    private final Pose2d Pose;
-    public final Pose2d leftPose, rightPose;
-  }
-
   public static Map<Pose2d, Command> ReefCenterPoseToAlgaeLocation = new HashMap<>();
 
   public static void initAlgaeLocations() {
     ReefCenterPoseToAlgaeLocation.put(
-        TargetPositions.REEF_AB.Pose, SuperstructureCommands.L3_ALGAE);
+        Targets.TargetPositions.REEF_AB.Pose, SuperstructureCommands.L3_ALGAE);
     ReefCenterPoseToAlgaeLocation.put(
-        TargetPositions.REEF_CD.Pose, SuperstructureCommands.L2_ALGAE);
+        Targets.TargetPositions.REEF_CD.Pose, SuperstructureCommands.L2_ALGAE);
     ReefCenterPoseToAlgaeLocation.put(
-        TargetPositions.REEF_EF.Pose, SuperstructureCommands.L3_ALGAE);
+        Targets.TargetPositions.REEF_EF.Pose, SuperstructureCommands.L3_ALGAE);
     ReefCenterPoseToAlgaeLocation.put(
-        TargetPositions.REEF_GH.Pose, SuperstructureCommands.L2_ALGAE);
+        Targets.TargetPositions.REEF_GH.Pose, SuperstructureCommands.L2_ALGAE);
     ReefCenterPoseToAlgaeLocation.put(
-        TargetPositions.REEF_IJ.Pose, SuperstructureCommands.L3_ALGAE);
+        Targets.TargetPositions.REEF_IJ.Pose, SuperstructureCommands.L3_ALGAE);
     ReefCenterPoseToAlgaeLocation.put(
-        TargetPositions.REEF_KL.Pose, SuperstructureCommands.L2_ALGAE);
+        Targets.TargetPositions.REEF_KL.Pose, SuperstructureCommands.L2_ALGAE);
   }
 
   public static Map<Pose2d, Command> ReefCenterPoseToAlgaeLocation() {
     var x = new HashMap<Pose2d, Command>();
-    x.put(TargetPositions.REEF_AB.Pose, SuperstructureCommands.l3Algae());
-    x.put(TargetPositions.REEF_CD.Pose, SuperstructureCommands.l2Algae());
-    x.put(TargetPositions.REEF_EF.Pose, SuperstructureCommands.l3Algae());
-    x.put(TargetPositions.REEF_GH.Pose, SuperstructureCommands.l2Algae());
-    x.put(TargetPositions.REEF_IJ.Pose, SuperstructureCommands.l3Algae());
-    x.put(TargetPositions.REEF_KL.Pose, SuperstructureCommands.l2Algae());
+    x.put(Targets.TargetPositions.REEF_AB.Pose, SuperstructureCommands.l3Algae());
+    x.put(Targets.TargetPositions.REEF_CD.Pose, SuperstructureCommands.l2Algae());
+    x.put(Targets.TargetPositions.REEF_EF.Pose, SuperstructureCommands.l3Algae());
+    x.put(Targets.TargetPositions.REEF_GH.Pose, SuperstructureCommands.l2Algae());
+    x.put(Targets.TargetPositions.REEF_IJ.Pose, SuperstructureCommands.l3Algae());
+    x.put(Targets.TargetPositions.REEF_KL.Pose, SuperstructureCommands.l2Algae());
 
     return x;
   }

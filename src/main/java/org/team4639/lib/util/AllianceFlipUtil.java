@@ -22,4 +22,11 @@ public class AllianceFlipUtil {
     return new Pose3d(
         flippedPose2d.getX(), flippedPose2d.getY(), z, new Rotation3d(flippedPose2d.getRotation()));
   }
+
+  public static Pose2d flip(Pose2d pose) {
+    return new Pose2d(
+            FieldConstants.fieldLength - pose.getX(),
+            FieldConstants.fieldWidth - pose.getY(),
+            pose.getRotation().plus(Rotation2d.k180deg));
+  }
 }
