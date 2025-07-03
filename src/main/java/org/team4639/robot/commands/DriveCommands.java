@@ -13,9 +13,9 @@
 
 package org.team4639.robot.commands;
 
+import static org.team4639.robot.robot.Subsystems.drive;
+
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.VecBuilder;
-import edu.wpi.first.math.Vector;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.filter.Debouncer;
@@ -25,7 +25,6 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.math.numbers.N2;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Timer;
@@ -77,10 +76,7 @@ public class DriveCommands {
    * Field relative drive command using two joysticks (controlling linear and angular velocities).
    */
   public static Command joystickDrive(
-      Drive drive,
-      DoubleSupplier xSupplier,
-      DoubleSupplier ySupplier,
-      DoubleSupplier omegaSupplier) {
+      DoubleSupplier xSupplier, DoubleSupplier ySupplier, DoubleSupplier omegaSupplier) {
     return Commands.run(
         () -> {
           // Get linear velocity
@@ -114,10 +110,7 @@ public class DriveCommands {
    * absolute rotation with a joystick.
    */
   public static Command joystickDriveAtAngle(
-      Drive drive,
-      DoubleSupplier xSupplier,
-      DoubleSupplier ySupplier,
-      Supplier<Rotation2d> rotationSupplier) {
+      DoubleSupplier xSupplier, DoubleSupplier ySupplier, Supplier<Rotation2d> rotationSupplier) {
 
     // Create PID controller
     ProfiledPIDController angleController =
@@ -164,71 +157,11 @@ public class DriveCommands {
   }
 
   /**
-   * Field relative drive command using joystick for linear control and PID for angular control,
-   * also includes a translation vector that allows for dynamic combination of alignment and driver
-   * input. Possible use cases include snapping to an angle, aiming at a vision target, or
-   * controlling absolute rotation with a joystick.
-   */
-  public static Command joystickDriveAtAngleWithTranslationVector(
-      Drive drive,
-      DoubleSupplier xSupplier,
-      DoubleSupplier ySupplier,
-      Supplier<Rotation2d> rotationSupplier,
-      Supplier<Vector<N2>> vectorSupplier) {
-
-    // Create PID controller
-    ProfiledPIDController angleController =
-        new ProfiledPIDController(
-            ANGLE_KP,
-            ANGLE_KI,
-            ANGLE_KD,
-            new TrapezoidProfile.Constraints(ANGLE_MAX_VELOCITY, ANGLE_MAX_ACCELERATION));
-    angleController.enableContinuousInput(-Math.PI, Math.PI);
-
-    // Construct command
-    return Commands.run(
-            () -> {
-              Vector<N2> joystickInput =
-                  VecBuilder.fill(xSupplier.getAsDouble(), ySupplier.getAsDouble());
-              Vector<N2> finalInput = joystickInput.plus(vectorSupplier.get());
-              // Get linear velocity
-              Translation2d linearVelocity =
-                  getLinearVelocityFromJoysticks(finalInput.get(0), finalInput.get(1));
-
-              // Calculate angular speed
-              double omega =
-                  angleController.calculate(
-                      drive.getRotation().getRadians(), rotationSupplier.get().getRadians());
-
-              // Convert to field relative speeds & send command
-              ChassisSpeeds speeds =
-                  new ChassisSpeeds(
-                      linearVelocity.getX() * drive.getMaxLinearSpeedMetersPerSec(),
-                      linearVelocity.getY() * drive.getMaxLinearSpeedMetersPerSec(),
-                      omega);
-              boolean isFlipped = false;
-              drive.runVelocity(
-                  ChassisSpeeds.fromFieldRelativeSpeeds(
-                      speeds,
-                      isFlipped
-                          ? drive.getRotation().plus(new Rotation2d(Math.PI))
-                          : drive.getRotation()));
-
-              SmartDashboard.putNumber(
-                  "Velocity", Math.hypot(speeds.vxMetersPerSecond, speeds.vyMetersPerSecond));
-            },
-            drive)
-
-        // Reset PID controller when command starts
-        .beforeStarting(() -> angleController.reset(drive.getRotation().getRadians()));
-  }
-
-  /**
    * Measures the velocity feedforward org.team4639.frobot.constants for the drive motors.
    *
    * <p>This command should only be used in voltage control mode.
    */
-  public static Command feedforwardCharacterization(Drive drive) {
+  public static Command feedforwardCharacterization() {
     List<Double> velocitySamples = new LinkedList<>();
     List<Double> voltageSamples = new LinkedList<>();
     Timer timer = new Timer();
@@ -287,7 +220,7 @@ public class DriveCommands {
   }
 
   /** Measures the robot's wheel radius by spinning in a circle. */
-  public static Command wheelRadiusCharacterization(Drive drive) {
+  public static Command wheelRadiusCharacterization() {
     SlewRateLimiter limiter = new SlewRateLimiter(WHEEL_RADIUS_RAMP_RATE);
     WheelRadiusCharacterizationState state = new WheelRadiusCharacterizationState();
 
@@ -361,7 +294,7 @@ public class DriveCommands {
     double gyroDelta = 0.0;
   }
 
-  public static Command reefAlign(Drive drive) {
+  public static Command reefAlignClosest() {
     Pose2d drivePose = drive.getPose();
 
     Pose2d nearestReefPose =
@@ -374,19 +307,10 @@ public class DriveCommands {
                 TargetPositions.REEF_IJ.getPose(),
                 TargetPositions.REEF_KL.getPose()));
 
-    //    var dist =
-    //        Math.max(
-    //            Math.abs(nearestReefPose.getX() - drivePose.getX()),
-    //            Math.abs(nearestReefPose.getY() - drivePose.getY()));
-    //    Pose2d startPose = nearestReefPose.transformBy(new Transform2d(-dist, 0,
-    // Rotation2d.kZero));
-    //
-    //    return PIDto(drive, startPose, nearestReefPose);
-
-    return PIDtoWithVelocityReset(drive, drivePose, nearestReefPose);
+    return PIDTo(drivePose, nearestReefPose);
   }
 
-  public static Command reefAlignLeft(Drive drive) {
+  public static Command reefAlignLeft() {
     Pose2d drivePose = drive.getPose();
 
     Pose2d nearestReefPose =
@@ -400,19 +324,10 @@ public class DriveCommands {
                     TargetPositions.REEF_IJ.getPose(),
                     TargetPositions.REEF_KL.getPose())));
 
-    //    var dist =
-    //        Math.max(
-    //            Math.abs(nearestReefPose.getX() - drivePose.getX()),
-    //            Math.abs(nearestReefPose.getY() - drivePose.getY()));
-    //    Pose2d startPose = nearestReefPose.transformBy(new Transform2d(-dist, 0,
-    // Rotation2d.kZero));
-    //
-    //    return PIDto(drive, startPose, nearestReefPose);
-
-    return PIDtoReefWithVelocityReset(drive, drivePose, nearestReefPose);
+    return PIDToReef(drivePose, nearestReefPose);
   }
 
-  public static Command reefAlignRight(Drive drive) {
+  public static Command reefAlignRight() {
     Pose2d drivePose = drive.getPose();
 
     Pose2d nearestReefPose =
@@ -426,19 +341,10 @@ public class DriveCommands {
                     TargetPositions.REEF_IJ.getPose(),
                     TargetPositions.REEF_KL.getPose())));
 
-    //    var dist =
-    //        Math.max(
-    //            Math.abs(nearestReefPose.getX() - drivePose.getX()),
-    //            Math.abs(nearestReefPose.getY() - drivePose.getY()));
-    //    Pose2d startPose = nearestReefPose.transformBy(new Transform2d(-dist, 0,
-    // Rotation2d.kZero));
-    //    return PIDto(drive, startPose, nearestReefPose);
-
-    return PIDtoReefWithVelocityReset(drive, drivePose, nearestReefPose);
+    return PIDToReef(drivePose, nearestReefPose);
   }
 
-  public static Command PIDtoWithVelocityReset(
-      Drive drive, Pose2d startingPose, Pose2d destinationPose) {
+  public static Command PIDTo(Pose2d startingPose, Pose2d destinationPose) {
     ProfiledPIDController pidX =
         new ProfiledPIDController(16, 0, 0, new TrapezoidProfile.Constraints(3, 5));
     ProfiledPIDController pidY =
@@ -482,8 +388,7 @@ public class DriveCommands {
         .until(drive::atSetpointTranslation);
   }
 
-  public static Command PIDtoWithVelocityResetUnending(
-      Drive drive, Pose2d startingPose, Pose2d destinationPose) {
+  public static Command PIDToUnending(Pose2d startingPose, Pose2d destinationPose) {
     ProfiledPIDController pidX =
         new ProfiledPIDController(16, 0, 0, new TrapezoidProfile.Constraints(3, 5));
     ProfiledPIDController pidY =
@@ -525,8 +430,7 @@ public class DriveCommands {
         });
   }
 
-  public static Command PIDtoReefWithVelocityReset(
-      Drive drive, Pose2d startingPose, Pose2d destinationPose) {
+  public static Command PIDToReef(Pose2d startingPose, Pose2d destinationPose) {
     ProfiledPIDController pidX =
         new ProfiledPIDController(16, 0, 0, new TrapezoidProfile.Constraints(3, 5));
     ProfiledPIDController pidY =
@@ -576,85 +480,35 @@ public class DriveCommands {
         .until(drive::atSetpointTranslation);
   }
 
-  public static Command robotOrientedDrive(Drive drive, ChassisSpeeds speeds) {
-    return drive.run(() -> drive.runVelocity(speeds));
+  public static Command HPStationAlignLeft() {
+    return Subsystems.drive.defer(() -> PIDTo(drive.getPose(), TargetPositions.HP_LEFT.getPose()));
   }
 
-  public static Command vectorCoralStationAlignLeft(
-      Drive drive, DoubleSupplier xSupplier, DoubleSupplier ySupplier) {
-    PIDController xController = new PIDController(24, 0, 0);
-    PIDController yController = new PIDController(24, 0, 0);
-
-    xController.setSetpoint(TargetPositions.HP_LEFT.getPose().getX());
-    yController.setSetpoint(TargetPositions.HP_LEFT.getPose().getY());
-
-    return joystickDriveAtAngleWithTranslationVector(
-            drive,
-            xSupplier,
-            ySupplier,
-            FieldConstants.CoralStation.leftCenterFace::getRotation,
-            () -> {
-              return VecBuilder.fill(
-                  MathUtil.clamp(xController.calculate(drive.getPose().getX()), -0.2, 0.2),
-                  MathUtil.clamp(yController.calculate(drive.getPose().getY()), -0.2, 0.2));
-            })
-        .until(
-            () ->
-                (Math.abs(xController.getError()) < 0.01
-                    && Math.abs(yController.getError()) < 0.0));
+  public static Command HPStationAlignRight() {
+    return Subsystems.drive.defer(() -> PIDTo(drive.getPose(), TargetPositions.HP_RIGHT.getPose()));
   }
 
-  public static Command vectorCoralStationAlignRight(
-      Drive drive, DoubleSupplier xSupplier, DoubleSupplier ySupplier) {
-    PIDController xController = new PIDController(24, 0, 0);
-    PIDController yController = new PIDController(24, 0, 0);
-
-    xController.setSetpoint(TargetPositions.HP_RIGHT.getPose().getX());
-    yController.setSetpoint(TargetPositions.HP_RIGHT.getPose().getY());
-
-    return joystickDriveAtAngleWithTranslationVector(
-            drive,
-            xSupplier,
-            ySupplier,
-            FieldConstants.CoralStation.rightCenterFace::getRotation,
-            () -> {
-              return VecBuilder.fill(
-                  MathUtil.clamp(xController.calculate(drive.getPose().getX()), -0.2, 0.2),
-                  MathUtil.clamp(yController.calculate(drive.getPose().getY()), -0.2, 0.2));
-            })
-        .until(
-            () ->
-                (Math.abs(xController.getError()) < 0.01
-                    && Math.abs(yController.getError()) < 0.0));
-  }
-
-  public static Command coralStationAlignLeft(Drive drive) {
-    return Subsystems.drive.defer(
-        () -> PIDtoWithVelocityReset(drive, drive.getPose(), TargetPositions.HP_LEFT.getPose()));
-  }
-
-  public static Command coralStationAlignRight(Drive drive) {
-    return Subsystems.drive.defer(
-        () -> PIDtoWithVelocityReset(drive, drive.getPose(), TargetPositions.HP_RIGHT.getPose()));
-  }
-
-  public static Command pathFindToReef(Drive drive, Pose2d pose) {
+  public static Command pathFindToReef(Pose2d pose) {
     return drive.defer(() -> TeleopPathGenerator.pathfindToReef(drive.getPose(), pose));
   }
 
-  public static Command pathFindToHP(Drive drive, Pose2d pose) {
+  /**
+   * Functionally the same as {@link DriveCommands#pathFindToReefCenter(Pose2d)} but this may be
+   * more semantically desirable
+   */
+  public static Command pathFindToHP(Pose2d pose) {
     return drive.defer(() -> TeleopPathGenerator.pathfindTo(drive.getPose(), pose));
   }
 
-  public static Command pathFindToReefCenter(Drive drive, Pose2d pose) {
+  /**
+   * Functionally the same as {@link DriveCommands#pathFindToHP(Pose2d)} but this may be more
+   * semantically desirable
+   */
+  public static Command pathFindToReefCenter(Pose2d pose) {
     return drive.defer(() -> TeleopPathGenerator.pathfindTo(drive.getPose(), pose));
   }
 
   public static Command stopWithX() {
     return Subsystems.drive.run(() -> Subsystems.drive.stopWithX()).withName("STOP_WITH_X");
-  }
-
-  public static Command stop() {
-    return Subsystems.drive.run(() -> Subsystems.drive.stop()).withName("STOP_WITH_X");
   }
 }

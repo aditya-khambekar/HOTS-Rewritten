@@ -1,6 +1,5 @@
 package org.team4639.robot.commands.superstructure;
 
-import static edu.wpi.first.units.Units.RotationsPerSecond;
 import static edu.wpi.first.units.Units.Value;
 
 import edu.wpi.first.math.geometry.Rotation2d;

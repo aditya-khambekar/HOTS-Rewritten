@@ -74,16 +74,14 @@ public class ReefscapeStates {
 
     HP_LEFT =
         new State("HP_LEFT")
-            .whileTrue(
-                DriveCommands.coralStationAlignLeft(Subsystems.drive), SuperstructureCommands.HP)
+            .whileTrue(DriveCommands.HPStationAlignLeft(), SuperstructureCommands.HP)
             .withEndCondition(DriveTriggers.closeToLeftStation.negate(), () -> INTAKE_LOWER)
             .onTrigger(Controls.secondIntake, () -> INTAKE_LOWER)
             .onEmergency(() -> IDLE);
 
     HP_RIGHT =
         new State("HP_RIGHT")
-            .whileTrue(
-                DriveCommands.coralStationAlignRight(Subsystems.drive), SuperstructureCommands.HP)
+            .whileTrue(DriveCommands.HPStationAlignRight(), SuperstructureCommands.HP)
             .withEndCondition(DriveTriggers.closeToRightStation.negate(), () -> INTAKE_LOWER)
             .onTrigger(Controls.secondIntake, () -> INTAKE_LOWER)
             .onEmergency(() -> IDLE);
@@ -104,7 +102,6 @@ public class ReefscapeStates {
             .whileTrue(
                 SuperstructureCommands.CORAL_STOW,
                 DriveCommands.joystickDriveAtAngle(
-                    Subsystems.drive,
                     () -> -RobotContainer.driver.getLeftY(),
                     () -> -RobotContainer.driver.getLeftX(),
                     () ->
@@ -131,7 +128,7 @@ public class ReefscapeStates {
     CORAL_SCORE_ALIGN_LEFT =
         new State("CORAL_SCORE_ALIGN_LEFT")
             .withDeadline(
-                Subsystems.drive.defer(() -> DriveCommands.reefAlignLeft(Subsystems.drive)),
+                Subsystems.drive.defer(() -> DriveCommands.reefAlignLeft()),
                 () -> CHOOSE_CORAL_LEVEL)
             .whileTrue(
                 SuperstructureCommands.ELEVATOR_READY,
@@ -157,7 +154,7 @@ public class ReefscapeStates {
     CORAL_SCORE_ALIGN_RIGHT =
         new State("CORAL_SCORE_ALIGN_RIGHT")
             .withDeadline(
-                Subsystems.drive.defer(() -> DriveCommands.reefAlignRight(Subsystems.drive)),
+                Subsystems.drive.defer(() -> DriveCommands.reefAlignRight()),
                 () -> CHOOSE_CORAL_LEVEL)
             .whileTrue(
                 SuperstructureCommands.ELEVATOR_READY,
@@ -183,8 +180,7 @@ public class ReefscapeStates {
     ALIGN_ALGAE =
         new State("ALIGN_ALGAE")
             .withDeadline(
-                Subsystems.drive.defer(() -> DriveCommands.reefAlign(Subsystems.drive)),
-                () -> ALGAE_INTAKE)
+                Subsystems.drive.defer(() -> DriveCommands.reefAlignClosest()), () -> ALGAE_INTAKE)
             .whileTrue(SuperstructureCommands.ALGAE_INTAKE)
             .onEmergency(() -> IDLE)
             .onAccelerationLimit(() -> IDLE);
@@ -285,8 +281,7 @@ public class ReefscapeStates {
   public static State pathFindToReef(TargetPositions reef) {
     var pose = reef.getPose();
     return new State("PATHFIND_TO_REEF")
-        .withDeadline(
-            DriveCommands.pathFindToReef(Subsystems.drive, pose), () -> CHOOSE_CORAL_LEVEL)
+        .withDeadline(DriveCommands.pathFindToReef(pose), () -> CHOOSE_CORAL_LEVEL)
         .whileTrue(
             SuperstructureCommands.ELEVATOR_READY,
             Subsystems.dashboardOutputs.displayUpcomingReefLevel())
@@ -296,9 +291,7 @@ public class ReefscapeStates {
 
   public static State pathFindToHPLeft() {
     return new State("PATHFIND_TO_HP_LEFT")
-        .withDeadline(
-            DriveCommands.pathFindToHP(Subsystems.drive, TargetPositions.HP_LEFT.getPose()),
-            () -> HP_LEFT)
+        .withDeadline(DriveCommands.pathFindToHP(TargetPositions.HP_LEFT.getPose()), () -> HP_LEFT)
         .whileTrue(SuperstructureCommands.HP)
         .onEmergency(() -> IDLE);
   }
@@ -306,17 +299,14 @@ public class ReefscapeStates {
   public static State pathFindToHPRight() {
     return new State("PATHFIND_TO_HP_RIGHT")
         .withDeadline(
-            DriveCommands.pathFindToHP(Subsystems.drive, TargetPositions.HP_RIGHT.getPose()),
-            () -> HP_RIGHT)
+            DriveCommands.pathFindToHP(TargetPositions.HP_RIGHT.getPose()), () -> HP_RIGHT)
         .whileTrue(SuperstructureCommands.HP)
         .onEmergency(() -> IDLE);
   }
 
   public static State pathFindToReefAlgae(TargetPositions reefCenter) {
     return new State("PATHFIND_TO_REEF_CENTER")
-        .withDeadline(
-            DriveCommands.pathFindToReefCenter(Subsystems.drive, reefCenter.getPose()),
-            () -> ALGAE_INTAKE)
+        .withDeadline(DriveCommands.pathFindToReefCenter(reefCenter.getPose()), () -> ALGAE_INTAKE)
         .whileTrue(SuperstructureCommands.algaeIntake(reefCenter.getPose()))
         .onEmergency(() -> IDLE);
   }

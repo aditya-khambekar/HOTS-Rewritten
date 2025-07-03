@@ -101,9 +101,7 @@ public class Superstructure extends SubsystemBase implements Sendable {
 
   public static SuperstructureState getSuperstructureState() {
     return new SuperstructureState(
-        Subsystems.elevator.getPercentage(),
-        Subsystems.wrist.getWristAngle(),
-        Subsystems.roller.getVelocity());
+        Subsystems.elevator.getPercentage(), Subsystems.wrist.getWristAngle(), Value.zero());
   }
 
   /** Determines if the wrist is at a safe angle to move the elevator. */

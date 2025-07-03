@@ -21,8 +21,7 @@ public class VisionDemoStates {
                 SuperstructureCommands.IDLE,
                 Subsystems.drive.defer(
                     () ->
-                        DriveCommands.PIDtoWithVelocityResetUnending(
-                            Subsystems.drive,
+                        DriveCommands.PIDToUnending(
                             Subsystems.drive.getPose(),
                             TargetPositions.REEF_AB
                                 .getPose()

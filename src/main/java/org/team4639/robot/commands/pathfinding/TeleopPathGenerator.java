@@ -48,9 +48,7 @@ public class TeleopPathGenerator {
                       PoseUtil.getDistance(Subsystems.drive.getPose(), endingPose).in(Meters) < 2.5)
               .andThen(
                   Subsystems.drive.defer(
-                      () ->
-                          DriveCommands.PIDtoReefWithVelocityReset(
-                              Subsystems.drive, Subsystems.drive.getPose(), endingPose))))
+                      () -> DriveCommands.PIDToReef(Subsystems.drive.getPose(), endingPose))))
           .beforeStarting(Subsystems.reefTracker.setCurrentReefPoseCommand(endingPose));
     }
 
@@ -64,9 +62,7 @@ public class TeleopPathGenerator {
                     < alignDistanceMeters)
         .andThen(
             Subsystems.drive.defer(
-                () ->
-                    DriveCommands.PIDtoReefWithVelocityReset(
-                        Subsystems.drive, Subsystems.drive.getPose(), endingPose)))
+                () -> DriveCommands.PIDToReef(Subsystems.drive.getPose(), endingPose)))
         .beforeStarting(Subsystems.reefTracker.setCurrentReefPoseCommand(endingPose));
   }
 
@@ -94,9 +90,7 @@ public class TeleopPathGenerator {
               () -> PoseUtil.getDistance(Subsystems.drive.getPose(), endingPose).in(Meters) < 1.5)
           .andThen(
               Subsystems.drive.defer(
-                  () ->
-                      DriveCommands.PIDtoWithVelocityReset(
-                          Subsystems.drive, Subsystems.drive.getPose(), endingPose))));
+                  () -> DriveCommands.PIDTo(Subsystems.drive.getPose(), endingPose))));
     }
 
     var alignDistanceMeters =
@@ -109,9 +103,7 @@ public class TeleopPathGenerator {
                     < alignDistanceMeters)
         .andThen(
             Subsystems.drive.defer(
-                () ->
-                    DriveCommands.PIDtoWithVelocityReset(
-                        Subsystems.drive, Subsystems.drive.getPose(), endingPose)));
+                () -> DriveCommands.PIDTo(Subsystems.drive.getPose(), endingPose)));
   }
 
   public static Command getPathCommand(ReefPathLocations starting, ReefPathLocations ending) {

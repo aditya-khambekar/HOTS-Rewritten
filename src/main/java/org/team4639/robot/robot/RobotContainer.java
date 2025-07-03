@@ -201,11 +201,9 @@ public class RobotContainer {
     autoChooser.addOption("LS-I-J-K", AutoFactory.LS_I_J_K());
     autoChooser.addOption("LS-J-K-L", AutoFactory.LS_J_K_L());
     autoChooser.addOption(
-        "Drive Wheel Radius Characterization",
-        DriveCommands.wheelRadiusCharacterization(Subsystems.drive));
+        "Drive Wheel Radius Characterization", DriveCommands.wheelRadiusCharacterization());
     autoChooser.addOption(
-        "Drive Simple FF Characterization",
-        DriveCommands.feedforwardCharacterization(Subsystems.drive));
+        "Drive Simple FF Characterization", DriveCommands.feedforwardCharacterization());
     autoChooser.addOption(
         "Drive SysId (Quasistatic Forward)",
         Subsystems.drive.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
@@ -249,10 +247,7 @@ public class RobotContainer {
     // Default command, normal field-relative drive
     Subsystems.drive.setDefaultCommand(
         DriveCommands.joystickDrive(
-                Subsystems.drive,
-                () -> -driver.getLeftY(),
-                () -> -driver.getLeftX(),
-                () -> -driver.getRightX())
+                () -> -driver.getLeftY(), () -> -driver.getLeftX(), () -> -driver.getRightX())
             .withName("Drive Joystick"));
 
     Subsystems.leds.setDefaultCommand(LEDCommands.disabled());
