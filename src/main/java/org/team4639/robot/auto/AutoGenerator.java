@@ -10,7 +10,7 @@ import java.util.List;
 import org.team4639.robot.commands.AutoCommands;
 import org.team4639.robot.commands.DriveCommands;
 import org.team4639.robot.commands.SuperstructureCommands;
-import org.team4639.robot.constants.Targets;
+import org.team4639.robot.constants.TargetPositions;
 import org.team4639.robot.robot.Subsystems;
 
 public class AutoGenerator {
@@ -93,18 +93,18 @@ public class AutoGenerator {
         case OUT_CORAL -> (pathCommand.deadlineFor(SuperstructureCommands.elevatorReady()))
             .andThen(
                 switch (ending) {
-                  case A -> AutoCommands.scoreL4(Targets.TargetPositions.REEF_A.getPose());
-                  case B -> AutoCommands.scoreL4(Targets.TargetPositions.REEF_B.getPose());
-                  case C -> AutoCommands.scoreL4(Targets.TargetPositions.REEF_C.getPose());
-                  case D -> AutoCommands.scoreL4(Targets.TargetPositions.REEF_D.getPose());
-                  case E -> AutoCommands.scoreL4(Targets.TargetPositions.REEF_E.getPose());
-                  case F -> AutoCommands.scoreL4(Targets.TargetPositions.REEF_F.getPose());
-                  case G -> AutoCommands.scoreL4(Targets.TargetPositions.REEF_G.getPose());
-                  case H -> AutoCommands.scoreL4(Targets.TargetPositions.REEF_H.getPose());
-                  case I -> AutoCommands.scoreL4(Targets.TargetPositions.REEF_I.getPose());
-                  case J -> AutoCommands.scoreL4(Targets.TargetPositions.REEF_J.getPose());
-                  case K -> AutoCommands.scoreL4(Targets.TargetPositions.REEF_K.getPose());
-                  case L -> AutoCommands.scoreL4(Targets.TargetPositions.REEF_L.getPose());
+                  case A -> AutoCommands.scoreL4(TargetPositions.REEF_A.getPose());
+                  case B -> AutoCommands.scoreL4(TargetPositions.REEF_B.getPose());
+                  case C -> AutoCommands.scoreL4(TargetPositions.REEF_C.getPose());
+                  case D -> AutoCommands.scoreL4(TargetPositions.REEF_D.getPose());
+                  case E -> AutoCommands.scoreL4(TargetPositions.REEF_E.getPose());
+                  case F -> AutoCommands.scoreL4(TargetPositions.REEF_F.getPose());
+                  case G -> AutoCommands.scoreL4(TargetPositions.REEF_G.getPose());
+                  case H -> AutoCommands.scoreL4(TargetPositions.REEF_H.getPose());
+                  case I -> AutoCommands.scoreL4(TargetPositions.REEF_I.getPose());
+                  case J -> AutoCommands.scoreL4(TargetPositions.REEF_J.getPose());
+                  case K -> AutoCommands.scoreL4(TargetPositions.REEF_K.getPose());
+                  case L -> AutoCommands.scoreL4(TargetPositions.REEF_L.getPose());
                   default -> throw new IllegalArgumentException("what the fuck");
                 });
         case IN_ALGAE -> (pathCommand.deadlineFor(SuperstructureCommands.elevatorReady()))
@@ -113,11 +113,11 @@ public class AutoGenerator {
             .andThen(
                 switch (ending) {
                   case ALGSC1 -> AutoCommands.scoreBarge(
-                      Targets.TargetPositions.BARGE_FARCAGE.getPose());
+                      TargetPositions.BARGE_FARCAGE.getPose());
                   case ALGSC2 -> AutoCommands.scoreBarge(
-                      Targets.TargetPositions.BARGE_MIDDLECAGE.getPose());
+                      TargetPositions.BARGE_MIDDLECAGE.getPose());
                   case ALGSC3 -> AutoCommands.scoreBarge(
-                      Targets.TargetPositions.BARGE_CLOSECAGE.getPose());
+                      TargetPositions.BARGE_CLOSECAGE.getPose());
                   default -> throw new IllegalArgumentException("what the fuck");
                 });
       };

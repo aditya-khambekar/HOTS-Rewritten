@@ -238,27 +238,27 @@ public class FieldConstants {
 
   public static void initAlgaeLocations() {
     ReefCenterPoseToAlgaeLocation.put(
-        Targets.TargetPositions.REEF_AB.Pose, SuperstructureCommands.L3_ALGAE);
+        TargetPositions.REEF_AB.Pose, SuperstructureCommands.L3_ALGAE);
     ReefCenterPoseToAlgaeLocation.put(
-        Targets.TargetPositions.REEF_CD.Pose, SuperstructureCommands.L2_ALGAE);
+        TargetPositions.REEF_CD.Pose, SuperstructureCommands.L2_ALGAE);
     ReefCenterPoseToAlgaeLocation.put(
-        Targets.TargetPositions.REEF_EF.Pose, SuperstructureCommands.L3_ALGAE);
+        TargetPositions.REEF_EF.Pose, SuperstructureCommands.L3_ALGAE);
     ReefCenterPoseToAlgaeLocation.put(
-        Targets.TargetPositions.REEF_GH.Pose, SuperstructureCommands.L2_ALGAE);
+        TargetPositions.REEF_GH.Pose, SuperstructureCommands.L2_ALGAE);
     ReefCenterPoseToAlgaeLocation.put(
-        Targets.TargetPositions.REEF_IJ.Pose, SuperstructureCommands.L3_ALGAE);
+        TargetPositions.REEF_IJ.Pose, SuperstructureCommands.L3_ALGAE);
     ReefCenterPoseToAlgaeLocation.put(
-        Targets.TargetPositions.REEF_KL.Pose, SuperstructureCommands.L2_ALGAE);
+        TargetPositions.REEF_KL.Pose, SuperstructureCommands.L2_ALGAE);
   }
 
   public static Map<Pose2d, Command> ReefCenterPoseToAlgaeLocation() {
     var x = new HashMap<Pose2d, Command>();
-    x.put(Targets.TargetPositions.REEF_AB.Pose, SuperstructureCommands.l3Algae());
-    x.put(Targets.TargetPositions.REEF_CD.Pose, SuperstructureCommands.l2Algae());
-    x.put(Targets.TargetPositions.REEF_EF.Pose, SuperstructureCommands.l3Algae());
-    x.put(Targets.TargetPositions.REEF_GH.Pose, SuperstructureCommands.l2Algae());
-    x.put(Targets.TargetPositions.REEF_IJ.Pose, SuperstructureCommands.l3Algae());
-    x.put(Targets.TargetPositions.REEF_KL.Pose, SuperstructureCommands.l2Algae());
+    x.put(TargetPositions.REEF_AB.Pose, SuperstructureCommands.l3Algae());
+    x.put(TargetPositions.REEF_CD.Pose, SuperstructureCommands.l2Algae());
+    x.put(TargetPositions.REEF_EF.Pose, SuperstructureCommands.l3Algae());
+    x.put(TargetPositions.REEF_GH.Pose, SuperstructureCommands.l2Algae());
+    x.put(TargetPositions.REEF_IJ.Pose, SuperstructureCommands.l3Algae());
+    x.put(TargetPositions.REEF_KL.Pose, SuperstructureCommands.l2Algae());
 
     return x;
   }

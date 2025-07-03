@@ -41,7 +41,7 @@ import java.util.function.Supplier;
 import org.team4639.lib.util.PoseUtil;
 import org.team4639.robot.commands.pathfinding.TeleopPathGenerator;
 import org.team4639.robot.constants.FieldConstants;
-import org.team4639.robot.constants.Targets;
+import org.team4639.robot.constants.TargetPositions;
 import org.team4639.robot.robot.Subsystems;
 import org.team4639.robot.subsystems.drive.Drive;
 
@@ -367,12 +367,12 @@ public class DriveCommands {
     Pose2d nearestReefPose =
         drivePose.nearest(
             List.of(
-                Targets.TargetPositions.REEF_AB.getPose(),
-                Targets.TargetPositions.REEF_CD.getPose(),
-                Targets.TargetPositions.REEF_EF.getPose(),
-                Targets.TargetPositions.REEF_GH.getPose(),
-                Targets.TargetPositions.REEF_IJ.getPose(),
-                Targets.TargetPositions.REEF_KL.getPose()));
+                TargetPositions.REEF_AB.getPose(),
+                TargetPositions.REEF_CD.getPose(),
+                TargetPositions.REEF_EF.getPose(),
+                TargetPositions.REEF_GH.getPose(),
+                TargetPositions.REEF_IJ.getPose(),
+                TargetPositions.REEF_KL.getPose()));
 
     //    var dist =
     //        Math.max(
@@ -393,12 +393,12 @@ public class DriveCommands {
         PoseUtil.ReefRelativeLeftOf(
             drivePose.nearest(
                 List.of(
-                    Targets.TargetPositions.REEF_AB.getPose(),
-                    Targets.TargetPositions.REEF_CD.getPose(),
-                    Targets.TargetPositions.REEF_EF.getPose(),
-                    Targets.TargetPositions.REEF_GH.getPose(),
-                    Targets.TargetPositions.REEF_IJ.getPose(),
-                    Targets.TargetPositions.REEF_KL.getPose())));
+                    TargetPositions.REEF_AB.getPose(),
+                    TargetPositions.REEF_CD.getPose(),
+                    TargetPositions.REEF_EF.getPose(),
+                    TargetPositions.REEF_GH.getPose(),
+                    TargetPositions.REEF_IJ.getPose(),
+                    TargetPositions.REEF_KL.getPose())));
 
     //    var dist =
     //        Math.max(
@@ -419,12 +419,12 @@ public class DriveCommands {
         PoseUtil.ReefRelativeRightOf(
             drivePose.nearest(
                 List.of(
-                    Targets.TargetPositions.REEF_AB.getPose(),
-                    Targets.TargetPositions.REEF_CD.getPose(),
-                    Targets.TargetPositions.REEF_EF.getPose(),
-                    Targets.TargetPositions.REEF_GH.getPose(),
-                    Targets.TargetPositions.REEF_IJ.getPose(),
-                    Targets.TargetPositions.REEF_KL.getPose())));
+                    TargetPositions.REEF_AB.getPose(),
+                    TargetPositions.REEF_CD.getPose(),
+                    TargetPositions.REEF_EF.getPose(),
+                    TargetPositions.REEF_GH.getPose(),
+                    TargetPositions.REEF_IJ.getPose(),
+                    TargetPositions.REEF_KL.getPose())));
 
     //    var dist =
     //        Math.max(
@@ -542,8 +542,8 @@ public class DriveCommands {
     PIDController xController = new PIDController(24, 0, 0);
     PIDController yController = new PIDController(24, 0, 0);
 
-    xController.setSetpoint(Targets.TargetPositions.HP_LEFT.getPose().getX());
-    yController.setSetpoint(Targets.TargetPositions.HP_LEFT.getPose().getY());
+    xController.setSetpoint(TargetPositions.HP_LEFT.getPose().getX());
+    yController.setSetpoint(TargetPositions.HP_LEFT.getPose().getY());
 
     return joystickDriveAtAngleWithTranslationVector(
             drive,
@@ -566,8 +566,8 @@ public class DriveCommands {
     PIDController xController = new PIDController(24, 0, 0);
     PIDController yController = new PIDController(24, 0, 0);
 
-    xController.setSetpoint(Targets.TargetPositions.HP_RIGHT.getPose().getX());
-    yController.setSetpoint(Targets.TargetPositions.HP_RIGHT.getPose().getY());
+    xController.setSetpoint(TargetPositions.HP_RIGHT.getPose().getX());
+    yController.setSetpoint(TargetPositions.HP_RIGHT.getPose().getY());
 
     return joystickDriveAtAngleWithTranslationVector(
             drive,
@@ -591,7 +591,7 @@ public class DriveCommands {
             PIDtowithVelocityReset(
                 drive,
                 drive.getPose(),
-                Targets.TargetPositions.HP_LEFT.getPose()));
+                TargetPositions.HP_LEFT.getPose()));
   }
 
   public static Command coralStationAlignRight(Drive drive) {
@@ -600,7 +600,7 @@ public class DriveCommands {
             PIDtowithVelocityReset(
                 drive,
                 drive.getPose(),
-                Targets.TargetPositions.HP_RIGHT.getPose()));
+                TargetPositions.HP_RIGHT.getPose()));
   }
 
   public static Command pathFindToReef(Drive drive, Pose2d pose) {
