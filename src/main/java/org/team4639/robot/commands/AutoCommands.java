@@ -20,7 +20,7 @@ public class AutoCommands {
     return (Subsystems.reefTracker.setCurrentReefPoseCommand(pose))
         .andThen(
             ((Subsystems.drive
-                        .defer(() -> DriveCommands.PIDToReef(Subsystems.drive.getPose(), pose))
+                        .defer(() -> DriveCommands.PIDToReef(pose))
                         .deadlineFor(SuperstructureCommands.elevatorReady()))
                     .andThen(
                         Subsystems.drive
@@ -35,7 +35,7 @@ public class AutoCommands {
 
   public static Command scoreBarge(Pose2d pose) {
     return (Subsystems.drive
-            .defer(() -> DriveCommands.PIDTo(Subsystems.drive.getPose(), pose))
+            .defer(() -> DriveCommands.PIDTo(pose))
             .deadlineFor(SuperstructureCommands.algaeStow()))
         .andThen(
             (SuperstructureCommands.barge().withExecutionTimeout(Seconds.of(0.75)).flashOnDone())
@@ -58,7 +58,6 @@ public class AutoCommands {
         .defer(
             () ->
                 DriveCommands.PIDTo(
-                    Subsystems.drive.getPose(),
                     Subsystems.drive
                         .getPose()
                         .nearest(
@@ -77,7 +76,6 @@ public class AutoCommands {
                 .defer(
                     () ->
                         DriveCommands.PIDTo(
-                            Subsystems.drive.getPose(),
                             Subsystems.drive
                                 .getPose()
                                 .nearest(

@@ -8,7 +8,6 @@ import org.team4639.robot.commands.DriveCommands;
 import org.team4639.robot.commands.SuperstructureCommands;
 import org.team4639.robot.constants.Controls;
 import org.team4639.robot.constants.TargetPositions;
-import org.team4639.robot.robot.Subsystems;
 
 public class VisionDemoStates {
   public static State DEMO_ON;
@@ -19,15 +18,12 @@ public class VisionDemoStates {
         new State("DEMO_ON")
             .whileTrue(
                 SuperstructureCommands.IDLE,
-                Subsystems.drive.defer(
-                    () ->
-                        DriveCommands.PIDToUnending(
-                            Subsystems.drive.getPose(),
-                            TargetPositions.REEF_AB
-                                .getPose()
-                                .transformBy(
-                                    new Transform2d(
-                                        Units2.inchesToMeters.convert(-36), 0, Rotation2d.kZero)))))
+                DriveCommands.PIDToUnending(
+                    TargetPositions.REEF_AB
+                        .getPose()
+                        .transformBy(
+                            new Transform2d(
+                                Units2.inchesToMeters.convert(-36), 0, Rotation2d.kZero))))
             .withEndCondition(Controls.VisionDemoControls.DEMO_ON.negate(), () -> DEMO_OFF);
     DEMO_OFF =
         new State("DEMO_OFF")

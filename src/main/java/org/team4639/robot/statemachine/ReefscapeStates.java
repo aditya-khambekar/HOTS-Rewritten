@@ -127,9 +127,7 @@ public class ReefscapeStates {
 
     CORAL_SCORE_ALIGN_LEFT =
         new State("CORAL_SCORE_ALIGN_LEFT")
-            .withDeadline(
-                Subsystems.drive.defer(() -> DriveCommands.reefAlignLeft()),
-                () -> CHOOSE_CORAL_LEVEL)
+            .withDeadline(DriveCommands.reefAlignLeft(), () -> CHOOSE_CORAL_LEVEL)
             .whileTrue(
                 SuperstructureCommands.ELEVATOR_READY,
                 Subsystems.dashboardOutputs.displayUpcomingReefLevel(),
@@ -153,9 +151,7 @@ public class ReefscapeStates {
 
     CORAL_SCORE_ALIGN_RIGHT =
         new State("CORAL_SCORE_ALIGN_RIGHT")
-            .withDeadline(
-                Subsystems.drive.defer(() -> DriveCommands.reefAlignRight()),
-                () -> CHOOSE_CORAL_LEVEL)
+            .withDeadline(DriveCommands.reefAlignRight(), () -> CHOOSE_CORAL_LEVEL)
             .whileTrue(
                 SuperstructureCommands.ELEVATOR_READY,
                 Subsystems.dashboardOutputs.displayUpcomingReefLevel(),
@@ -179,8 +175,7 @@ public class ReefscapeStates {
 
     ALIGN_ALGAE =
         new State("ALIGN_ALGAE")
-            .withDeadline(
-                Subsystems.drive.defer(() -> DriveCommands.reefAlignClosest()), () -> ALGAE_INTAKE)
+            .withDeadline(DriveCommands.reefAlignClosest(), () -> ALGAE_INTAKE)
             .whileTrue(SuperstructureCommands.ALGAE_INTAKE)
             .onEmergency(() -> IDLE)
             .onAccelerationLimit(() -> IDLE);
