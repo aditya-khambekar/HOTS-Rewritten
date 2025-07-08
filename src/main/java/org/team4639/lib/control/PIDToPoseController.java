@@ -12,7 +12,7 @@ import edu.wpi.first.util.sendable.SendableBuilder;
 import java.util.function.Supplier;
 import org.team4639.lib.util.ArraysUtil;
 
-public class ProfiledPIDPoseController implements Sendable {
+public class PIDToPoseController implements Sendable {
   private ProfiledPIDController xController;
   private ProfiledPIDController yController;
   private PIDController headingController;
@@ -22,7 +22,7 @@ public class ProfiledPIDPoseController implements Sendable {
 
   private Pose2d goal;
 
-  public ProfiledPIDPoseController(
+  public PIDToPoseController(
       PIDConstants translationPIDGains,
       TrapezoidProfile.Constraints translationConstraints,
       PIDConstants rotationPIDGains,
@@ -90,12 +90,15 @@ public class ProfiledPIDPoseController implements Sendable {
 
   public void setGoal(Pose2d pose) {
     this.goal = pose;
+    xController.reset(drivetrainPose.get().getX(), drivetrainSpeedsFieldOriented.get().vxMetersPerSecond);
+    yController.reset(drivetrainPose.get().getY(), drivetrainSpeedsFieldOriented.get().vyMetersPerSecond);
     xController.setGoal(pose.getX());
     yController.setGoal(pose.getY());
     headingController.setSetpoint(pose.getRotation().getRadians());
   }
 
-  public ChassisSpeeds calculateOutput(boolean fieldOriented) {
+
+  public ChassisSpeeds calculateOutput() {
     return ChassisSpeeds.fromFieldRelativeSpeeds(
         xController.getSetpoint().velocity + xController.calculate(drivetrainPose.get().getX()),
         yController.getSetpoint().velocity + yController.calculate(drivetrainPose.get().getY()),

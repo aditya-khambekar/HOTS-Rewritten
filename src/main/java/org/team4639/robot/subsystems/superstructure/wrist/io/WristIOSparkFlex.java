@@ -8,6 +8,7 @@ import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.Dimensionless;
+import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class WristIOSparkFlex extends WristIO {
@@ -43,5 +44,10 @@ public class WristIOSparkFlex extends WristIO {
   public void setPosition(Angle position) {
     wristPIDController.setGoal(position.in(Rotations));
     sparkFlex.set(wristPIDController.calculate(sparkFlex.getAbsoluteEncoder().getPosition()));
+  }
+
+  @Override
+  public void setVoltage(Voltage voltage) {
+    sparkFlex.setVoltage(voltage);
   }
 }

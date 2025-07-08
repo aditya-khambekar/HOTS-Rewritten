@@ -47,4 +47,6 @@ public abstract class WristIO {
   public abstract void setDutyCycleOutput(Dimensionless percent);
 
   public abstract void setPosition(Angle position);
+
+  public abstract void setVoltage(Voltage voltage);
 }

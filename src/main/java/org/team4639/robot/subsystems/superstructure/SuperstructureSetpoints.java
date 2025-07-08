@@ -3,179 +3,154 @@ package org.team4639.robot.subsystems.superstructure;
 import static edu.wpi.first.units.Units.*;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import org.team4639.robot.subsystems.superstructure.superstructurestate.SuperstructureState;
 
 public class SuperstructureSetpoints {
-  // IDLE State
-  public static final SuperstructureState IDLE =
-      new SuperstructureState(
-          Value.of(0.04), // IDLE_Proportion
-          Rotation2d.fromDegrees(150), // Wrist_IDLE_Proportion: 30 - 230 * 0.414 = -65.22 degrees
-          Value.zero() // Intake_Idle_Speed: 0.0 * 20 = 0.0 RPS
-          );
+    public static final SuperstructureState IDLE =
+            SuperstructureState.of(
+                    Value.of(0.04),
+                    Rotation2d.fromDegrees(150),
+                    Value.zero()
+            );
 
-  public static final SuperstructureState CORAL_STOW =
-      new SuperstructureState(
-          Value.of(0.04), // IDLE_Proportion
-          Rotation2d.fromDegrees(150), // Wrist_IDLE_Proportion: 30 - 230 * 0.414 = -65.22 degrees
-          Value.zero() // Intake_Idle_Speed: 0.0 * 20 = 0.0 RPS
-          );
+    public static final SuperstructureState CORAL_STOW =
+            SuperstructureState.of(
+                    Value.of(0.04),
+                    Rotation2d.fromDegrees(150),
+                    Value.zero()
+            );
 
-  // HP State
-  public static final SuperstructureState HP =
-      new SuperstructureState(
-          Value.of(0.048), // HP_Proportion
-          Rotation2d.fromDegrees(55), // Wrist_HP_Proportion: 30 - 230 * 0.238 = -24.74 degrees
-          Value.zero() // Intake_HP_Speed: 0.5 * 20 = 10.0 RPS
-          );
+    public static final SuperstructureState HP =
+            SuperstructureState.of(
+                    Value.of(0.048),
+                    Rotation2d.fromDegrees(55),
+                    Value.zero()
+            );
 
-  // Processor State
-  public static final SuperstructureState PROCESSOR =
-      new SuperstructureState(
-          Value.of(0.15), // Processor_Proportion: ProportionToPosition.convertBackwards(2.620) -
-          // assuming this equals ~0.655
-          Rotation2d.fromDegrees(
-              100), // Wrist_Processor_Proportion: 30 - 230 * 0.709 = -133.07 degrees
-          Value.zero() // Intake_Processor_Speed: 0.5 * 20 = 10.0 RPS
-          );
+    public static final SuperstructureState PROCESSOR =
+            SuperstructureState.of(
+                    Value.of(0.15),
+                    Rotation2d.fromDegrees(100),
+                    Value.zero()
+            );
 
-  public static final SuperstructureState ELEVATOR_READY =
-      new SuperstructureState(Value.of(0.496), Rotation2d.fromDegrees(200), Value.zero());
+    public static final SuperstructureState ELEVATOR_READY =
+            SuperstructureState.of(Value.of(0.496), Rotation2d.fromDegrees(200), Value.zero());
 
-  public static final SuperstructureState AUTO_ELEVATOR_L4_READY =
-      new SuperstructureState(Value.of(0.7), Rotation2d.fromDegrees(230), Value.zero());
+    public static final SuperstructureState AUTO_ELEVATOR_L4_READY =
+            SuperstructureState.of(Value.of(0.7), Rotation2d.fromDegrees(230), Value.zero());
 
-  // L1 State
-  public static final SuperstructureState L1 =
-      new SuperstructureState(
-          Value.of(0.15), // L1_Proportion
-          Rotation2d.fromDegrees(215), // Wrist_L1_Proportion: 30 - 230 * 1.0 = -200.0 degrees
-          Value.zero() // Intake_L1_Speed: 0.2 * 20 = 4.0 RPS
-          );
+    public static final SuperstructureState L1 =
+            SuperstructureState.of(
+                    Value.of(0.15),
+                    Rotation2d.fromDegrees(215),
+                    Value.zero()
+            );
 
-  // L2 State
-  public static final SuperstructureState L2 =
-      new SuperstructureState(
-          Value.of(0.2893), // L2_Proportion
-          Rotation2d.fromDegrees(215), // Wrist_L2_Proportion: 30 - 230 * 0.95 = -188.5 degrees
-          Value.zero() // Intake_L2_Speed: -0.875 * 20 = -17.5 RPS
-          );
+    public static final SuperstructureState L2 =
+            SuperstructureState.of(
+                    Value.of(0.2893),
+                    Rotation2d.fromDegrees(215),
+                    Value.zero()
+            );
 
-  // L3 State
-  public static final SuperstructureState L3 =
-      new SuperstructureState(
-          Value.of(0.496), // L3_Proportion
-          Rotation2d.fromDegrees(215), // Wrist_L3_Proportion: 30 - 230 * 0.95 = -188.5 degrees
-          Value.zero() // Intake_L3_Speed: -0.875 * 20 = -17.5 RPS
-          );
+    public static final SuperstructureState L3 =
+            SuperstructureState.of(
+                    Value.of(0.496),
+                    Rotation2d.fromDegrees(215),
+                    Value.zero()
+            );
 
-  // L4 State
-  public static final SuperstructureState L4 =
-      new SuperstructureState(
-          Value.of(0.85635), // L4_Proportion
-          Rotation2d.fromDegrees(230), // Wrist_L4_Proportion: 30 - 230 * 1.0 = -200.0 degrees
-          Value.zero() // Intake_L4_Speed: -0.875 * 20 = -17.5 RPS
-          );
+    public static final SuperstructureState L4 =
+            SuperstructureState.of(
+                    Value.of(0.85635),
+                    Rotation2d.fromDegrees(230),
+                    Value.zero()
+            );
 
-  // L1 State
-  public static final SuperstructureState L1_NO_OUTTAKE =
-      new SuperstructureState(
-          Value.of(0.15), // L1_Proportion
-          Rotation2d.fromDegrees(215), // Wrist_L1_Proportion: 30 - 230 * 1.0 = -200.0 degrees
-          Value.zero() // Intake_L1_Speed: 0.2 * 20 = 4.0 RPS
-          );
+    public static final SuperstructureState L1_NO_OUTTAKE =
+            SuperstructureState.of(
+                    Value.of(0.15),
+                    Rotation2d.fromDegrees(215),
+                    Value.zero()
+            );
 
-  // L2 State
-  public static final SuperstructureState L2_NO_OUTTAKE =
-      new SuperstructureState(
-          Value.of(0.2893), // L2_Proportion
-          Rotation2d.fromDegrees(215), // Wrist_L2_Proportion: 30 - 230 * 0.95 = -188.5 degrees
-          Value.zero() // Intake_L2_Speed: -0.875 * 20 = -17.5 RPS
-          );
+    public static final SuperstructureState L2_NO_OUTTAKE =
+            SuperstructureState.of(
+                    Value.of(0.2893),
+                    Rotation2d.fromDegrees(215),
+                    Value.zero()
+            );
 
-  // L3 State
-  public static final SuperstructureState L3_NO_OUTTAKE =
-      new SuperstructureState(
-          Value.of(0.496), // L3_Proportion
-          Rotation2d.fromDegrees(215), // Wrist_L3_Proportion: 30 - 230 * 0.95 = -188.5 degrees
-          Value.zero() // Intake_L3_Speed: -0.875 * 20 = -17.5 RPS
-          );
+    public static final SuperstructureState L3_NO_OUTTAKE =
+            SuperstructureState.of(
+                    Value.of(0.496),
+                    Rotation2d.fromDegrees(215),
+                    Value.zero()
+            );
 
-  // L4 State
-  public static final SuperstructureState L4_NO_OUTTAKE =
-      new SuperstructureState(
-          Value.of(0.85635), // L4_Proportion
-          Rotation2d.fromDegrees(230), // Wrist_L4_Proportion: 30 - 230 * 1.0 = -200.0 degrees
-          Value.zero() // Intake_L4_Speed: -0.875 * 20 = -17.5 RPS
-          );
+    public static final SuperstructureState L4_NO_OUTTAKE =
+            SuperstructureState.of(
+                    Value.of(0.85635),
+                    Rotation2d.fromDegrees(230),
+                    Value.zero()
+            );
 
-  // L2_ALGAE State
-  public static final SuperstructureState L2_ALGAE =
-      new SuperstructureState(
-          Value.of(0.32), // L2_ALGAE_Proportion
-          Rotation2d.fromDegrees(
-              135), // Wrist_L2_ALGAE_Proportion: 30 - 230 * 0.82 = -158.6 degrees
-          Value.zero() // Intake_L2_ALGAE_Speed: 1.0 * 20 = 20.0 RPS
-          );
+    public static final SuperstructureState L2_ALGAE =
+            SuperstructureState.of(
+                    Value.of(0.32),
+                    Rotation2d.fromDegrees(135),
+                    Value.zero()
+            );
 
-  // L3_ALGAE State
-  public static final SuperstructureState L3_ALGAE =
-      new SuperstructureState(
-          Value.of(
-              0.8), // L3_ALGAE_Proportion: ProportionToPosition.convertBackwards(32.0) - assuming
-          // this equals ~0.8
-          Rotation2d.fromDegrees(
-              135), // Wrist_L3_ALGAE_Proportion: 30 - 230 * 0.763 = -145.49 degrees
-          Value.zero() // Intake_L3_ALGAE_Speed: 1.0 * 20 = 20.0 RPS
-          );
+    public static final SuperstructureState L3_ALGAE =
+            SuperstructureState.of(
+                    Value.of(0.8),
+                    Rotation2d.fromDegrees(135),
+                    Value.zero()
+            );
 
-  public static final SuperstructureState ALGAE_STOW =
-      new SuperstructureState(
-          Value.of(0.32), // L2_ALGAE_Proportion
-          Rotation2d.fromDegrees(
-              135), // Wrist_L2_ALGAE_Proportion: 30 - 230 * 0.82 = -158.6 degrees
-          Value.zero() // Intake_L2_ALGAE_Speed: 1.0 * 20 = 20.0 RPS
-          );
+    public static final SuperstructureState ALGAE_STOW =
+            SuperstructureState.of(
+                    Value.of(0.32),
+                    Rotation2d.fromDegrees(135),
+                    Value.zero()
+            );
 
-  // Barge State
-  public static final SuperstructureState BARGE =
-      new SuperstructureState(
-          Value.of(0.95), // Barge_Proportion
-          Rotation2d.fromDegrees(150), // Wrist_Barge_Proportion: 30 - 230 * 0.563 = -99.49 degrees
-          Value.zero() // Intake_Barge_Speed: 0.1 * 20 = 2.0 RPS
-          );
+    public static final SuperstructureState BARGE =
+            SuperstructureState.of(
+                    Value.of(0.95),
+                    Rotation2d.fromDegrees(150),
+                    Value.zero()
+            );
 
-  // Ground_Intake State
-  public static final SuperstructureState GROUND_INTAKE =
-      new SuperstructureState(
-          Value.of(0.0), // Ground_Intake_Proportion
-          Rotation2d.fromDegrees(135), // Wrist_Ground_Intake_Proportion: 30 - 230 * 0.845 = -164.35
-          // degrees
-          Value.zero() // No intake speed specified, assuming 0.0 RPS
-          );
+    public static final SuperstructureState GROUND_INTAKE =
+            SuperstructureState.of(
+                    Value.of(0.0),
+                    Rotation2d.fromDegrees(135),
+                    Value.zero()
+            );
 
-  // Homing State
-  public static final SuperstructureState HOMING =
-      new SuperstructureState(
-          Value.of(0.0), // Homing_Proportion
-          Rotation2d.fromDegrees(
-              135), // Using IDLE wrist proportion: 30 - 230 * 0.414 = -65.22 degrees
-          Value.zero() // No intake speed specified, assuming 0.0 RPS
-          );
+    public static final SuperstructureState HOMING =
+            SuperstructureState.of(
+                    Value.of(0.0),
+                    Rotation2d.fromDegrees(135),
+                    Value.zero()
+            );
 
-  // HP_Lower State (new)
-  public static final SuperstructureState HP_LOWER =
-      new SuperstructureState(
-          Value.of(0.048), // HP_Proportion (same as HP)
-          Rotation2d.fromDegrees(40), // Wrist_HP_Lower_Proportion: 30 - 230 * 0.14 = -2.2 degrees
-          Value.zero() // Intake_HP_Speed: 0.5 * 20 = 10.0 RPS
-          );
+    public static final SuperstructureState HP_LOWER =
+            SuperstructureState.of(
+                    Value.of(0.048),
+                    Rotation2d.fromDegrees(40),
+                    Value.zero()
+            );
 
-  public static final SuperstructureState HOMING_READY =
-      new SuperstructureState(Value.of(0.1), Rotation2d.fromDegrees(135), Value.zero());
+    public static final SuperstructureState HOMING_READY =
+            SuperstructureState.of(Value.of(0.1), Rotation2d.fromDegrees(135), Value.zero());
 
-  public static final SuperstructureState REJECT_CORAL =
-      new SuperstructureState(Value.of(0), Rotation2d.fromDegrees(150), Value.zero());
+    public static final SuperstructureState REJECT_CORAL =
+            SuperstructureState.of(Value.of(0), Rotation2d.fromDegrees(150), Value.zero());
 
-  public static final SuperstructureState REJECT_ALGAE =
-      new SuperstructureState(Value.of(0), Rotation2d.fromDegrees(135), Value.zero());
+    public static final SuperstructureState REJECT_ALGAE =
+            SuperstructureState.of(Value.of(0), Rotation2d.fromDegrees(135), Value.zero());
 }

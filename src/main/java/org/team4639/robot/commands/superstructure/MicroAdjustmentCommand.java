@@ -19,10 +19,10 @@ public class MicroAdjustmentCommand extends SuperstructureCommandBase {
 
   @Override
   public void initialize() {
-    elevatorSetpoint = Superstructure.getSuperstructureState().elevatorProportion().mutableCopy();
+    elevatorSetpoint = Superstructure.getSuperstructureState().getElevatorProportion().mutableCopy();
     wristSetpoint =
         Rotation2d.fromDegrees(
-            Superstructure.getSuperstructureState().wristRotation().getDegrees());
+            Superstructure.getSuperstructureState().getWristRotation().getDegrees());
   }
 
   public void execute() {

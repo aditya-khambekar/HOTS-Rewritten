@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.team4639.lib.util.RotationUtil;
 import org.team4639.robot.robot.Subsystems;
 import org.team4639.robot.subsystems.superstructure.elevator.ElevatorConstants;
+import org.team4639.robot.subsystems.superstructure.superstructurestate.SuperstructureState;
 import org.team4639.robot.subsystems.superstructure.wrist.WristConstants;
 
 /**
@@ -78,29 +79,29 @@ public class Superstructure extends SubsystemBase implements Sendable {
    */
   public static boolean atPosition(SuperstructureState current, SuperstructureState target) {
     return MathUtil.isNear(
-            current.elevatorProportion().baseUnitMagnitude(),
-            target.elevatorProportion().baseUnitMagnitude(),
+            current.getElevatorProportion().baseUnitMagnitude(),
+            target.getElevatorProportion().baseUnitMagnitude(),
             Math.abs(ElevatorConstants.elevatorTolerance.baseUnitMagnitude()))
         && MathUtil.isNear(
-            current.wristRotation().getRotations(),
-            target.wristRotation().getRotations(),
+            current.getWristRotation().getRotations(),
+            target.getWristRotation().getRotations(),
             Math.abs(WristConstants.wristTolerance.in(Rotations)));
   }
 
   public static boolean atPosition(SuperstructureState target) {
     var current = getSuperstructureState();
     return MathUtil.isNear(
-            current.elevatorProportion().baseUnitMagnitude(),
-            target.elevatorProportion().baseUnitMagnitude(),
+            current.getElevatorProportion().baseUnitMagnitude(),
+            target.getElevatorProportion().baseUnitMagnitude(),
             Math.abs(ElevatorConstants.elevatorTolerance.baseUnitMagnitude()))
         && MathUtil.isNear(
-            current.wristRotation().getRotations(),
-            target.wristRotation().getRotations(),
+            current.getWristRotation().getRotations(),
+            target.getWristRotation().getRotations(),
             Math.abs(WristConstants.wristTolerance.in(Rotations)));
   }
 
   public static SuperstructureState getSuperstructureState() {
-    return new SuperstructureState(
+    return SuperstructureState.of(
         Subsystems.elevator.getPercentage(), Subsystems.wrist.getWristAngle(), Value.zero());
   }
 
@@ -123,9 +124,9 @@ public class Superstructure extends SubsystemBase implements Sendable {
   public void initSendable(SendableBuilder builder) {
     builder.setSmartDashboardType("Superstructure");
     builder.addDoubleProperty(
-        "Elevator Proportion", () -> getSuperstructureState().elevatorProportion().in(Value), null);
+        "Elevator Proportion", () -> getSuperstructureState().getElevatorProportion().in(Value), null);
     builder.addDoubleProperty(
-        "Wrist Angle Degrees", () -> getSuperstructureState().wristRotation().getDegrees(), null);
+        "Wrist Angle Degrees", () -> getSuperstructureState().getWristRotation().getDegrees(), null);
   }
 
   public static final double height = 120;

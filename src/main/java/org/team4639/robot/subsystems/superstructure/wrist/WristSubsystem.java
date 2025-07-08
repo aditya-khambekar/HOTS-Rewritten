@@ -9,6 +9,7 @@ import edu.wpi.first.math.filter.Debouncer.DebounceType;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.Dimensionless;
+import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -82,5 +83,9 @@ public class WristSubsystem extends SubsystemBase {
   public boolean isWristStopped() {
     return wristStoppedDebouncer.calculate(
         MathUtil.isNear(0, wristIOInputs.motorVelocity.in(RotationsPerSecond), 0.3));
+  }
+
+  public void setVoltage(Voltage voltage) {
+    WristIO.setVoltage(voltage);
   }
 }
