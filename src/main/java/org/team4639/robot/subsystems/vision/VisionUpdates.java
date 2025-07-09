@@ -10,7 +10,7 @@ import java.util.Objects;
 import java.util.Set;
 
 /** Utility class to update vision measurements across the entire program. */
-public class VisionUpdates implements Vision.VisionConsumer {
+public final class VisionUpdates implements Vision.VisionConsumer {
   private static volatile VisionUpdates instance = new VisionUpdates();
   private Set<Vision.VisionConsumer> consumers = new HashSet<>();
   private double lastVisionUpdate = Double.NEGATIVE_INFINITY;

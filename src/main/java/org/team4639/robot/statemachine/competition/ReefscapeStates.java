@@ -22,7 +22,7 @@ import org.team4639.robot.subsystems.superstructure.Superstructure;
 import org.team4639.robot.subsystems.superstructure.SuperstructureSetpoints;
 
 /** State machine used in competition */
-public class ReefscapeStates implements StatesBase {
+public final class ReefscapeStates implements StatesBase {
   public State IDLE;
   public State NONE = StateFactory.none();
   public State HP_LEFT;

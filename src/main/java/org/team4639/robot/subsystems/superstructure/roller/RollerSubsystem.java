@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.team4639.robot.subsystems.superstructure.roller.io.RollerIO;
 import org.team4639.robot.subsystems.superstructure.roller.io.RollerIO.RollerIOInputs;
 
-public class RollerSubsystem extends SubsystemBase {
+public final class RollerSubsystem extends SubsystemBase {
   RollerIO.RollerIOInputs inputs;
   RollerIO io;
 

@@ -26,7 +26,7 @@ import org.team4639.robot.constants.reefscape.TargetPositions;
 import org.team4639.robot.robot.Subsystems;
 
 // TODO: there is probably a better way to do this
-public class TeleopPathCommands {
+public final class TeleopPathCommands {
   public static Command pathfindToReef(Pose2d startingPose, Pose2d endingPose) {
     var starting = ReefPathLocations.getClosest(startingPose);
     var ending = ReefPathLocations.getClosest(endingPose);

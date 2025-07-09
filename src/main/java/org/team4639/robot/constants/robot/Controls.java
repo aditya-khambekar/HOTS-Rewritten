@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import org.team4639.robot.robot.RobotContainer;
 import org.team4639.robot.statemachine.demo.VisionDemo;
 
-public class Controls {
+public final class Controls {
   public static final Trigger intake = RobotContainer.driver.a();
   public static final Trigger secondIntake = RobotContainer.driver.a();
   public static final Trigger emergency = RobotContainer.driver.y();

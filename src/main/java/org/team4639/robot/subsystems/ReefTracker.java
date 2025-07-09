@@ -9,7 +9,7 @@ import java.util.Map;
 import org.team4639.robot.constants.reefscape.TargetPositions;
 
 /** Tracks reef. */
-public class ReefTracker extends SubsystemBase {
+public final class ReefTracker extends SubsystemBase {
   private Map<Pose2d, boolean[]> reefs = new HashMap<Pose2d, boolean[]>();
   private Pose2d currentReefPose = new Pose2d();
 

@@ -9,7 +9,7 @@ import edu.wpi.first.units.measure.Current;
 import org.team4639.lib.annotation.Untuned;
 import org.team4639.lib.unit.UnitConverter;
 
-public class WristConstants {
+public final class WristConstants {
   public static final Rotation2d MAX_ROTATION = Rotation2d.fromDegrees(230);
   public static final Rotation2d IDLE_ROTATION = Rotation2d.fromDegrees(30);
 

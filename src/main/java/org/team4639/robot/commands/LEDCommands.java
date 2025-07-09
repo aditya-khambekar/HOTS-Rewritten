@@ -9,7 +9,7 @@ import org.team4639.lib.led.pattern.TwoSegmentLEDPattern;
 import org.team4639.lib.util.DriverStationUtil;
 import org.team4639.robot.robot.Subsystems;
 
-public class LEDCommands {
+public final class LEDCommands {
   public static Command disabled() {
     return Subsystems.leds
         .defer(

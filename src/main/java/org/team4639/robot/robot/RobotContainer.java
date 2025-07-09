@@ -73,7 +73,7 @@ import org.team4639.robot.subsystems.vision.*;
  * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
  * subsystems, commands, and button mappings) should be declared here.
  */
-public class RobotContainer {
+public final class RobotContainer {
   // Controller
   public static final CommandXboxController driver = OI.driver;
   public static final CommandXboxController operator = OI.operator;

@@ -9,7 +9,7 @@ import edu.wpi.first.math.interpolation.InverseInterpolator;
 import org.team4639.robot.subsystems.superstructure.superstructurestate.SuperstructureState;
 
 /** Holds interpolating tree maps for superstructure setpoints on all 4 levels of the reef. */
-public class InterpolatingSuperstructureSetpoints {
+public final class InterpolatingSuperstructureSetpoints {
   /**
    * Maps distance from the desired reef branch and the superstructure state required to place a
    * coral there.

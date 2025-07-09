@@ -26,7 +26,7 @@ import org.littletonrobotics.junction.Logger;
 import org.team4639.lib.io.swerve.ModuleIO;
 import org.team4639.lib.io.swerve.ModuleIOInputsAutoLogged;
 
-public class Module {
+public final class Module {
   private final ModuleIO io;
   private final ModuleIOInputsAutoLogged inputs = new ModuleIOInputsAutoLogged();
   private final int index;

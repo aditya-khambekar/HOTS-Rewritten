@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 /** Holds constants and methods that define our robot-specific interactions with the field. */
-public class FieldUtil {
+public final class FieldUtil {
   // change this to tune how far the align tries to go from the reef face
   protected static final Transform2d fromReef =
       new Transform2d(Units.inchesToMeters(29.25), 0, Rotation2d.k180deg);

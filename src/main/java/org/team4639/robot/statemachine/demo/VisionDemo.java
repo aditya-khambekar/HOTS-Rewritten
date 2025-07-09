@@ -12,7 +12,7 @@ import org.team4639.robot.constants.reefscape.TargetPositions;
 import org.team4639.robot.constants.robot.Controls;
 import org.team4639.robot.statemachine.StatesBase;
 
-public class VisionDemo implements StatesBase {
+public final class VisionDemo implements StatesBase {
   public static State DEMO_ON;
   public static State DEMO_OFF;
 

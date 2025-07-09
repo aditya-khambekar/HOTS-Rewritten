@@ -20,7 +20,7 @@ import org.team4639.robot.subsystems.superstructure.elevator.ElevatorConstants;
 import org.team4639.robot.subsystems.superstructure.superstructurestate.SuperstructureState;
 import org.team4639.robot.subsystems.superstructure.wrist.WristConstants;
 
-public class MotionSuperstructureCommand extends SuperstructureCommandBase {
+public final class MotionSuperstructureCommand extends SuperstructureCommandBase {
   private SuperstructureState desiredState;
   private SuperstructureCommandState commandState;
   private final BooleanSupplier endCondition;

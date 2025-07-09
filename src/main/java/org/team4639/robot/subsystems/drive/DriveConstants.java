@@ -4,7 +4,7 @@ import static edu.wpi.first.units.Units.MetersPerSecond;
 
 import edu.wpi.first.units.measure.LinearVelocity;
 
-public class DriveConstants {
+public final class DriveConstants {
   public static class Params {
     public static final double LINEAR_MULTIPLIER = 2.0;
   }

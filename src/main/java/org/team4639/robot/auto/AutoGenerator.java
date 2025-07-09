@@ -13,7 +13,7 @@ import org.team4639.robot.commands.SuperstructureCommands;
 import org.team4639.robot.constants.reefscape.TargetPositions;
 import org.team4639.robot.robot.Subsystems;
 
-public class AutoGenerator {
+public final class AutoGenerator {
 
   public static enum Location {
     RS,

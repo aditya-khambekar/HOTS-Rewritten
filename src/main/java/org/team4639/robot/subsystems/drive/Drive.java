@@ -66,7 +66,7 @@ import org.team4639.robot.subsystems.vision.Vision;
 import org.team4639.robot.subsystems.vision.VisionPoses;
 import org.team4639.robot.util.LocalADStarAK;
 
-public class Drive extends SubsystemBase implements Vision.VisionConsumer {
+public final class Drive extends SubsystemBase implements Vision.VisionConsumer {
   // TunerConstants doesn't include these org.team4639.frobot.constants, so they are declared
   // locally
   public static final double ODOMETRY_FREQUENCY =

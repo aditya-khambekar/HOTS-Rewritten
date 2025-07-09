@@ -2,7 +2,7 @@ package org.team4639.robot.statemachine.routine;
 
 import org.team4639.lib.statebased.State;
 
-public class SuperstructureMotionRoutine {
+public final class SuperstructureMotionRoutine {
   private static State INTAKE;
   private static State L1_NOINT;
   private static State L2_NOINT;

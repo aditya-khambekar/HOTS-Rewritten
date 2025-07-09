@@ -3,7 +3,7 @@ package org.team4639.robot.constants.robot;
 import org.team4639.lib.annotation.Untuned;
 
 // TODO: get IDS
-public class IDs {
+public final class IDs {
   public static final class Drivetrain {
     // Front Left
     public static final int FRONT_LEFT_DRIVE = 7;

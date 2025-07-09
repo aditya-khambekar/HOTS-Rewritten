@@ -8,7 +8,7 @@ import org.team4639.robot.constants.robot.Controls;
 import org.team4639.robot.robot.Subsystems;
 import org.team4639.robot.subsystems.superstructure.Superstructure;
 
-public class MicroAdjustmentCommand extends SuperstructureCommandBase {
+public final class MicroAdjustmentCommand extends SuperstructureCommandBase {
   private MutDimensionless elevatorSetpoint;
   private Rotation2d wristSetpoint;
 

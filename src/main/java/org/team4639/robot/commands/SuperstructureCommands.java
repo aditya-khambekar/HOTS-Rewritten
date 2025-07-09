@@ -13,7 +13,7 @@ import org.team4639.robot.robot.Subsystems;
 import org.team4639.robot.subsystems.superstructure.Superstructure;
 import org.team4639.robot.subsystems.superstructure.SuperstructureSetpoints;
 
-public class SuperstructureCommands {
+public final class SuperstructureCommands {
   public static Command IDLE;
   public static Command HP;
   public static Command HP_LOWER;

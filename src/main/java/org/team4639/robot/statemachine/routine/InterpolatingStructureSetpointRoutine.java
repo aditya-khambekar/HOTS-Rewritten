@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 import org.team4639.robot.subsystems.superstructure.superstructurestate.SuperstructureState;
 
-public class InterpolatingStructureSetpointRoutine {
+public final class InterpolatingStructureSetpointRoutine {
 
   private static Set<String> entries = new HashSet<>();
 

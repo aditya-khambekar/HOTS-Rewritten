@@ -8,7 +8,7 @@ import edu.wpi.first.units.measure.Distance;
 import org.team4639.lib.tunable.*;
 import org.team4639.lib.unit.UnitConverter;
 
-public class ElevatorConstants {
+public final class ElevatorConstants {
   public static final Distance HEIGHT_MAX = Inches.of(90);
   public static final Distance HEIGHT_MIN = Inches.of(15);
 

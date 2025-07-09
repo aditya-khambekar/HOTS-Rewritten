@@ -8,7 +8,7 @@ import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.wpilibj.RobotBase;
 import org.team4639.robot.robot.Subsystems;
 
-public class HomingCommand extends SuperstructureCommandBase {
+public final class HomingCommand extends SuperstructureCommandBase {
   private Debouncer stoppedDebouncer = new Debouncer(0.5, Debouncer.DebounceType.kRising);
 
   public HomingCommand() {

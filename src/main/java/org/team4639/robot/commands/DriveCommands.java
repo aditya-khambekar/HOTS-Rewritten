@@ -42,7 +42,7 @@ import org.team4639.robot.constants.reefscape.TargetPositions;
 import org.team4639.robot.robot.Subsystems;
 import org.team4639.robot.subsystems.drive.Drive;
 
-public class DriveCommands {
+public final class DriveCommands {
   public static final ProfiledPIDController ALIGN_PID_X =
       new ProfiledPIDController(16, 0, 0, new TrapezoidProfile.Constraints(3, 5));
   public static final ProfiledPIDController ALIGN_PID_Y =

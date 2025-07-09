@@ -31,7 +31,7 @@ import org.team4639.robot.subsystems.superstructure.wrist.WristConstants;
  * Does literally nothing except as a way to impose default commands on the elevator, wrist, and
  * roller and provide helper methods for controlling the superstructure.
  */
-public class Superstructure extends SubsystemBase implements Sendable {
+public final class Superstructure extends SubsystemBase implements Sendable {
   /**
    * Mutates the given AngularVelocity to correspond to intaking a coral
    *

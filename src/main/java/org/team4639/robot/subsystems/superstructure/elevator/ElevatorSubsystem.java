@@ -15,7 +15,7 @@ import java.util.Optional;
 import org.team4639.robot.robot.Subsystems;
 import org.team4639.robot.subsystems.superstructure.elevator.io.ElevatorIO;
 
-public class ElevatorSubsystem extends SubsystemBase {
+public final class ElevatorSubsystem extends SubsystemBase {
   private ElevatorIO io;
   private ElevatorIO.ElevatorIOInputs elevatorIOInputs;
   private Debouncer stoppedDebouncer = new Debouncer(0.5, Debouncer.DebounceType.kRising);

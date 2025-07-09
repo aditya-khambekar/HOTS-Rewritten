@@ -3,7 +3,7 @@ package org.team4639.robot.subsystems.superstructure.superstructurestate;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.units.measure.Dimensionless;
 
-public class MutSuperstructureState extends SuperstructureState {
+public final class MutSuperstructureState extends SuperstructureState {
   private Dimensionless elevatorProportion;
   private Rotation2d wristRotation;
   private Dimensionless wheelDutyCycle;

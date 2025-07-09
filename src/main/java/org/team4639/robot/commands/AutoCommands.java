@@ -15,7 +15,7 @@ import org.team4639.robot.robot.Subsystems;
 import org.team4639.robot.subsystems.superstructure.Superstructure;
 import org.team4639.robot.subsystems.superstructure.SuperstructureSetpoints;
 
-public class AutoCommands {
+public final class AutoCommands {
   public static Command scoreL4(Pose2d pose) {
     return (Subsystems.reefTracker.setCurrentReefPoseCommand(pose))
         .andThen(

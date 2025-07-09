@@ -5,7 +5,7 @@ import static edu.wpi.first.units.Units.*;
 import edu.wpi.first.math.geometry.Rotation2d;
 import org.team4639.robot.subsystems.superstructure.superstructurestate.SuperstructureState;
 
-public class SuperstructureSetpoints {
+public final class SuperstructureSetpoints {
   public static final SuperstructureState IDLE =
       SuperstructureState.of(Value.of(0.04), Rotation2d.fromDegrees(150), Value.zero());
 

@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.team4639.lib.limelight.LimelightHelpers;
 
-public class LimelightFlash extends SubsystemBase {
+public final class LimelightFlash extends SubsystemBase {
   private String name;
   private MutTime timeSinceLastCall = Seconds.mutable(1000);
 

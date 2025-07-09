@@ -7,7 +7,7 @@ import org.team4639.robot.statemachine.competition.ReefscapeStates;
  * This is where we can control which state machine is being used and the teleop and auto start
  * behavior.
  */
-public class StateControls {
+public final class StateControls {
   private static final StatesBase states = ReefscapeStates.getInstance();
 
   /**

@@ -32,7 +32,7 @@ import org.team4639.lib.io.vision.VisionIO;
 import org.team4639.lib.io.vision.VisionIO.PoseObservationType;
 import org.team4639.lib.io.vision.VisionIOInputsAutoLogged;
 
-public class Vision extends SubsystemBase {
+public final class Vision extends SubsystemBase {
   private final VisionConsumer consumer;
   private final VisionIO[] io;
   private final VisionIOInputsAutoLogged[] inputs;

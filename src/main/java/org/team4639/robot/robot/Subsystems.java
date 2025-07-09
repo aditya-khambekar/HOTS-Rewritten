@@ -11,7 +11,7 @@ import org.team4639.robot.subsystems.superstructure.roller.RollerSubsystem;
 import org.team4639.robot.subsystems.superstructure.wrist.WristSubsystem;
 import org.team4639.robot.subsystems.vision.Vision;
 
-public class Subsystems {
+public final class Subsystems {
   public static Drive drive;
   public static Vision vision;
   public static DashboardOutputs dashboardOutputs;

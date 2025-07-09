@@ -20,7 +20,7 @@ import org.team4639.robot.commands.SuperstructureCommands;
  * Contains various field dimensions and useful reference points. All units are in meters and poses
  * have a blue alliance origin.
  */
-public class FieldConstants {
+public final class FieldConstants {
   public static final double fieldLength = Units.inchesToMeters(690.876);
   public static final double fieldWidth = Units.inchesToMeters(317);
   public static final double startingLineX =

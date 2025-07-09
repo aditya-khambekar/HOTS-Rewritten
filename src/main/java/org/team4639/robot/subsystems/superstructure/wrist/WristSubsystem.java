@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.team4639.lib.io.sensor.lasercan.LaserCanIO;
 import org.team4639.robot.subsystems.superstructure.wrist.io.WristIO;
 
-public class WristSubsystem extends SubsystemBase {
+public final class WristSubsystem extends SubsystemBase {
   WristIO.WristIOInputs wristIOInputs;
   org.team4639.lib.io.sensor.lasercan.LaserCanIO.LaserCanIOInputs laserCanIOInputs;
   WristIO WristIO;

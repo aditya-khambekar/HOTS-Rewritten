@@ -6,7 +6,7 @@ import edu.wpi.first.math.system.plant.DCMotor;
 import org.team4639.lib.unit.Units2;
 import org.team4639.robot.subsystems.drive.generated.TunerConstants;
 
-public class RobotConfigGenerator {
+public final class RobotConfigGenerator {
   private static RobotConfig robotConfig =
       new RobotConfig(
           Units2.poundsToKilograms.convert(136.0),

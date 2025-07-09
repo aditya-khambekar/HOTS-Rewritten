@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.team4639.robot.constants.robot.Controls;
 import org.team4639.robot.robot.Subsystems;
 
-public class DashboardOutputs extends SubsystemBase {
+public final class DashboardOutputs extends SubsystemBase {
   public DashboardOutputs() {
     SmartDashboard.putString("Reef Level", "NONE");
   }

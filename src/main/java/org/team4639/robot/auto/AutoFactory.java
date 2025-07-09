@@ -9,7 +9,7 @@ import java.io.IOException;
 import org.json.simple.parser.ParseException;
 import org.team4639.robot.robot.Subsystems;
 
-public class AutoFactory {
+public final class AutoFactory {
   public static Command RS_F_E_D_C() {
     return AutoGenerator.compileAuto(
         AutoGenerator.Location.RS,
