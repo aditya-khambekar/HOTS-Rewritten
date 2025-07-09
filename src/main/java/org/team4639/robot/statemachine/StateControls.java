@@ -1,7 +1,6 @@
 package org.team4639.robot.statemachine;
 
 import org.team4639.lib.statebased.State;
-import org.team4639.lib.statebased.StateFactory;
 import org.team4639.robot.statemachine.competition.ReefscapeStates;
 
 /**
@@ -9,20 +8,21 @@ import org.team4639.robot.statemachine.competition.ReefscapeStates;
  * behavior.
  */
 public class StateControls {
+  private static final StatesBase states = ReefscapeStates.getInstance();
 
   /**
    * There should only be one set of states initialized here. All states intended to be used in the
    * same deployment should be stored in the same class and thus can be initialized in one method.
    */
   public static void initStateMachine() {
-    ReefscapeStates.init();
+    states.init();
   }
 
   public static State getAutoStartState() {
-    return StateFactory.none();
+    return states.getAutoStartState();
   }
 
   public static State getTeleopStartState() {
-    return ReefscapeStates.determineState();
+    return states.getTeleopStartState();
   }
 }

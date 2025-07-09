@@ -3,6 +3,7 @@ package org.team4639.robot.statemachine.competition;
 import static edu.wpi.first.units.Units.Seconds;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import java.util.Objects;
 import org.team4639.lib.statebased.State;
 import org.team4639.lib.statebased.StateFactory;
 import org.team4639.robot.commands.AutoCommands;
@@ -16,36 +17,45 @@ import org.team4639.robot.constants.robot.Controls;
 import org.team4639.robot.modaltriggers.DriveTriggers;
 import org.team4639.robot.robot.RobotContainer;
 import org.team4639.robot.robot.Subsystems;
+import org.team4639.robot.statemachine.StatesBase;
 import org.team4639.robot.subsystems.superstructure.Superstructure;
 import org.team4639.robot.subsystems.superstructure.SuperstructureSetpoints;
 
 /** State machine used in competition */
-public class ReefscapeStates {
-  public static State IDLE;
-  public static State NONE = StateFactory.none();
-  public static State HP_LEFT;
-  public static State HP_RIGHT;
-  public static State HP_NODIR;
-  public static State INTAKE_LOWER;
-  public static State CORAL_STOW;
-  public static State ALIGN_ALGAE;
-  public static State ALGAE_INTAKE;
-  public static State CORAL_SCORE_ALIGN_LEFT;
-  public static State CORAL_SCORE_ALIGN_RIGHT;
-  public static State ALGAE_STOW;
-  public static State ALGAE_SCORE;
-  public static State CHOOSE_CORAL_LEVEL;
-  public static State L1_CORAL_SCORE;
-  public static State L2_CORAL_SCORE;
-  public static State L3_CORAL_SCORE;
-  public static State L4_CORAL_SCORE;
-  public static State HOMING_READY;
-  public static State HOMING;
-  public static State REJECT_CORAL;
-  public static State REJECT_ALGAE;
-  public static State MICROADJUSTMENTS;
+public class ReefscapeStates implements StatesBase {
+  public State IDLE;
+  public State NONE = StateFactory.none();
+  public State HP_LEFT;
+  public State HP_RIGHT;
+  public State HP_NODIR;
+  public State INTAKE_LOWER;
+  public State CORAL_STOW;
+  public State ALIGN_ALGAE;
+  public State ALGAE_INTAKE;
+  public State CORAL_SCORE_ALIGN_LEFT;
+  public State CORAL_SCORE_ALIGN_RIGHT;
+  public State ALGAE_STOW;
+  public State ALGAE_SCORE;
+  public State CHOOSE_CORAL_LEVEL;
+  public State L1_CORAL_SCORE;
+  public State L2_CORAL_SCORE;
+  public State L3_CORAL_SCORE;
+  public State L4_CORAL_SCORE;
+  public State HOMING_READY;
+  public State HOMING;
+  public State REJECT_CORAL;
+  public State REJECT_ALGAE;
+  public State MICROADJUSTMENTS;
 
-  public static void init() {
+  private static volatile StatesBase instance;
+
+  public static synchronized StatesBase getInstance() {
+    return instance = Objects.requireNonNullElseGet(instance, ReefscapeStates::new);
+  }
+
+  private ReefscapeStates() {}
+
+  public void init() {
     IDLE =
         new State("IDLE")
             .whileTrue(SuperstructureCommands.IDLE)
@@ -53,26 +63,20 @@ public class ReefscapeStates {
             .onTrigger(DriveTriggers.closeToLeftStation, () -> HP_LEFT)
             .withEndCondition(Controls.intake, () -> HP_NODIR)
             .withEndCondition(Subsystems.wrist::hasCoral, () -> CORAL_STOW)
-            .withEndCondition(Controls.LEFT_HP, ReefscapeStates::pathFindToHPLeft)
-            .withEndCondition(Controls.RIGHT_HP, ReefscapeStates::pathFindToHPRight)
+            .withEndCondition(Controls.LEFT_HP, this::pathFindToHPLeft)
+            .withEndCondition(Controls.RIGHT_HP, this::pathFindToHPRight)
             .withEndCondition(
-                Controls.REEF_AB,
-                () -> ReefscapeStates.pathFindToReefAlgae(TargetPositions.REEF_AB))
+                Controls.REEF_AB, () -> this.pathFindToReefAlgae(TargetPositions.REEF_AB))
             .withEndCondition(
-                Controls.REEF_CD,
-                () -> ReefscapeStates.pathFindToReefAlgae(TargetPositions.REEF_CD))
+                Controls.REEF_CD, () -> this.pathFindToReefAlgae(TargetPositions.REEF_CD))
             .withEndCondition(
-                Controls.REEF_EF,
-                () -> ReefscapeStates.pathFindToReefAlgae(TargetPositions.REEF_EF))
+                Controls.REEF_EF, () -> this.pathFindToReefAlgae(TargetPositions.REEF_EF))
             .withEndCondition(
-                Controls.REEF_GH,
-                () -> ReefscapeStates.pathFindToReefAlgae(TargetPositions.REEF_GH))
+                Controls.REEF_GH, () -> this.pathFindToReefAlgae(TargetPositions.REEF_GH))
             .withEndCondition(
-                Controls.REEF_IJ,
-                () -> ReefscapeStates.pathFindToReefAlgae(TargetPositions.REEF_IJ))
+                Controls.REEF_IJ, () -> this.pathFindToReefAlgae(TargetPositions.REEF_IJ))
             .withEndCondition(
-                Controls.REEF_KL,
-                () -> ReefscapeStates.pathFindToReefAlgae(TargetPositions.REEF_KL));
+                Controls.REEF_KL, () -> this.pathFindToReefAlgae(TargetPositions.REEF_KL));
 
     HP_LEFT =
         new State("HP_LEFT")
@@ -132,7 +136,7 @@ public class ReefscapeStates {
                 SuperstructureCommands.ELEVATOR_READY,
                 Subsystems.dashboardOutputs.displayUpcomingReefLevel(),
                 LEDCommands.aligning())
-            .onTrigger(Controls.alignRight, () -> ReefscapeStates.CORAL_SCORE_ALIGN_RIGHT)
+            .onTrigger(Controls.alignRight, () -> this.CORAL_SCORE_ALIGN_RIGHT)
             .onTrigger(Controls.REEF_A, () -> pathFindToReef(TargetPositions.REEF_A))
             .onTrigger(Controls.REEF_B, () -> pathFindToReef(TargetPositions.REEF_B))
             .onTrigger(Controls.REEF_C, () -> pathFindToReef(TargetPositions.REEF_C))
@@ -156,7 +160,7 @@ public class ReefscapeStates {
                 SuperstructureCommands.ELEVATOR_READY,
                 Subsystems.dashboardOutputs.displayUpcomingReefLevel(),
                 LEDCommands.aligning())
-            .onTrigger(Controls.alignLeft, () -> ReefscapeStates.CORAL_SCORE_ALIGN_LEFT)
+            .onTrigger(Controls.alignLeft, () -> this.CORAL_SCORE_ALIGN_LEFT)
             .onTrigger(Controls.REEF_A, () -> pathFindToReef(TargetPositions.REEF_A))
             .onTrigger(Controls.REEF_B, () -> pathFindToReef(TargetPositions.REEF_B))
             .onTrigger(Controls.REEF_C, () -> pathFindToReef(TargetPositions.REEF_C))
@@ -273,7 +277,19 @@ public class ReefscapeStates {
             .onEmergency(() -> CORAL_STOW);
   }
 
-  public static State pathFindToReef(TargetPositions reef) {
+  /** Gets the state at the start of auto */
+  @Override
+  public State getAutoStartState() {
+    return StateFactory.none();
+  }
+
+  /** Gets the state at the start of teleop */
+  @Override
+  public State getTeleopStartState() {
+    return determineState();
+  }
+
+  public State pathFindToReef(TargetPositions reef) {
     var pose = reef.getPose();
     return new State("PATHFIND_TO_REEF")
         .withDeadline(DriveCommands.pathFindToReef(pose), () -> CHOOSE_CORAL_LEVEL)
@@ -284,14 +300,14 @@ public class ReefscapeStates {
         .onEmergency(() -> CORAL_STOW);
   }
 
-  public static State pathFindToHPLeft() {
+  public State pathFindToHPLeft() {
     return new State("PATHFIND_TO_HP_LEFT")
         .withDeadline(DriveCommands.pathFindToHP(TargetPositions.HP_LEFT.getPose()), () -> HP_LEFT)
         .whileTrue(SuperstructureCommands.HP)
         .onEmergency(() -> IDLE);
   }
 
-  public static State pathFindToHPRight() {
+  public State pathFindToHPRight() {
     return new State("PATHFIND_TO_HP_RIGHT")
         .withDeadline(
             DriveCommands.pathFindToHP(TargetPositions.HP_RIGHT.getPose()), () -> HP_RIGHT)
@@ -299,14 +315,14 @@ public class ReefscapeStates {
         .onEmergency(() -> IDLE);
   }
 
-  public static State pathFindToReefAlgae(TargetPositions reefCenter) {
+  public State pathFindToReefAlgae(TargetPositions reefCenter) {
     return new State("PATHFIND_TO_REEF_CENTER")
         .withDeadline(DriveCommands.pathFindToReefCenter(reefCenter.getPose()), () -> ALGAE_INTAKE)
         .whileTrue(SuperstructureCommands.algaeIntake(reefCenter.getPose()))
         .onEmergency(() -> IDLE);
   }
 
-  public static State determineState() {
+  public State determineState() {
     return switch (SmartDashboard.getString("Superstructure State", "")) {
       case "IDLE" -> IDLE;
       case "HP" -> HP_NODIR;

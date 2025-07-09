@@ -36,7 +36,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
-import org.team4639.robot.commands.pathfinding.TeleopPathCommands;
 import org.team4639.robot.constants.reefscape.FieldPoseUtil;
 import org.team4639.robot.constants.reefscape.FieldUtil;
 import org.team4639.robot.constants.reefscape.TargetPositions;

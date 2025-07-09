@@ -1,4 +1,4 @@
-package org.team4639.robot.commands.pathfinding;
+package org.team4639.robot.commands;
 
 import static edu.wpi.first.units.Units.Meters;
 import static edu.wpi.first.units.Units.MetersPerSecond;
@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.function.Supplier;
 import org.json.simple.parser.ParseException;
 import org.team4639.lib.util.PoseUtil;
-import org.team4639.robot.commands.DriveCommands;
 import org.team4639.robot.constants.reefscape.TargetPositions;
 import org.team4639.robot.robot.Subsystems;
 

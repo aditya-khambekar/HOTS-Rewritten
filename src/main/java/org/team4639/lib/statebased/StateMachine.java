@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Commands;
 import java.util.Objects;
 import org.team4639.robot.constants.robot.Controls;
-import org.team4639.robot.statemachine.competition.ReefscapeStates;
 
 public class StateMachine {
   private static volatile StateMachine instance;
@@ -21,7 +20,7 @@ public class StateMachine {
   private final MutTime timeOfLastStateChange;
 
   private StateMachine() {
-    state = ReefscapeStates.NONE;
+    state = StateFactory.none();
     timeOfLastStateChange = Seconds.mutable(0);
     Controls.emergency.onTrue(Commands.runOnce(() -> setState(state.onEmergency.get())));
   }
