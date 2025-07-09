@@ -7,8 +7,6 @@
 
 package org.team4639.robot.constants.reefscape;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.math.geometry.*;
 import edu.wpi.first.math.util.Units;
@@ -47,17 +45,9 @@ public class FieldConstants {
       } catch (IOException e) {
         throw new RuntimeException(e);
       }
-
-      try {
-        layoutString = new ObjectMapper().writeValueAsString(layout);
-      } catch (JsonProcessingException e) {
-        throw new RuntimeException(
-            "Failed to serialize AprilTag layout JSON " + toString() + "for Northstar");
-      }
     }
 
     private final AprilTagFieldLayout layout;
-    private final String layoutString;
 
     public AprilTagFieldLayout getLayout() {
       return layout;
@@ -82,7 +72,7 @@ public class FieldConstants {
     public static final double shallowHeight = Units.inchesToMeters(30.125);
   }
 
-  public static class CoralStation {
+  public static class HPStation {
     public static final Pose2d leftCenterFace =
         new Pose2d(
             Units.inchesToMeters(33.526),
@@ -121,7 +111,7 @@ public class FieldConstants {
 
   public static final double aprilTagWidth = Units.inchesToMeters(6.50);
   public static final int aprilTagCount = 22;
-  public static final AprilTagLayoutType defaultAprilTagType = AprilTagLayoutType.NO_BARGE;
+  public static final AprilTagLayoutType defaultAprilTagType = AprilTagLayoutType.OFFICIAL;
 
   public static class Reef {
     public static final double faceLength = Units.inchesToMeters(36.792600);
@@ -199,16 +189,6 @@ public class FieldConstants {
     }
   }
 
-  public static class StagingPositions {
-    // Measured from the center of the ice cream
-    public static final Pose2d leftIceCream =
-        new Pose2d(Units.inchesToMeters(48), Units.inchesToMeters(230.5), new Rotation2d());
-    public static final Pose2d middleIceCream =
-        new Pose2d(Units.inchesToMeters(48), Units.inchesToMeters(158.5), new Rotation2d());
-    public static final Pose2d rightIceCream =
-        new Pose2d(Units.inchesToMeters(48), Units.inchesToMeters(86.5), new Rotation2d());
-  }
-
   public enum ReefHeight {
     L4(Units.inchesToMeters(72), -90),
     L3(Units.inchesToMeters(47.625), -35),
@@ -223,15 +203,6 @@ public class FieldConstants {
     public final double height;
     public final double pitch;
   }
-
-  // change this to tune how far the align tries to go from the reef face
-  static Transform2d fromReef = new Transform2d(Units.inchesToMeters(29.25), 0, Rotation2d.k180deg);
-  static Transform2d fromProcessor =
-      new Transform2d(Units.inchesToMeters(25), 0, Rotation2d.k180deg);
-  // change this to tune how far the align tries to go from the intake station
-  static Transform2d fromCoralStation =
-      new Transform2d(Units.inchesToMeters(16), 0, Rotation2d.kZero);
-  static Transform2d fromBarge = new Transform2d(Units.inchesToMeters(-39), 0, Rotation2d.kZero);
 
   public static Map<Pose2d, Command> ReefCenterPoseToAlgaeLocation = new HashMap<>();
 
@@ -260,22 +231,5 @@ public class FieldConstants {
     x.put(TargetPositions.REEF_KL.Pose, SuperstructureCommands.l2Algae());
 
     return x;
-  }
-
-  public static Pose2d getClosestBranchPosition(Pose2d currentPose) {
-    List<Pose2d> branches = new ArrayList<>();
-    for (Map<ReefLevel, Pose2d> x : Reef.branchPositions2d) {
-      branches.addAll(x.values());
-    }
-
-    return currentPose.nearest(branches);
-  }
-
-  public static Rotation2d getRotationToClosestBranchPosition(Pose2d currentPose) {
-    var closestBranchPosition = getClosestBranchPosition(currentPose);
-    return Rotation2d.fromRadians(
-        Math.atan2(
-            closestBranchPosition.getY() - currentPose.getY(),
-            closestBranchPosition.getX() - currentPose.getX()));
   }
 }

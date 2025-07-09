@@ -36,9 +36,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
-import org.team4639.robot.commands.pathfinding.TeleopPathGenerator;
-import org.team4639.robot.constants.reefscape.FieldConstants;
-import org.team4639.robot.constants.reefscape.ReefscapePoseUtil;
+import org.team4639.robot.commands.pathfinding.TeleopPathCommands;
+import org.team4639.robot.constants.reefscape.FieldPoseUtil;
+import org.team4639.robot.constants.reefscape.FieldUtil;
 import org.team4639.robot.constants.reefscape.TargetPositions;
 import org.team4639.robot.robot.Subsystems;
 import org.team4639.robot.subsystems.drive.Drive;
@@ -322,7 +322,7 @@ public class DriveCommands {
           Pose2d drivePose = drive.getPose();
 
           Pose2d nearestReefPose =
-              ReefscapePoseUtil.ReefRelativeLeftOf(
+              FieldPoseUtil.ReefRelativeLeftOf(
                   drivePose.nearest(
                       List.of(
                           TargetPositions.REEF_AB.getPose(),
@@ -342,7 +342,7 @@ public class DriveCommands {
           Pose2d drivePose = drive.getPose();
 
           Pose2d nearestReefPose =
-              ReefscapePoseUtil.ReefRelativeRightOf(
+              FieldPoseUtil.ReefRelativeRightOf(
                   drivePose.nearest(
                       List.of(
                           TargetPositions.REEF_AB.getPose(),
@@ -422,8 +422,7 @@ public class DriveCommands {
               .run(
                   () -> {
                     headingController.setSetpoint(
-                        FieldConstants.getRotationToClosestBranchPosition(drive.getPose())
-                            .getRadians());
+                        FieldUtil.getRotationToClosestBranchPosition(drive.getPose()).getRadians());
                     drive.runVelocity(
                         ChassisSpeeds.fromFieldRelativeSpeeds(
                             new ChassisSpeeds(
@@ -456,7 +455,7 @@ public class DriveCommands {
   }
 
   public static Command pathFindToReef(Pose2d pose) {
-    return drive.defer(() -> TeleopPathGenerator.pathfindToReef(drive.getPose(), pose));
+    return drive.defer(() -> TeleopPathCommands.pathfindToReef(drive.getPose(), pose));
   }
 
   /**
@@ -464,7 +463,7 @@ public class DriveCommands {
    * more semantically desirable
    */
   public static Command pathFindToHP(Pose2d pose) {
-    return drive.defer(() -> TeleopPathGenerator.pathfindTo(drive.getPose(), pose));
+    return drive.defer(() -> TeleopPathCommands.pathfindTo(drive.getPose(), pose));
   }
 
   /**
@@ -472,7 +471,7 @@ public class DriveCommands {
    * semantically desirable
    */
   public static Command pathFindToReefCenter(Pose2d pose) {
-    return drive.defer(() -> TeleopPathGenerator.pathfindTo(drive.getPose(), pose));
+    return drive.defer(() -> TeleopPathCommands.pathfindTo(drive.getPose(), pose));
   }
 
   public static Command stopWithX() {

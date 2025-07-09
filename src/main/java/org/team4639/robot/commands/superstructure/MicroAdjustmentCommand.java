@@ -44,7 +44,7 @@ public class MicroAdjustmentCommand extends SuperstructureCommandBase {
   }
 
   @Override
-  public SuperstructureCommandState getState() {
+  public SuperstructureCommandState getCommandState() {
     return SuperstructureCommandState.MICROADJUSTMENTS;
   }
 

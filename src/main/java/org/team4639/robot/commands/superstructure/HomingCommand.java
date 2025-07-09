@@ -36,7 +36,7 @@ public class HomingCommand extends SuperstructureCommandBase {
   }
 
   @Override
-  public SuperstructureCommandState getState() {
+  public SuperstructureCommandState getCommandState() {
     return SuperstructureCommandState.HOMING;
   }
 

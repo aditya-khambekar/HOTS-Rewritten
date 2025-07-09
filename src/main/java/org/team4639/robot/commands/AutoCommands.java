@@ -9,7 +9,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import java.util.List;
-import org.team4639.robot.commands.superstructure.SuperstructureCommand;
+import org.team4639.robot.commands.superstructure.MotionSuperstructureCommand;
 import org.team4639.robot.constants.reefscape.TargetPositions;
 import org.team4639.robot.robot.Subsystems;
 import org.team4639.robot.subsystems.superstructure.Superstructure;
@@ -43,7 +43,7 @@ public class AutoCommands {
   }
 
   public static Command elevatorReady() {
-    return new SuperstructureCommand(
+    return new MotionSuperstructureCommand(
             SuperstructureSetpoints.AUTO_ELEVATOR_L4_READY, "AUTO_ELEVATOR_L4_READY")
         .flashOnDone();
   }

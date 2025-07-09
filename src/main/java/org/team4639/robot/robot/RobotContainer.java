@@ -109,11 +109,15 @@ public class RobotContainer {
                     VisionConstants.cameraLeftName, Subsystems.drive::getRotation));
 
         Subsystems.elevator =
-            new ElevatorSubsystem(new ElevatorIOTalonFX(IDs.ELEVATOR_LEFT, IDs.ELEVATOR_RIGHT));
+            new ElevatorSubsystem(
+                new ElevatorIOTalonFX(
+                    IDs.Superstructure.ELEVATOR_LEFT_FOLLOWER,
+                    IDs.Superstructure.ELEVATOR_RIGHT_LEADER));
         Subsystems.wrist =
             new WristSubsystem(
-                new WristIOSparkFlex(IDs.WRIST), new LaserCanIOHardware(IDs.WRIST_LASERCAN));
-        Subsystems.roller = new RollerSubsystem(new RollerIOSparkFlex(IDs.ROLLER));
+                new WristIOSparkFlex(IDs.Superstructure.WRIST),
+                new LaserCanIOHardware(IDs.Superstructure.WRIST_LASERCAN));
+        Subsystems.roller = new RollerSubsystem(new RollerIOSparkFlex(IDs.Superstructure.ROLLER));
         break;
 
       case SIM:
@@ -146,15 +150,18 @@ public class RobotContainer {
                     () -> AllianceFlipUtil.flipIfRedAlliance(Subsystems.drive.getPose())));
         SmartDashboard.putBoolean("Has Coral", false);
         Subsystems.elevator =
-            new ElevatorSubsystem(new ElevatorIOTalonFXSim(IDs.ELEVATOR_LEFT, IDs.ELEVATOR_RIGHT));
+            new ElevatorSubsystem(
+                new ElevatorIOTalonFXSim(
+                    IDs.Superstructure.ELEVATOR_LEFT_FOLLOWER,
+                    IDs.Superstructure.ELEVATOR_RIGHT_LEADER));
         Subsystems.wrist =
             new WristSubsystem(
-                new WristIOSim(IDs.WRIST),
+                new WristIOSim(IDs.Superstructure.WRIST),
                 new LaserCanIOSim(
                     () ->
                         Millimeter.of(
                             SmartDashboard.getBoolean("Has Coral", true) ? 1 : Integer.MAX_VALUE)));
-        Subsystems.roller = new RollerSubsystem(new RollerIOSim(IDs.ROLLER));
+        Subsystems.roller = new RollerSubsystem(new RollerIOSim(IDs.Superstructure.ROLLER));
         break;
 
       default:
@@ -223,7 +230,6 @@ public class RobotContainer {
     VisionUpdates.addConsumer(VisionPoses.frontCamerasPoseEstimate);
     SuperstructureCommands.initCommands();
     FieldConstants.init();
-    FieldConstants.initAlgaeLocations();
     Subsystems.reefTracker.resetReefTracker();
   }
 

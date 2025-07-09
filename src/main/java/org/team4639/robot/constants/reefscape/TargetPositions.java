@@ -5,41 +5,39 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import org.team4639.lib.util.AllianceFlipUtil;
 
 public enum TargetPositions {
-  REEF_AB(FieldConstants.Reef.centerFaces[0].transformBy((FieldConstants.fromReef))),
-  REEF_CD(FieldConstants.Reef.centerFaces[5].transformBy((FieldConstants.fromReef))),
-  REEF_EF(FieldConstants.Reef.centerFaces[4].transformBy((FieldConstants.fromReef))),
-  REEF_GH(FieldConstants.Reef.centerFaces[3].transformBy((FieldConstants.fromReef))),
-  REEF_IJ(FieldConstants.Reef.centerFaces[2].transformBy((FieldConstants.fromReef))),
-  REEF_KL(FieldConstants.Reef.centerFaces[1].transformBy((FieldConstants.fromReef))),
+  REEF_AB(FieldConstants.Reef.centerFaces[0].transformBy((FieldUtil.fromReef))),
+  REEF_CD(FieldConstants.Reef.centerFaces[5].transformBy((FieldUtil.fromReef))),
+  REEF_EF(FieldConstants.Reef.centerFaces[4].transformBy((FieldUtil.fromReef))),
+  REEF_GH(FieldConstants.Reef.centerFaces[3].transformBy((FieldUtil.fromReef))),
+  REEF_IJ(FieldConstants.Reef.centerFaces[2].transformBy((FieldUtil.fromReef))),
+  REEF_KL(FieldConstants.Reef.centerFaces[1].transformBy((FieldUtil.fromReef))),
 
-  REEF_A(ReefscapePoseUtil.ReefRelativeLeftOf(REEF_AB.getPose())),
-  REEF_B(ReefscapePoseUtil.ReefRelativeRightOf(REEF_AB.getPose())),
-  REEF_C(ReefscapePoseUtil.ReefRelativeLeftOf(REEF_CD.getPose())),
-  REEF_D(ReefscapePoseUtil.ReefRelativeRightOf(REEF_CD.getPose())),
-  REEF_E(ReefscapePoseUtil.ReefRelativeLeftOf(REEF_EF.getPose())),
-  REEF_F(ReefscapePoseUtil.ReefRelativeRightOf(REEF_EF.getPose())),
-  REEF_G(ReefscapePoseUtil.ReefRelativeLeftOf(REEF_GH.getPose())),
-  REEF_H(ReefscapePoseUtil.ReefRelativeRightOf(REEF_GH.getPose())),
-  REEF_I(ReefscapePoseUtil.ReefRelativeLeftOf(REEF_IJ.getPose())),
-  REEF_J(ReefscapePoseUtil.ReefRelativeRightOf(REEF_IJ.getPose())),
-  REEF_K(ReefscapePoseUtil.ReefRelativeLeftOf(REEF_KL.getPose())),
-  REEF_L(ReefscapePoseUtil.ReefRelativeRightOf(REEF_KL.getPose())),
+  REEF_A(FieldPoseUtil.ReefRelativeLeftOf(REEF_AB.getPose())),
+  REEF_B(FieldPoseUtil.ReefRelativeRightOf(REEF_AB.getPose())),
+  REEF_C(FieldPoseUtil.ReefRelativeLeftOf(REEF_CD.getPose())),
+  REEF_D(FieldPoseUtil.ReefRelativeRightOf(REEF_CD.getPose())),
+  REEF_E(FieldPoseUtil.ReefRelativeLeftOf(REEF_EF.getPose())),
+  REEF_F(FieldPoseUtil.ReefRelativeRightOf(REEF_EF.getPose())),
+  REEF_G(FieldPoseUtil.ReefRelativeLeftOf(REEF_GH.getPose())),
+  REEF_H(FieldPoseUtil.ReefRelativeRightOf(REEF_GH.getPose())),
+  REEF_I(FieldPoseUtil.ReefRelativeLeftOf(REEF_IJ.getPose())),
+  REEF_J(FieldPoseUtil.ReefRelativeRightOf(REEF_IJ.getPose())),
+  REEF_K(FieldPoseUtil.ReefRelativeLeftOf(REEF_KL.getPose())),
+  REEF_L(FieldPoseUtil.ReefRelativeRightOf(REEF_KL.getPose())),
 
-  PROCESSOR(FieldConstants.Processor.centerFace.transformBy(FieldConstants.fromProcessor)),
+  PROCESSOR(FieldConstants.Processor.centerFace.transformBy(FieldUtil.fromProcessor)),
 
-  HP_LEFT(FieldConstants.CoralStation.leftCenterFace.transformBy(FieldConstants.fromCoralStation)),
-  HP_RIGHT(
-      FieldConstants.CoralStation.rightCenterFace.transformBy(FieldConstants.fromCoralStation)),
+  HP_LEFT(FieldConstants.HPStation.leftCenterFace.transformBy(FieldUtil.fromCoralStation)),
+  HP_RIGHT(FieldConstants.HPStation.rightCenterFace.transformBy(FieldUtil.fromCoralStation)),
 
   BARGE_FARCAGE(
-      new Pose2d(FieldConstants.Barge.farCage, Rotation2d.kZero)
-          .transformBy(FieldConstants.fromBarge)),
+      new Pose2d(FieldConstants.Barge.farCage, Rotation2d.kZero).transformBy(FieldUtil.fromBarge)),
   BARGE_MIDDLECAGE(
       new Pose2d(FieldConstants.Barge.middleCage, Rotation2d.kZero)
-          .transformBy(FieldConstants.fromBarge)),
+          .transformBy(FieldUtil.fromBarge)),
   BARGE_CLOSECAGE(
       new Pose2d(FieldConstants.Barge.closeCage, Rotation2d.kZero)
-          .transformBy(FieldConstants.fromBarge)),
+          .transformBy(FieldUtil.fromBarge)),
 
   // Opponent positions
   OPP_REEF_AB(AllianceFlipUtil.flip(REEF_AB.Pose)),
@@ -78,10 +76,7 @@ public enum TargetPositions {
   }
 
   TargetPositions(Pose2d pose) {
-    this(
-        pose,
-        ReefscapePoseUtil.ReefRelativeLeftOf(pose),
-        ReefscapePoseUtil.ReefRelativeRightOf(pose));
+    this(pose, FieldPoseUtil.ReefRelativeLeftOf(pose), FieldPoseUtil.ReefRelativeRightOf(pose));
   }
 
   public Pose2d getPose() {

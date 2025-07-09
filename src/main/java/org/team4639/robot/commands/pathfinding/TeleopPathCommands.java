@@ -12,17 +12,22 @@ import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.util.FileVersionException;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 import org.json.simple.parser.ParseException;
 import org.team4639.lib.util.PoseUtil;
 import org.team4639.robot.commands.DriveCommands;
+import org.team4639.robot.constants.reefscape.TargetPositions;
 import org.team4639.robot.robot.Subsystems;
 
-public class TeleopPathGenerator {
+// TODO: there is probably a better way to do this
+public class TeleopPathCommands {
   public static Command pathfindToReef(Pose2d startingPose, Pose2d endingPose) {
     var starting = ReefPathLocations.getClosest(startingPose);
     var ending = ReefPathLocations.getClosest(endingPose);
@@ -137,5 +142,92 @@ public class TeleopPathGenerator {
     }
     System.out.println("Shit fucked up");
     return List.of();
+  }
+
+  public static class ReefPathLocations {
+    public static final ReefPathLocations AB =
+        new ReefPathLocations(
+            TargetPositions.REEF_AB,
+            TargetPositions.REEF_A,
+            TargetPositions.REEF_B,
+            () -> TeleopPathCommands.ReefPathLocations.KL,
+            () -> TeleopPathCommands.ReefPathLocations.CD,
+            "AB");
+    public static final ReefPathLocations CD =
+        new ReefPathLocations(
+            TargetPositions.REEF_CD,
+            TargetPositions.REEF_C,
+            TargetPositions.REEF_D,
+            () -> TeleopPathCommands.ReefPathLocations.AB,
+            () -> TeleopPathCommands.ReefPathLocations.EF,
+            "CD");
+    public static final ReefPathLocations EF =
+        new ReefPathLocations(
+            TargetPositions.REEF_EF,
+            TargetPositions.REEF_E,
+            TargetPositions.REEF_F,
+            () -> TeleopPathCommands.ReefPathLocations.CD,
+            () -> TeleopPathCommands.ReefPathLocations.GH,
+            "EF");
+    public static final ReefPathLocations GH =
+        new ReefPathLocations(
+            TargetPositions.REEF_GH,
+            TargetPositions.REEF_G,
+            TargetPositions.REEF_H,
+            () -> TeleopPathCommands.ReefPathLocations.EF,
+            () -> TeleopPathCommands.ReefPathLocations.IJ,
+            "GH");
+    public static final ReefPathLocations IJ =
+        new ReefPathLocations(
+            TargetPositions.REEF_IJ,
+            TargetPositions.REEF_I,
+            TargetPositions.REEF_J,
+            () -> TeleopPathCommands.ReefPathLocations.GH,
+            () -> TeleopPathCommands.ReefPathLocations.KL,
+            "IJ");
+    public static final ReefPathLocations KL =
+        new ReefPathLocations(
+            TargetPositions.REEF_KL,
+            TargetPositions.REEF_K,
+            TargetPositions.REEF_L,
+            () -> TeleopPathCommands.ReefPathLocations.IJ,
+            () -> TeleopPathCommands.ReefPathLocations.AB,
+            "KL");
+
+    public static List<ReefPathLocations> entries = List.of(AB, CD, EF, GH, IJ, KL);
+
+    protected TargetPositions center;
+    protected TargetPositions left;
+    protected TargetPositions right;
+    protected Supplier<ReefPathLocations> rightReef;
+    protected Supplier<ReefPathLocations> leftReef;
+    protected String name;
+
+    public ReefPathLocations(
+        TargetPositions center,
+        TargetPositions left,
+        TargetPositions right,
+        Supplier<ReefPathLocations> leftReef,
+        Supplier<ReefPathLocations> rightReef,
+        String name) {
+      this.center = center;
+      this.left = left;
+      this.right = right;
+      this.leftReef = leftReef;
+      this.rightReef = rightReef;
+      this.name = name;
+    }
+
+    public Pose2d getPoseOfStartPath() {
+      return center.getPose().transformBy(new Transform2d(-0.9, 0, Rotation2d.kZero));
+    }
+
+    public static ReefPathLocations getClosest(Pose2d pose) {
+      var nearestPose = pose.nearest(entries.stream().map(x -> x.getPoseOfStartPath()).toList());
+      return entries.stream()
+          .filter(x -> x.getPoseOfStartPath().equals(nearestPose))
+          .findAny()
+          .get();
+    }
   }
 }

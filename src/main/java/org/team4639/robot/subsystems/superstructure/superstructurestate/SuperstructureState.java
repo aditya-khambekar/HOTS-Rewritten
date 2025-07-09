@@ -1,7 +1,5 @@
 package org.team4639.robot.subsystems.superstructure.superstructurestate;
 
-import static edu.wpi.first.units.Units.Value;
-
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.units.measure.Dimensionless;
 

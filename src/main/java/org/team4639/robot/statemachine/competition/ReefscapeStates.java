@@ -10,7 +10,7 @@ import org.team4639.robot.commands.DriveCommands;
 import org.team4639.robot.commands.LEDCommands;
 import org.team4639.robot.commands.SuperstructureCommands;
 import org.team4639.robot.commands.superstructure.MicroAdjustmentCommand;
-import org.team4639.robot.constants.reefscape.FieldConstants;
+import org.team4639.robot.constants.reefscape.FieldUtil;
 import org.team4639.robot.constants.reefscape.TargetPositions;
 import org.team4639.robot.constants.robot.Controls;
 import org.team4639.robot.modaltriggers.DriveTriggers;
@@ -19,9 +19,7 @@ import org.team4639.robot.robot.Subsystems;
 import org.team4639.robot.subsystems.superstructure.Superstructure;
 import org.team4639.robot.subsystems.superstructure.SuperstructureSetpoints;
 
-/**
- * State machine used in competition
- */
+/** State machine used in competition */
 public class ReefscapeStates {
   public static State IDLE;
   public static State NONE = StateFactory.none();
@@ -108,9 +106,7 @@ public class ReefscapeStates {
                 DriveCommands.joystickDriveAtAngle(
                     () -> -RobotContainer.driver.getLeftY(),
                     () -> -RobotContainer.driver.getLeftX(),
-                    () ->
-                        FieldConstants.getRotationToClosestBranchPosition(
-                            Subsystems.drive.getPose())),
+                    () -> FieldUtil.getRotationToClosestBranchPosition(Subsystems.drive.getPose())),
                 LEDCommands.hasCoral())
             .onTrigger(Controls.alignLeft, () -> CORAL_SCORE_ALIGN_LEFT)
             .onTrigger(Controls.alignRight, () -> CORAL_SCORE_ALIGN_RIGHT)

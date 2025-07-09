@@ -20,9 +20,9 @@ import org.team4639.robot.subsystems.superstructure.elevator.ElevatorConstants;
 import org.team4639.robot.subsystems.superstructure.superstructurestate.SuperstructureState;
 import org.team4639.robot.subsystems.superstructure.wrist.WristConstants;
 
-public class SuperstructureCommand extends SuperstructureCommandBase {
-  private SuperstructureState setpoint;
-  private SuperstructureCommandState state;
+public class MotionSuperstructureCommand extends SuperstructureCommandBase {
+  private SuperstructureState desiredState;
+  private SuperstructureCommandState commandState;
   private final BooleanSupplier endCondition;
   private Dimensionless holdPosition;
   private final MutTime timeOfExecutingAction;
@@ -33,17 +33,17 @@ public class SuperstructureCommand extends SuperstructureCommandBase {
   /**
    * Commands the superstructure to go to a specific state
    *
-   * @param setpoint the setpoint that the superstructure is commanded to
+   * @param desiredState the setpoint that the superstructure is commanded to
    * @param endCondition the condition to end this command. Ex. has coral, doesn't have coral, or
    *     can always return false for a command that doesn't end by itself. This is checked only once
    *     the command has reached the EXECUTING_ACTION state.
    */
-  public SuperstructureCommand(
-      SuperstructureState setpoint, BooleanSupplier endCondition, String name) {
+  public MotionSuperstructureCommand(
+      SuperstructureState desiredState, BooleanSupplier endCondition, String name) {
     addRequirements(
         Subsystems.elevator, Subsystems.wrist, Subsystems.roller, Subsystems.superstructure);
-    this.setpoint = setpoint;
-    this.state = SuperstructureCommandState.TO_SAFE_ANGLE;
+    this.desiredState = desiredState;
+    this.commandState = SuperstructureCommandState.TO_SAFE_ANGLE;
     this.endCondition = endCondition;
     holdPosition = Value.zero();
     timeOfExecutingAction = Seconds.mutable(0);
@@ -51,42 +51,42 @@ public class SuperstructureCommand extends SuperstructureCommandBase {
     setName(name);
   }
 
-  public SuperstructureCommand(SuperstructureState setpoint, String name) {
-    this(setpoint, () -> false, name);
+  public MotionSuperstructureCommand(SuperstructureState desiredState, String name) {
+    this(desiredState, () -> false, name);
   }
 
   @Override
   public void initialize() {
-    setState(SuperstructureCommandState.TO_SAFE_ANGLE);
-    if (Superstructure.atPosition(Superstructure.getSuperstructureState(), setpoint))
-      setState(SuperstructureCommandState.EXECUTING_ACTION);
+    setCommandState(SuperstructureCommandState.TO_SAFE_ANGLE);
+    if (Superstructure.atPosition(Superstructure.getSuperstructureState(), desiredState))
+      setCommandState(SuperstructureCommandState.EXECUTING_ACTION);
   }
 
   @Override
   public void execute() {
     super.execute();
     SmartDashboard.putBoolean("Elevator At Setpoint", elevatorAtSetpoint());
-    if (Superstructure.atPosition(Superstructure.getSuperstructureState(), setpoint))
-      setState(SuperstructureCommandState.EXECUTING_ACTION);
-    switch (state) {
+    if (Superstructure.atPosition(Superstructure.getSuperstructureState(), desiredState))
+      setCommandState(SuperstructureCommandState.EXECUTING_ACTION);
+    switch (commandState) {
       case TO_SAFE_ANGLE -> {
-        if (elevatorAtSetpoint()) setState(SuperstructureCommandState.TO_WRIST_SETPOINT);
+        if (elevatorAtSetpoint()) setCommandState(SuperstructureCommandState.TO_WRIST_SETPOINT);
         if (Superstructure.isWristAtSafeAngle())
-          setState(SuperstructureCommandState.TO_ELEVATOR_SETPOINT);
+          setCommandState(SuperstructureCommandState.TO_ELEVATOR_SETPOINT);
         if (RotationUtil.boundedBy(
                 Subsystems.wrist.getWristAngle(),
                 WristConstants.SAFE_TRANSITION_RANGE_INTERIOR.getFirst(),
                 WristConstants.SAFE_TRANSITION_RANGE_INTERIOR.getSecond())
             && RotationUtil.boundedBy(
-                setpoint.getWristRotation(),
+                desiredState.getWristRotation(),
                 WristConstants.SAFE_TRANSITION_RANGE_INTERIOR.getFirst(),
                 WristConstants.SAFE_TRANSITION_RANGE_INTERIOR.getSecond()))
-          setState(SuperstructureCommandState.TO_ELEVATOR_SETPOINT);
+          setCommandState(SuperstructureCommandState.TO_ELEVATOR_SETPOINT);
         Pair<Rotation2d, Rotation2d> safeTransitionRange =
             Superstructure.getEffectiveExteriorSafeZone();
         Subsystems.wrist.setWristSetpoint(
             RotationUtil.nearest(
-                setpoint.getWristRotation(),
+                desiredState.getWristRotation(),
                 RotationUtil.min(safeTransitionRange.getFirst(), safeTransitionRange.getSecond())
                     .plus(Rotation2d.fromDegrees(2)),
                 RotationUtil.max(safeTransitionRange.getFirst(), safeTransitionRange.getSecond())
@@ -95,52 +95,52 @@ public class SuperstructureCommand extends SuperstructureCommandBase {
         Subsystems.roller.setVelocity(RotationsPerSecond.zero());
       }
       case TO_ELEVATOR_SETPOINT -> {
-        if (elevatorAtSetpoint()) setState(SuperstructureCommandState.TO_WRIST_SETPOINT);
+        if (elevatorAtSetpoint()) setCommandState(SuperstructureCommandState.TO_WRIST_SETPOINT);
         if (Superstructure.isWristAtSafeAngle()) {
-          Subsystems.wrist.setWristSetpoint(setpoint.getWristRotation());
+          Subsystems.wrist.setWristSetpoint(desiredState.getWristRotation());
         } else {
           Subsystems.wrist.setWristDutyCycle(Percent.zero());
         }
-        Subsystems.elevator.setPercentageRaw(setpoint.getElevatorProportion());
+        Subsystems.elevator.setPercentageRaw(desiredState.getElevatorProportion());
         Subsystems.roller.setVelocity(RotationsPerSecond.zero());
       }
       case TO_WRIST_SETPOINT -> {
-        if (Superstructure.atPosition(Superstructure.getSuperstructureState(), setpoint))
-          setState(SuperstructureCommandState.EXECUTING_ACTION);
+        if (Superstructure.atPosition(Superstructure.getSuperstructureState(), desiredState))
+          setCommandState(SuperstructureCommandState.EXECUTING_ACTION);
 
-        Subsystems.wrist.setWristSetpoint(setpoint.getWristRotation());
-        Subsystems.elevator.setPercentageRaw(setpoint.getElevatorProportion());
+        Subsystems.wrist.setWristSetpoint(desiredState.getWristRotation());
+        Subsystems.elevator.setPercentageRaw(desiredState.getElevatorProportion());
         ;
         Subsystems.roller.setVelocity(RotationsPerSecond.zero());
       }
       case EXECUTING_ACTION -> {
         timeOfExecutingAction.mut_plus(0.02, Seconds);
-        if (endCondition.getAsBoolean()) setState(SuperstructureCommandState.DONE);
+        if (endCondition.getAsBoolean()) setCommandState(SuperstructureCommandState.DONE);
         if (timeOfExecutingAction.gte(executingActionTimeout))
-          setState(SuperstructureCommandState.DONE);
+          setCommandState(SuperstructureCommandState.DONE);
         if (flash) Subsystems.limelightFlash.flash();
-        Subsystems.wrist.setWristSetpoint(setpoint.getWristRotation());
-        Subsystems.elevator.setPercentageRaw(setpoint.getElevatorProportion());
-        Subsystems.roller.setDutyCycle(setpoint.getWheelDutyCycle());
+        Subsystems.wrist.setWristSetpoint(desiredState.getWristRotation());
+        Subsystems.elevator.setPercentageRaw(desiredState.getElevatorProportion());
+        Subsystems.roller.setDutyCycle(desiredState.getWheelDutyCycle());
       }
       case DONE -> {
         // at this point the command will be ended, but we do these just to make sure nothing
         // strange happens.
-        Subsystems.wrist.setWristSetpoint(setpoint.getWristRotation());
-        Subsystems.elevator.setPercentageRaw(setpoint.getElevatorProportion());
+        Subsystems.wrist.setWristSetpoint(desiredState.getWristRotation());
+        Subsystems.elevator.setPercentageRaw(desiredState.getElevatorProportion());
         ;
-        Subsystems.roller.setDutyCycle(setpoint.getWheelDutyCycle());
+        Subsystems.roller.setDutyCycle(desiredState.getWheelDutyCycle());
       }
       case STOPPED -> {
         Subsystems.wrist.setWristDutyCycle(Value.zero());
         Subsystems.elevator.elevatorStop();
         Subsystems.roller.setDutyCycle(Value.zero());
       }
-      default -> throw new IllegalArgumentException("Unexpected state: " + state);
+      default -> throw new IllegalArgumentException("Unexpected state: " + commandState);
     }
   }
 
-  public SuperstructureCommand flashOnDone() {
+  public MotionSuperstructureCommand flashOnDone() {
     this.flash = true;
     return this;
   }
@@ -152,13 +152,13 @@ public class SuperstructureCommand extends SuperstructureCommandBase {
 
   @Override
   public boolean isFinished() {
-    return state == SuperstructureCommandState.DONE;
+    return commandState == SuperstructureCommandState.DONE;
   }
 
   private boolean elevatorAtSetpoint() {
     return MathUtil.isNear(
         Subsystems.elevator.getPercentage().baseUnitMagnitude(),
-        setpoint.getElevatorProportion().baseUnitMagnitude(),
+        desiredState.getElevatorProportion().baseUnitMagnitude(),
         Math.abs(ElevatorConstants.elevatorTolerance.baseUnitMagnitude()));
   }
 
@@ -166,19 +166,19 @@ public class SuperstructureCommand extends SuperstructureCommandBase {
     holdPosition = Subsystems.elevator.getPercentage();
   }
 
-  private void setState(SuperstructureCommandState state) {
-    this.state = state;
+  private void setCommandState(SuperstructureCommandState commandState) {
+    this.commandState = commandState;
     setHoldPosition();
   }
 
-  public SuperstructureCommand withExecutionTimeout(Time time) {
+  public MotionSuperstructureCommand withExecutionTimeout(Time time) {
     this.executingActionTimeout = time;
     return this;
   }
 
   @Override
-  public SuperstructureCommandState getState() {
-    return state;
+  public SuperstructureCommandState getCommandState() {
+    return commandState;
   }
 
   @Override

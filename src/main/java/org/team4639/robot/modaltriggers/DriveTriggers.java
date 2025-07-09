@@ -11,7 +11,7 @@ public class DriveTriggers {
                   Subsystems.drive
                           .getPose()
                           .getTranslation()
-                          .getDistance(FieldConstants.CoralStation.leftCenterFace.getTranslation())
+                          .getDistance(FieldConstants.HPStation.leftCenterFace.getTranslation())
                       < .75)
           .and(VisionTriggers.visionIsActive());
 
@@ -21,7 +21,7 @@ public class DriveTriggers {
                   Subsystems.drive
                           .getPose()
                           .getTranslation()
-                          .getDistance(FieldConstants.CoralStation.rightCenterFace.getTranslation())
+                          .getDistance(FieldConstants.HPStation.rightCenterFace.getTranslation())
                       < .75)
           .and(VisionTriggers.visionIsActive());
 }
