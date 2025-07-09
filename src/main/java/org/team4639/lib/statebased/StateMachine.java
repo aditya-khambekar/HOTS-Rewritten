@@ -7,8 +7,8 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Commands;
 import java.util.Objects;
-import org.team4639.robot.constants.Controls;
-import org.team4639.robot.statemachine.ReefscapeStates;
+import org.team4639.robot.constants.robot.Controls;
+import org.team4639.robot.statemachine.competition.ReefscapeStates;
 
 public class StateMachine {
   private static volatile StateMachine instance;

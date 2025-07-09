@@ -10,7 +10,7 @@ import java.util.List;
 import org.team4639.robot.commands.AutoCommands;
 import org.team4639.robot.commands.DriveCommands;
 import org.team4639.robot.commands.SuperstructureCommands;
-import org.team4639.robot.constants.TargetPositions;
+import org.team4639.robot.constants.reefscape.TargetPositions;
 import org.team4639.robot.robot.Subsystems;
 
 public class AutoGenerator {

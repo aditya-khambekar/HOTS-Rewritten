@@ -4,7 +4,7 @@ import static edu.wpi.first.units.Units.Value;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.units.measure.MutDimensionless;
-import org.team4639.robot.constants.Controls;
+import org.team4639.robot.constants.robot.Controls;
 import org.team4639.robot.robot.Subsystems;
 import org.team4639.robot.subsystems.superstructure.Superstructure;
 
@@ -19,7 +19,8 @@ public class MicroAdjustmentCommand extends SuperstructureCommandBase {
 
   @Override
   public void initialize() {
-    elevatorSetpoint = Superstructure.getSuperstructureState().getElevatorProportion().mutableCopy();
+    elevatorSetpoint =
+        Superstructure.getSuperstructureState().getElevatorProportion().mutableCopy();
     wristSetpoint =
         Rotation2d.fromDegrees(
             Superstructure.getSuperstructureState().getWristRotation().getDegrees());

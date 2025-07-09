@@ -5,7 +5,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import java.util.List;
 import java.util.function.Supplier;
-import org.team4639.robot.constants.TargetPositions;
+import org.team4639.robot.constants.reefscape.TargetPositions;
 
 public class ReefPathLocations {
   public static final ReefPathLocations AB =

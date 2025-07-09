@@ -1,4 +1,4 @@
-package org.team4639.robot.statemachine;
+package org.team4639.robot.statemachine.demo;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
@@ -6,10 +6,10 @@ import org.team4639.lib.statebased.State;
 import org.team4639.lib.unit.Units2;
 import org.team4639.robot.commands.DriveCommands;
 import org.team4639.robot.commands.SuperstructureCommands;
-import org.team4639.robot.constants.Controls;
-import org.team4639.robot.constants.TargetPositions;
+import org.team4639.robot.constants.reefscape.TargetPositions;
+import org.team4639.robot.constants.robot.Controls;
 
-public class VisionDemoStates {
+public class VisionDemo {
   public static State DEMO_ON;
   public static State DEMO_OFF;
 

@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import java.util.HashMap;
 import java.util.Map;
-import org.team4639.robot.constants.TargetPositions;
+import org.team4639.robot.constants.reefscape.TargetPositions;
 
 /** Tracks reef. */
 public class ReefTracker extends SubsystemBase {

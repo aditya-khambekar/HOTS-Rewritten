@@ -1,26 +1,30 @@
-package org.team4639.robot.statemachine;
+package org.team4639.robot.statemachine.competition;
 
 import static edu.wpi.first.units.Units.Seconds;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.team4639.lib.statebased.State;
+import org.team4639.lib.statebased.StateFactory;
 import org.team4639.robot.commands.AutoCommands;
 import org.team4639.robot.commands.DriveCommands;
 import org.team4639.robot.commands.LEDCommands;
 import org.team4639.robot.commands.SuperstructureCommands;
 import org.team4639.robot.commands.superstructure.MicroAdjustmentCommand;
-import org.team4639.robot.constants.Controls;
-import org.team4639.robot.constants.FieldConstants;
-import org.team4639.robot.constants.TargetPositions;
+import org.team4639.robot.constants.reefscape.FieldConstants;
+import org.team4639.robot.constants.reefscape.TargetPositions;
+import org.team4639.robot.constants.robot.Controls;
 import org.team4639.robot.modaltriggers.DriveTriggers;
 import org.team4639.robot.robot.RobotContainer;
 import org.team4639.robot.robot.Subsystems;
 import org.team4639.robot.subsystems.superstructure.Superstructure;
 import org.team4639.robot.subsystems.superstructure.SuperstructureSetpoints;
 
+/**
+ * State machine used in competition
+ */
 public class ReefscapeStates {
   public static State IDLE;
-  public static State NONE = new State("NONE");
+  public static State NONE = StateFactory.none();
   public static State HP_LEFT;
   public static State HP_RIGHT;
   public static State HP_NODIR;

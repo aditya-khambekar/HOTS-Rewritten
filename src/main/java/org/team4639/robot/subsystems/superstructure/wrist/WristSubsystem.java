@@ -88,4 +88,8 @@ public class WristSubsystem extends SubsystemBase {
   public void setVoltage(Voltage voltage) {
     WristIO.setVoltage(voltage);
   }
+
+  public WristIO.WristIOInputs getWristIOInputs() {
+    return wristIOInputs;
+  }
 }

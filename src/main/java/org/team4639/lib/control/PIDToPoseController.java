@@ -90,13 +90,14 @@ public class PIDToPoseController implements Sendable {
 
   public void setGoal(Pose2d pose) {
     this.goal = pose;
-    xController.reset(drivetrainPose.get().getX(), drivetrainSpeedsFieldOriented.get().vxMetersPerSecond);
-    yController.reset(drivetrainPose.get().getY(), drivetrainSpeedsFieldOriented.get().vyMetersPerSecond);
+    xController.reset(
+        drivetrainPose.get().getX(), drivetrainSpeedsFieldOriented.get().vxMetersPerSecond);
+    yController.reset(
+        drivetrainPose.get().getY(), drivetrainSpeedsFieldOriented.get().vyMetersPerSecond);
     xController.setGoal(pose.getX());
     yController.setGoal(pose.getY());
     headingController.setSetpoint(pose.getRotation().getRadians());
   }
-
 
   public ChassisSpeeds calculateOutput() {
     return ChassisSpeeds.fromFieldRelativeSpeeds(

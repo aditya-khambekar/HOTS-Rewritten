@@ -102,4 +102,12 @@ public class State {
   public String toString() {
     return name;
   }
+
+  public Trigger getTrigger() {
+    return new Trigger(() -> StateMachine.getState() == this);
+  }
+
+  public Trigger and(BooleanSupplier trigger) {
+    return getTrigger().and(trigger);
+  }
 }

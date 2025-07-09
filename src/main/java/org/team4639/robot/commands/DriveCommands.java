@@ -36,11 +36,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
-import org.team4639.lib.util.PoseUtil;
 import org.team4639.robot.commands.pathfinding.TeleopPathGenerator;
-import org.team4639.robot.constants.FieldConstants;
-import org.team4639.robot.constants.TargetPositions;
-import org.team4639.robot.daemon.Daemon;
+import org.team4639.robot.constants.reefscape.FieldConstants;
+import org.team4639.robot.constants.reefscape.ReefscapePoseUtil;
+import org.team4639.robot.constants.reefscape.TargetPositions;
 import org.team4639.robot.robot.Subsystems;
 import org.team4639.robot.subsystems.drive.Drive;
 
@@ -107,43 +106,6 @@ public class DriveCommands {
         },
         drive);
   }
-
-    /**
-     * Field relative drive command using two joysticks (controlling linear and angular velocities).
-     */
-    public static Command joystickDriveWithDaemonControl(
-            DoubleSupplier xSupplier, DoubleSupplier ySupplier, DoubleSupplier omegaSupplier) {
-        return Commands.run(
-                () -> {
-                    if (Daemon.getInstance().isOn()){
-                        drive.runVelocity(ChassisSpeeds.fromFieldRelativeSpeeds(Daemon.getInstance().getJoystickChassisSpeeds(), drive.getRotation()));
-                    } else{
-                        // Get linear velocity
-                        Translation2d linearVelocity =
-                                getLinearVelocityFromJoysticks(xSupplier.getAsDouble(), ySupplier.getAsDouble());
-
-                        // Apply rotation deadband
-                        double omega = MathUtil.applyDeadband(omegaSupplier.getAsDouble(), DEADBAND);
-
-                        // Square rotation value for more precise control
-                        omega = Math.copySign(omega * omega, omega);
-
-                        // Convert to field relative speeds & send command
-                        ChassisSpeeds speeds =
-                                new ChassisSpeeds(
-                                        linearVelocity.getX() * drive.getMaxLinearSpeedMetersPerSec(),
-                                        linearVelocity.getY() * drive.getMaxLinearSpeedMetersPerSec(),
-                                        omega * drive.getMaxAngularSpeedRadPerSec());
-                        boolean isFlipped = false;
-                        drive.runVelocity(ChassisSpeeds.fromFieldRelativeSpeeds(speeds, drive.getRotation()));
-
-                        SmartDashboard.putNumber(
-                                "Velocity", Math.hypot(speeds.vxMetersPerSecond, speeds.vyMetersPerSecond));
-                    }
-
-                },
-                drive);
-    }
 
   /**
    * Field relative drive command using joystick for linear control and PID for angular control.
@@ -360,7 +322,7 @@ public class DriveCommands {
           Pose2d drivePose = drive.getPose();
 
           Pose2d nearestReefPose =
-              PoseUtil.ReefRelativeLeftOf(
+              ReefscapePoseUtil.ReefRelativeLeftOf(
                   drivePose.nearest(
                       List.of(
                           TargetPositions.REEF_AB.getPose(),
@@ -380,7 +342,7 @@ public class DriveCommands {
           Pose2d drivePose = drive.getPose();
 
           Pose2d nearestReefPose =
-              PoseUtil.ReefRelativeRightOf(
+              ReefscapePoseUtil.ReefRelativeRightOf(
                   drivePose.nearest(
                       List.of(
                           TargetPositions.REEF_AB.getPose(),

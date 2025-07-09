@@ -16,7 +16,6 @@ public class Commands2 {
   public static DeferredCommand defer(Supplier<Command> command) {
     var preliminaryCommand = command.get();
     var ret = new DeferredCommand(command, preliminaryCommand.getRequirements());
-    preliminaryCommand = null;
     return ret;
   }
 }

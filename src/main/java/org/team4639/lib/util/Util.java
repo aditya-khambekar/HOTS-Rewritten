@@ -34,7 +34,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.IntSupplier;
 import java.util.function.Supplier;
-import org.team4639.robot.constants.FieldConstants;
+import org.team4639.robot.constants.reefscape.FieldConstants;
 
 /** Contains basic functions that are used often. */
 public class Util {

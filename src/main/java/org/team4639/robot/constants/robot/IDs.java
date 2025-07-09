@@ -1,4 +1,4 @@
-package org.team4639.robot.constants;
+package org.team4639.robot.constants.robot;
 
 import org.team4639.lib.annotation.Untuned;
 

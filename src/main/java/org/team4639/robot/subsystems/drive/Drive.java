@@ -120,10 +120,8 @@ public class Drive extends SubsystemBase implements Vision.VisionConsumer {
   private final SwerveDrivePoseEstimator poseEstimator =
       new SwerveDrivePoseEstimator(kinematics, rawGyroRotation, lastModulePositions, new Pose2d());
 
-  private final SwerveSetpointGenerator swerveSetpointGenerator = new SwerveSetpointGenerator(
-          RobotConfigGenerator.getRobotConfig(),
-          RotationsPerSecond.of(3)
-  );
+  private final SwerveSetpointGenerator swerveSetpointGenerator =
+      new SwerveSetpointGenerator(RobotConfigGenerator.getRobotConfig(), RotationsPerSecond.of(3));
 
   private SwerveSetpoint swerveSetpoint;
 
@@ -273,11 +271,7 @@ public class Drive extends SubsystemBase implements Vision.VisionConsumer {
    */
   public void runVelocity(ChassisSpeeds speeds) {
 
-    swerveSetpoint = swerveSetpointGenerator.generateSetpoint(
-            swerveSetpoint,
-            speeds,
-            0.02
-    );
+    swerveSetpoint = swerveSetpointGenerator.generateSetpoint(swerveSetpoint, speeds, 0.02);
 
     SwerveModuleState[] setpointStates = swerveSetpoint.moduleStates();
 

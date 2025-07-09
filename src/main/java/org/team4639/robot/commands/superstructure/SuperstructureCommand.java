@@ -16,8 +16,8 @@ import java.util.function.BooleanSupplier;
 import org.team4639.lib.util.RotationUtil;
 import org.team4639.robot.robot.Subsystems;
 import org.team4639.robot.subsystems.superstructure.Superstructure;
-import org.team4639.robot.subsystems.superstructure.superstructurestate.SuperstructureState;
 import org.team4639.robot.subsystems.superstructure.elevator.ElevatorConstants;
+import org.team4639.robot.subsystems.superstructure.superstructurestate.SuperstructureState;
 import org.team4639.robot.subsystems.superstructure.wrist.WristConstants;
 
 public class SuperstructureCommand extends SuperstructureCommandBase {
@@ -30,7 +30,7 @@ public class SuperstructureCommand extends SuperstructureCommandBase {
   private final String name;
   private boolean flash;
 
-    /**
+  /**
    * Commands the superstructure to go to a specific state
    *
    * @param setpoint the setpoint that the superstructure is commanded to
@@ -82,7 +82,7 @@ public class SuperstructureCommand extends SuperstructureCommandBase {
                 WristConstants.SAFE_TRANSITION_RANGE_INTERIOR.getFirst(),
                 WristConstants.SAFE_TRANSITION_RANGE_INTERIOR.getSecond()))
           setState(SuperstructureCommandState.TO_ELEVATOR_SETPOINT);
-          Pair<Rotation2d, Rotation2d> safeTransitionRange =
+        Pair<Rotation2d, Rotation2d> safeTransitionRange =
             Superstructure.getEffectiveExteriorSafeZone();
         Subsystems.wrist.setWristSetpoint(
             RotationUtil.nearest(
@@ -105,7 +105,7 @@ public class SuperstructureCommand extends SuperstructureCommandBase {
         Subsystems.roller.setVelocity(RotationsPerSecond.zero());
       }
       case TO_WRIST_SETPOINT -> {
-          if (Superstructure.atPosition(Superstructure.getSuperstructureState(), setpoint))
+        if (Superstructure.atPosition(Superstructure.getSuperstructureState(), setpoint))
           setState(SuperstructureCommandState.EXECUTING_ACTION);
 
         Subsystems.wrist.setWristSetpoint(setpoint.getWristRotation());
@@ -114,7 +114,7 @@ public class SuperstructureCommand extends SuperstructureCommandBase {
         Subsystems.roller.setVelocity(RotationsPerSecond.zero());
       }
       case EXECUTING_ACTION -> {
-          timeOfExecutingAction.mut_plus(0.02, Seconds);
+        timeOfExecutingAction.mut_plus(0.02, Seconds);
         if (endCondition.getAsBoolean()) setState(SuperstructureCommandState.DONE);
         if (timeOfExecutingAction.gte(executingActionTimeout))
           setState(SuperstructureCommandState.DONE);

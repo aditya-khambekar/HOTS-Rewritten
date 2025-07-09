@@ -1,7 +1,8 @@
-package org.team4639.robot.constants;
+package org.team4639.robot.constants.robot;
 
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import org.team4639.robot.robot.RobotContainer;
+import org.team4639.robot.statemachine.demo.VisionDemo;
 
 public class Controls {
   public static final Trigger intake = RobotContainer.driver.a();
@@ -62,6 +63,9 @@ public class Controls {
   public static final Trigger RIGHT_HP = RobotContainer.driver.rightBumper();
 
   public static final class VisionDemoControls {
-    public static final Trigger DEMO_ON = new Trigger(() -> false);
+    public static final Trigger DEMO_ON =
+        RobotContainer.driver
+            .x()
+            .and(VisionDemo.DEMO_ON.getTrigger().or(VisionDemo.DEMO_OFF.getTrigger()));
   }
 }

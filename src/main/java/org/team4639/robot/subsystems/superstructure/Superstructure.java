@@ -124,9 +124,13 @@ public class Superstructure extends SubsystemBase implements Sendable {
   public void initSendable(SendableBuilder builder) {
     builder.setSmartDashboardType("Superstructure");
     builder.addDoubleProperty(
-        "Elevator Proportion", () -> getSuperstructureState().getElevatorProportion().in(Value), null);
+        "Elevator Proportion",
+        () -> getSuperstructureState().getElevatorProportion().in(Value),
+        null);
     builder.addDoubleProperty(
-        "Wrist Angle Degrees", () -> getSuperstructureState().getWristRotation().getDegrees(), null);
+        "Wrist Angle Degrees",
+        () -> getSuperstructureState().getWristRotation().getDegrees(),
+        null);
   }
 
   public static final double height = 120;

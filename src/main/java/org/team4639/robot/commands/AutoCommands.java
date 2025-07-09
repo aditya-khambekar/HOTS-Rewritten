@@ -10,7 +10,7 @@ import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import java.util.List;
 import org.team4639.robot.commands.superstructure.SuperstructureCommand;
-import org.team4639.robot.constants.TargetPositions;
+import org.team4639.robot.constants.reefscape.TargetPositions;
 import org.team4639.robot.robot.Subsystems;
 import org.team4639.robot.subsystems.superstructure.Superstructure;
 import org.team4639.robot.subsystems.superstructure.SuperstructureSetpoints;
@@ -48,11 +48,8 @@ public class AutoCommands {
         .flashOnDone();
   }
 
-  /**
-   * Intended to be used after reef center align
-   *
-   * @return
-   */
+  /** Intended to be used after reef center align */
+  // TODO: move this somewhere more appropriate since its used in teleop too
   public static Command algaeIntakeSequence() {
     return Subsystems.drive
         .defer(
