@@ -16,14 +16,14 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.team4639.lib.io.sensor.lasercan.LaserCanIO;
 import org.team4639.robot.subsystems.superstructure.wrist.io.WristIO;
 
-public final class WristSubsystem extends SubsystemBase {
+public final class Wrist extends SubsystemBase {
   WristIO.WristIOInputs wristIOInputs;
   org.team4639.lib.io.sensor.lasercan.LaserCanIO.LaserCanIOInputs laserCanIOInputs;
   WristIO WristIO;
   LaserCanIO LaserCanIO;
   private Debouncer wristStoppedDebouncer = new Debouncer(0.5, DebounceType.kRising);
 
-  public WristSubsystem(WristIO WristIO, LaserCanIO laserCanIO) {
+  public Wrist(WristIO WristIO, LaserCanIO laserCanIO) {
     wristIOInputs = new WristIO.WristIOInputs();
     laserCanIOInputs = new LaserCanIO.LaserCanIOInputs();
     this.WristIO = WristIO;

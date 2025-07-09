@@ -56,13 +56,13 @@ import org.team4639.robot.subsystems.ReefTracker;
 import org.team4639.robot.subsystems.drive.Drive;
 import org.team4639.robot.subsystems.drive.generated.TunerConstants;
 import org.team4639.robot.subsystems.superstructure.Superstructure;
-import org.team4639.robot.subsystems.superstructure.elevator.ElevatorSubsystem;
+import org.team4639.robot.subsystems.superstructure.elevator.Elevator;
 import org.team4639.robot.subsystems.superstructure.elevator.io.ElevatorIOTalonFX;
 import org.team4639.robot.subsystems.superstructure.elevator.io.ElevatorIOTalonFXSim;
-import org.team4639.robot.subsystems.superstructure.roller.RollerSubsystem;
+import org.team4639.robot.subsystems.superstructure.roller.Roller;
 import org.team4639.robot.subsystems.superstructure.roller.io.RollerIOSim;
 import org.team4639.robot.subsystems.superstructure.roller.io.RollerIOSparkFlex;
-import org.team4639.robot.subsystems.superstructure.wrist.WristSubsystem;
+import org.team4639.robot.subsystems.superstructure.wrist.Wrist;
 import org.team4639.robot.subsystems.superstructure.wrist.io.WristIOSim;
 import org.team4639.robot.subsystems.superstructure.wrist.io.WristIOSparkFlex;
 import org.team4639.robot.subsystems.vision.*;
@@ -109,15 +109,15 @@ public final class RobotContainer {
                     VisionConstants.cameraLeftName, Subsystems.drive::getRotation));
 
         Subsystems.elevator =
-            new ElevatorSubsystem(
+            new Elevator(
                 new ElevatorIOTalonFX(
                     IDs.Superstructure.ELEVATOR_LEFT_FOLLOWER,
                     IDs.Superstructure.ELEVATOR_RIGHT_LEADER));
         Subsystems.wrist =
-            new WristSubsystem(
+            new Wrist(
                 new WristIOSparkFlex(IDs.Superstructure.WRIST),
                 new LaserCanIOHardware(IDs.Superstructure.WRIST_LASERCAN));
-        Subsystems.roller = new RollerSubsystem(new RollerIOSparkFlex(IDs.Superstructure.ROLLER));
+        Subsystems.roller = new Roller(new RollerIOSparkFlex(IDs.Superstructure.ROLLER));
         break;
 
       case SIM:
@@ -150,18 +150,18 @@ public final class RobotContainer {
                     () -> AllianceFlipUtil.flipIfRedAlliance(Subsystems.drive.getPose())));
         SmartDashboard.putBoolean("Has Coral", false);
         Subsystems.elevator =
-            new ElevatorSubsystem(
+            new Elevator(
                 new ElevatorIOTalonFXSim(
                     IDs.Superstructure.ELEVATOR_LEFT_FOLLOWER,
                     IDs.Superstructure.ELEVATOR_RIGHT_LEADER));
         Subsystems.wrist =
-            new WristSubsystem(
+            new Wrist(
                 new WristIOSim(IDs.Superstructure.WRIST),
                 new LaserCanIOSim(
                     () ->
                         Millimeter.of(
                             SmartDashboard.getBoolean("Has Coral", true) ? 1 : Integer.MAX_VALUE)));
-        Subsystems.roller = new RollerSubsystem(new RollerIOSim(IDs.Superstructure.ROLLER));
+        Subsystems.roller = new Roller(new RollerIOSim(IDs.Superstructure.ROLLER));
         break;
 
       default:

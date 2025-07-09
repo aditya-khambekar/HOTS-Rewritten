@@ -15,12 +15,12 @@ import java.util.Optional;
 import org.team4639.robot.robot.Subsystems;
 import org.team4639.robot.subsystems.superstructure.elevator.io.ElevatorIO;
 
-public final class ElevatorSubsystem extends SubsystemBase {
+public final class Elevator extends SubsystemBase {
   private ElevatorIO io;
   private ElevatorIO.ElevatorIOInputs elevatorIOInputs;
   private Debouncer stoppedDebouncer = new Debouncer(0.5, Debouncer.DebounceType.kRising);
 
-  public ElevatorSubsystem(ElevatorIO io) {
+  public Elevator(ElevatorIO io) {
     this.io = io;
     elevatorIOInputs = new ElevatorIO.ElevatorIOInputs();
     SmartDashboard.putData("Elevator", elevatorIOInputs);

@@ -6,18 +6,18 @@ import org.team4639.robot.subsystems.LimelightFlash;
 import org.team4639.robot.subsystems.ReefTracker;
 import org.team4639.robot.subsystems.drive.Drive;
 import org.team4639.robot.subsystems.superstructure.Superstructure;
-import org.team4639.robot.subsystems.superstructure.elevator.ElevatorSubsystem;
-import org.team4639.robot.subsystems.superstructure.roller.RollerSubsystem;
-import org.team4639.robot.subsystems.superstructure.wrist.WristSubsystem;
+import org.team4639.robot.subsystems.superstructure.elevator.Elevator;
+import org.team4639.robot.subsystems.superstructure.roller.Roller;
+import org.team4639.robot.subsystems.superstructure.wrist.Wrist;
 import org.team4639.robot.subsystems.vision.Vision;
 
 public final class Subsystems {
   public static Drive drive;
   public static Vision vision;
   public static DashboardOutputs dashboardOutputs;
-  public static ElevatorSubsystem elevator;
-  public static WristSubsystem wrist;
-  public static RollerSubsystem roller;
+  public static Elevator elevator;
+  public static Wrist wrist;
+  public static Roller roller;
   public static Superstructure superstructure;
   public static ReefTracker reefTracker;
   public static LimelightFlash limelightFlash;
