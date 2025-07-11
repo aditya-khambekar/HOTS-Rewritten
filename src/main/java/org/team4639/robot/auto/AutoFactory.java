@@ -1,6 +1,6 @@
 package org.team4639.robot.auto;
 
-import static org.team4639.robot.auto.AutoGenerator.Location;
+import static org.team4639.robot.auto.AutoGenerator.Location.*;
 import static org.team4639.robot.auto.AutoGenerator.compileAuto;
 
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -15,69 +15,69 @@ import org.team4639.robot.robot.Subsystems;
 public final class AutoFactory {
   public static Command RS_F4_E4_D4_C4() {
     return compileAuto(
-        Location.RS,
-        Location.F4,
-        Location.RHP,
-        Location.E4,
-        Location.RHP,
-        Location.D4,
-        Location.RHP,
-        Location.C4);
+        RS,
+        F4,
+        RHP,
+        E4,
+        RHP,
+        D4,
+        RHP,
+        C4);
   }
 
   public static Command RS_F4_E4_D4() {
     return compileAuto(
-        Location.RS, Location.F4, Location.RHP, Location.E4, Location.RHP, Location.D4);
+        RS, F4, RHP, E4, RHP, D4);
   }
 
   public static Command RS_E4_D4_C4() {
     return compileAuto(
-        Location.RS, Location.E4, Location.RHP, Location.D4, Location.RHP, Location.C4);
+        RS, E4, RHP, D4, RHP, C4);
   }
 
   public static Command RS_F4_D4_C4_E4() {
     return compileAuto(
-            Location.RS, Location.F4, Location.RHP, Location.D4, Location.RHP, Location.C4, Location.RHP, Location.E4
+            RS, F4, RHP, D4, RHP, C4, RHP, E4
     );
   }
 
   public static Command LS_I4_J4_K4_L4() {
     return compileAuto(
-        Location.LS,
-        Location.I4,
-        Location.LHP,
-        Location.J4,
-        Location.LHP,
-        Location.K4,
-        Location.LHP,
-        Location.L4);
+        LS,
+        I4,
+        LHP,
+        J4,
+        LHP,
+        K4,
+        LHP,
+        L4);
   }
 
   public static Command LS_I4_J4_K4() {
     return compileAuto(
-        Location.LS, Location.I4, Location.LHP, Location.J4, Location.LHP, Location.K4);
+        LS, I4, LHP, J4, LHP, K4);
   }
 
   public static Command LS_J4_K4_L4() {
     return compileAuto(
-        Location.LS, Location.J4, Location.LHP, Location.K4, Location.LHP, Location.L4);
+        LS, J4, LHP, K4, LHP, L4);
   }
 
   public static Command LS_I4_K4_L4_J4() {
     return compileAuto(
-            Location.LS,
-            Location.I4,
-            Location.LHP,
-            Location.K4,
-            Location.LHP,
-            Location.L4,
-            Location.LHP,
-            Location.J4);
+            LS,
+            I4,
+            LHP,
+            K4,
+            LHP,
+            L4,
+            LHP,
+            J4);
   }
 
   public static Command MS_G4_ALGH_ALGSC1_ALIJ_ALGSC2() {
     return compileAuto(
-        Location.MS, Location.G4, Location.ALGH, Location.ALGSC1, Location.ALIJ, Location.ALGSC2);
+        MS, G4, ALGH, ALGSC1, ALIJ, ALGSC2);
   }
 
   public static Command TEST_1MTR() {
