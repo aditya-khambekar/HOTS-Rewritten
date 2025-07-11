@@ -15,10 +15,10 @@ public final class DashboardOutputs extends SubsystemBase {
     return run(() -> {
           var recommended = Subsystems.reefTracker.getRecommendedLevel();
           var level = "NONE";
-          if (Controls.L4Coral.getAsBoolean()) level = "L4";
-          else if (Controls.L3Coral.getAsBoolean()) level = "L3";
-          else if (Controls.L2Coral.getAsBoolean()) level = "L2";
-          else if (Controls.L1Coral.getAsBoolean()) level = "L1";
+          if (Controls.L4_CORAL.getAsBoolean()) level = "L4";
+          else if (Controls.L3_CORAL.getAsBoolean()) level = "L3";
+          else if (Controls.L2_CORAL.getAsBoolean()) level = "L2";
+          else if (Controls.L1_CORAL.getAsBoolean()) level = "L1";
           else if (recommended != 0) level = "L" + recommended;
           SmartDashboard.putString("Reef Level", level);
         })
@@ -27,10 +27,10 @@ public final class DashboardOutputs extends SubsystemBase {
 
   public int upcomingReefLevel() {
     var recommended = Subsystems.reefTracker.getRecommendedLevel();
-    if (Controls.L4Coral.getAsBoolean()) return 4;
-    else if (Controls.L3Coral.getAsBoolean()) return 3;
-    else if (Controls.L2Coral.getAsBoolean()) return 2;
-    else if (Controls.L1Coral.getAsBoolean()) return 1;
+    if (Controls.L4_CORAL.getAsBoolean()) return 4;
+    else if (Controls.L3_CORAL.getAsBoolean()) return 3;
+    else if (Controls.L2_CORAL.getAsBoolean()) return 2;
+    else if (Controls.L1_CORAL.getAsBoolean()) return 1;
     else return recommended;
   }
 }

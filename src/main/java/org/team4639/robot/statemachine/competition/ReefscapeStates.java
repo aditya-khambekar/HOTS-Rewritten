@@ -15,6 +15,7 @@ import org.team4639.robot.constants.reefscape.FieldUtil;
 import org.team4639.robot.constants.reefscape.TargetPositions;
 import org.team4639.robot.constants.robot.Controls;
 import org.team4639.robot.modaltriggers.DriveTriggers;
+import org.team4639.robot.modaltriggers.IOTriggers;
 import org.team4639.robot.robot.RobotContainer;
 import org.team4639.robot.robot.Subsystems;
 import org.team4639.robot.statemachine.StatesBase;
@@ -46,10 +47,11 @@ public final class ReefscapeStates implements StatesBase {
   public State REJECT_CORAL;
   public State REJECT_ALGAE;
   public State MICROADJUSTMENTS;
+  public State DEFENSE;
 
-  private static volatile StatesBase instance;
+  private static volatile ReefscapeStates instance;
 
-  public static synchronized StatesBase getInstance() {
+  public static synchronized ReefscapeStates getInstance() {
     return instance = Objects.requireNonNullElseGet(instance, ReefscapeStates::new);
   }
 
@@ -59,43 +61,28 @@ public final class ReefscapeStates implements StatesBase {
     IDLE =
         new State("IDLE")
             .whileTrue(SuperstructureCommands.IDLE)
-            .onTrigger(DriveTriggers.closeToRightStation, () -> HP_RIGHT)
-            .onTrigger(DriveTriggers.closeToLeftStation, () -> HP_LEFT)
-            .withEndCondition(Controls.intake, () -> HP_NODIR)
+            .onTrigger(DriveTriggers.CLOSE_TO_RIGHT_STATION, () -> HP_RIGHT)
+            .onTrigger(DriveTriggers.CLOSE_TO_LEFT_STATION, () -> HP_LEFT)
+            .onTrigger(Controls.DEFENSE_TOGGLE, () -> DEFENSE)
             .withEndCondition(Subsystems.wrist::hasCoral, () -> CORAL_STOW)
             .withEndCondition(Controls.LEFT_HP, this::pathFindToHPLeft)
-            .withEndCondition(Controls.RIGHT_HP, this::pathFindToHPRight)
-            .withEndCondition(
-                Controls.REEF_AB, () -> this.pathFindToReefAlgae(TargetPositions.REEF_AB))
-            .withEndCondition(
-                Controls.REEF_CD, () -> this.pathFindToReefAlgae(TargetPositions.REEF_CD))
-            .withEndCondition(
-                Controls.REEF_EF, () -> this.pathFindToReefAlgae(TargetPositions.REEF_EF))
-            .withEndCondition(
-                Controls.REEF_GH, () -> this.pathFindToReefAlgae(TargetPositions.REEF_GH))
-            .withEndCondition(
-                Controls.REEF_IJ, () -> this.pathFindToReefAlgae(TargetPositions.REEF_IJ))
-            .withEndCondition(
-                Controls.REEF_KL, () -> this.pathFindToReefAlgae(TargetPositions.REEF_KL));
+            .withEndCondition(Controls.RIGHT_HP, this::pathFindToHPRight);
 
     HP_LEFT =
         new State("HP_LEFT")
             .whileTrue(DriveCommands.HPStationAlignLeft(), SuperstructureCommands.HP)
-            .withEndCondition(DriveTriggers.closeToLeftStation.negate(), () -> INTAKE_LOWER)
-            .onTrigger(Controls.secondIntake, () -> INTAKE_LOWER)
+            .withEndCondition(DriveTriggers.CLOSE_TO_LEFT_STATION.negate(), () -> INTAKE_LOWER)
+            .onTrigger(IOTriggers.JOYSTICK_MOVEMENT, () -> IDLE)
             .onEmergency(() -> IDLE);
 
     HP_RIGHT =
         new State("HP_RIGHT")
             .whileTrue(DriveCommands.HPStationAlignRight(), SuperstructureCommands.HP)
-            .withEndCondition(DriveTriggers.closeToRightStation.negate(), () -> INTAKE_LOWER)
-            .onTrigger(Controls.secondIntake, () -> INTAKE_LOWER)
+            .withEndCondition(DriveTriggers.CLOSE_TO_RIGHT_STATION.negate(), () -> INTAKE_LOWER)
+            .onTrigger(IOTriggers.JOYSTICK_MOVEMENT, () -> IDLE)
             .onEmergency(() -> IDLE);
 
-    HP_NODIR =
-        new State("INTAKE_NODIR")
-            .whileTrue(SuperstructureCommands.HP)
-            .onTrigger(Controls.secondIntake, () -> INTAKE_LOWER);
+    HP_NODIR = new State("INTAKE_NODIR").whileTrue(SuperstructureCommands.HP);
 
     INTAKE_LOWER =
         new State("INTAKE_LOWER")
@@ -112,20 +99,8 @@ public final class ReefscapeStates implements StatesBase {
                     () -> -RobotContainer.driver.getLeftX(),
                     () -> FieldUtil.getRotationToClosestBranchPosition(Subsystems.drive.getPose())),
                 LEDCommands.hasCoral())
-            .onTrigger(Controls.alignLeft, () -> CORAL_SCORE_ALIGN_LEFT)
-            .onTrigger(Controls.alignRight, () -> CORAL_SCORE_ALIGN_RIGHT)
-            .onTrigger(Controls.REEF_A, () -> pathFindToReef(TargetPositions.REEF_A))
-            .onTrigger(Controls.REEF_B, () -> pathFindToReef(TargetPositions.REEF_B))
-            .onTrigger(Controls.REEF_C, () -> pathFindToReef(TargetPositions.REEF_C))
-            .onTrigger(Controls.REEF_D, () -> pathFindToReef(TargetPositions.REEF_D))
-            .onTrigger(Controls.REEF_E, () -> pathFindToReef(TargetPositions.REEF_E))
-            .onTrigger(Controls.REEF_F, () -> pathFindToReef(TargetPositions.REEF_F))
-            .onTrigger(Controls.REEF_G, () -> pathFindToReef(TargetPositions.REEF_G))
-            .onTrigger(Controls.REEF_H, () -> pathFindToReef(TargetPositions.REEF_H))
-            .onTrigger(Controls.REEF_I, () -> pathFindToReef(TargetPositions.REEF_I))
-            .onTrigger(Controls.REEF_J, () -> pathFindToReef(TargetPositions.REEF_J))
-            .onTrigger(Controls.REEF_K, () -> pathFindToReef(TargetPositions.REEF_K))
-            .onTrigger(Controls.REEF_L, () -> pathFindToReef(TargetPositions.REEF_L))
+            .onTrigger(Controls.ALIGN_LEFT, () -> CORAL_SCORE_ALIGN_LEFT)
+            .onTrigger(Controls.ALIGN_RIGHT, () -> CORAL_SCORE_ALIGN_RIGHT)
             .withEndCondition(Subsystems.wrist::doesNotHaveCoral, () -> IDLE)
             .onEmergency(() -> REJECT_CORAL);
 
@@ -136,20 +111,9 @@ public final class ReefscapeStates implements StatesBase {
                 SuperstructureCommands.ELEVATOR_READY,
                 Subsystems.dashboardOutputs.displayUpcomingReefLevel(),
                 LEDCommands.aligning())
-            .onTrigger(Controls.alignRight, () -> this.CORAL_SCORE_ALIGN_RIGHT)
-            .onTrigger(Controls.REEF_A, () -> pathFindToReef(TargetPositions.REEF_A))
-            .onTrigger(Controls.REEF_B, () -> pathFindToReef(TargetPositions.REEF_B))
-            .onTrigger(Controls.REEF_C, () -> pathFindToReef(TargetPositions.REEF_C))
-            .onTrigger(Controls.REEF_D, () -> pathFindToReef(TargetPositions.REEF_D))
-            .onTrigger(Controls.REEF_E, () -> pathFindToReef(TargetPositions.REEF_E))
-            .onTrigger(Controls.REEF_F, () -> pathFindToReef(TargetPositions.REEF_F))
-            .onTrigger(Controls.REEF_G, () -> pathFindToReef(TargetPositions.REEF_G))
-            .onTrigger(Controls.REEF_H, () -> pathFindToReef(TargetPositions.REEF_H))
-            .onTrigger(Controls.REEF_I, () -> pathFindToReef(TargetPositions.REEF_I))
-            .onTrigger(Controls.REEF_J, () -> pathFindToReef(TargetPositions.REEF_J))
-            .onTrigger(Controls.REEF_K, () -> pathFindToReef(TargetPositions.REEF_K))
-            .onTrigger(Controls.REEF_L, () -> pathFindToReef(TargetPositions.REEF_L))
+            .onTrigger(Controls.ALIGN_RIGHT, () -> this.CORAL_SCORE_ALIGN_RIGHT)
             .withEndCondition(Subsystems.wrist::doesNotHaveCoral, () -> IDLE)
+            .onTrigger(IOTriggers.JOYSTICK_MOVEMENT, () -> CORAL_STOW)
             .onEmergency(() -> CORAL_STOW)
             .onAccelerationLimit(() -> CORAL_STOW);
 
@@ -160,20 +124,9 @@ public final class ReefscapeStates implements StatesBase {
                 SuperstructureCommands.ELEVATOR_READY,
                 Subsystems.dashboardOutputs.displayUpcomingReefLevel(),
                 LEDCommands.aligning())
-            .onTrigger(Controls.alignLeft, () -> this.CORAL_SCORE_ALIGN_LEFT)
-            .onTrigger(Controls.REEF_A, () -> pathFindToReef(TargetPositions.REEF_A))
-            .onTrigger(Controls.REEF_B, () -> pathFindToReef(TargetPositions.REEF_B))
-            .onTrigger(Controls.REEF_C, () -> pathFindToReef(TargetPositions.REEF_C))
-            .onTrigger(Controls.REEF_D, () -> pathFindToReef(TargetPositions.REEF_D))
-            .onTrigger(Controls.REEF_E, () -> pathFindToReef(TargetPositions.REEF_E))
-            .onTrigger(Controls.REEF_F, () -> pathFindToReef(TargetPositions.REEF_F))
-            .onTrigger(Controls.REEF_G, () -> pathFindToReef(TargetPositions.REEF_G))
-            .onTrigger(Controls.REEF_H, () -> pathFindToReef(TargetPositions.REEF_H))
-            .onTrigger(Controls.REEF_I, () -> pathFindToReef(TargetPositions.REEF_I))
-            .onTrigger(Controls.REEF_J, () -> pathFindToReef(TargetPositions.REEF_J))
-            .onTrigger(Controls.REEF_K, () -> pathFindToReef(TargetPositions.REEF_K))
-            .onTrigger(Controls.REEF_L, () -> pathFindToReef(TargetPositions.REEF_L))
+            .onTrigger(Controls.ALIGN_LEFT, () -> this.CORAL_SCORE_ALIGN_LEFT)
             .withEndCondition(Subsystems.wrist::doesNotHaveCoral, () -> IDLE)
+            .onTrigger(IOTriggers.JOYSTICK_MOVEMENT, () -> CORAL_STOW)
             .onEmergency(() -> CORAL_STOW)
             .onAccelerationLimit(() -> CORAL_STOW);
 
@@ -181,12 +134,14 @@ public final class ReefscapeStates implements StatesBase {
         new State("ALIGN_ALGAE")
             .withDeadline(DriveCommands.reefAlignClosest(), () -> ALGAE_INTAKE)
             .whileTrue(SuperstructureCommands.ALGAE_INTAKE)
+            .onTrigger(IOTriggers.JOYSTICK_MOVEMENT, () -> IDLE)
             .onEmergency(() -> IDLE)
             .onAccelerationLimit(() -> IDLE);
 
     ALGAE_INTAKE =
         new State("ALGAE_INTAKE")
             .withDeadline(AutoCommands.algaeIntakeSequence(), () -> ALGAE_STOW)
+            .onTrigger(IOTriggers.JOYSTICK_MOVEMENT, () -> ALGAE_STOW)
             .onEmergency(() -> IDLE)
             .onAccelerationLimit(() -> IDLE);
 
@@ -205,8 +160,8 @@ public final class ReefscapeStates implements StatesBase {
         new State("CHOOSE_CORAL_LEVEL")
             .whileTrue(
                 SuperstructureCommands.HOLD, Subsystems.drive.run(() -> Subsystems.drive.stop()))
-            .withEndCondition(Controls.alignLeft, () -> CORAL_SCORE_ALIGN_LEFT)
-            .withEndCondition(Controls.alignRight, () -> CORAL_SCORE_ALIGN_RIGHT)
+            .withEndCondition(Controls.ALIGN_LEFT, () -> CORAL_SCORE_ALIGN_LEFT)
+            .withEndCondition(Controls.ALIGN_RIGHT, () -> CORAL_SCORE_ALIGN_RIGHT)
             .withEndCondition(Subsystems.wrist::doesNotHaveCoral, () -> IDLE)
             .withEndCondition(
                 () -> Subsystems.dashboardOutputs.upcomingReefLevel() == 1, () -> L1_CORAL_SCORE)
@@ -275,6 +230,12 @@ public final class ReefscapeStates implements StatesBase {
         new State("MICROADJUSTMENTS")
             .whileTrue(new MicroAdjustmentCommand(), DriveCommands.stopWithX())
             .onEmergency(() -> CORAL_STOW);
+
+    DEFENSE =
+        new State("DEFENSE")
+            .onEmergency(() -> IDLE)
+            .onTrigger(Controls.DEFENSE_TOGGLE, () -> IDLE)
+            .whileTrue(SuperstructureCommands.IDLE);
   }
 
   /** Gets the state at the start of auto */

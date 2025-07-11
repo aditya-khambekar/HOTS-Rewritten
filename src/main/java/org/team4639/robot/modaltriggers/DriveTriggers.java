@@ -5,7 +5,7 @@ import org.team4639.robot.constants.reefscape.FieldConstants;
 import org.team4639.robot.robot.Subsystems;
 
 public final class DriveTriggers {
-  public static Trigger closeToLeftStation =
+  public static final Trigger CLOSE_TO_LEFT_STATION =
       new Trigger(
               () ->
                   Subsystems.drive
@@ -13,9 +13,9 @@ public final class DriveTriggers {
                           .getTranslation()
                           .getDistance(FieldConstants.HPStation.leftCenterFace.getTranslation())
                       < .75)
-          .and(VisionTriggers.visionIsActive());
+          .and(VisionTriggers.ACTIVE);
 
-  public static Trigger closeToRightStation =
+  public static final Trigger CLOSE_TO_RIGHT_STATION =
       new Trigger(
               () ->
                   Subsystems.drive
@@ -23,5 +23,5 @@ public final class DriveTriggers {
                           .getTranslation()
                           .getDistance(FieldConstants.HPStation.rightCenterFace.getTranslation())
                       < .75)
-          .and(VisionTriggers.visionIsActive());
+          .and(VisionTriggers.ACTIVE);
 }

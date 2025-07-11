@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * An instance of a controller that provides utils for applying deadzone to the controller axes and
  * some other things
  */
-public class DeadbandXboxController extends CommandXboxController {
+public class RSXboxController extends CommandXboxController {
   private final double DEFAULT_DEADZONE = 0.08;
 
   /**
@@ -19,7 +19,7 @@ public class DeadbandXboxController extends CommandXboxController {
    *
    * @param port The port index on the Driver Station that the controller is plugged into.
    */
-  public DeadbandXboxController(int port) {
+  public RSXboxController(int port) {
     super(port);
   }
 
@@ -709,5 +709,26 @@ public class DeadbandXboxController extends CommandXboxController {
 
   public double applyDeadzone(double value) {
     return Math.signum(value) * Math.max((Math.abs(value) - DEFAULT_DEADZONE), 0);
+  }
+
+  private Trigger ab = a().and(b());
+  private Trigger xy = x().and(y());
+
+  /**
+   * Functionally equivalent to a().and(b())
+   *
+   * @return a trigger representing both a and b buttons being pressed.
+   */
+  public Trigger ab() {
+    return ab;
+  }
+
+  /**
+   * Functionally equivalent to x().and(y())
+   *
+   * @return a trigger representing both x and y buttons being pressed.
+   */
+  public Trigger xy() {
+    return xy;
   }
 }

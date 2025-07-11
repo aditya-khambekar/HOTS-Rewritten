@@ -169,6 +169,7 @@ public final class AutoGenerator {
         case OUT_CORAL -> (pathCommand.deadlineFor(SuperstructureCommands.elevatorReady()))
             .andThen(
                 switch (ending) {
+                    // L4
                   case A4 -> AutoCommands.scoreL4(TargetPositions.REEF_A.getPose());
                   case B4 -> AutoCommands.scoreL4(TargetPositions.REEF_B.getPose());
                   case C4 -> AutoCommands.scoreL4(TargetPositions.REEF_C.getPose());
@@ -181,6 +182,7 @@ public final class AutoGenerator {
                   case J4 -> AutoCommands.scoreL4(TargetPositions.REEF_J.getPose());
                   case K4 -> AutoCommands.scoreL4(TargetPositions.REEF_K.getPose());
                   case L4 -> AutoCommands.scoreL4(TargetPositions.REEF_L.getPose());
+                    // L3
                   case A3 -> AutoCommands.scoreL3(TargetPositions.REEF_A.getPose());
                   case B3 -> AutoCommands.scoreL3(TargetPositions.REEF_B.getPose());
                   case C3 -> AutoCommands.scoreL3(TargetPositions.REEF_C.getPose());
@@ -193,6 +195,7 @@ public final class AutoGenerator {
                   case J3 -> AutoCommands.scoreL3(TargetPositions.REEF_J.getPose());
                   case K3 -> AutoCommands.scoreL3(TargetPositions.REEF_K.getPose());
                   case L3 -> AutoCommands.scoreL3(TargetPositions.REEF_L.getPose());
+                    // L2
                   case A2 -> AutoCommands.scoreL2(TargetPositions.REEF_A.getPose());
                   case B2 -> AutoCommands.scoreL2(TargetPositions.REEF_B.getPose());
                   case C2 -> AutoCommands.scoreL2(TargetPositions.REEF_C.getPose());

@@ -22,7 +22,7 @@ public class StateMachine {
   private StateMachine() {
     state = StateFactory.none();
     timeOfLastStateChange = Seconds.mutable(0);
-    Controls.emergency.onTrue(Commands.runOnce(() -> setState(state.onEmergency.get())));
+    Controls.EMERGENCY.onTrue(Commands.runOnce(() -> setState(state.onEmergency.get())));
   }
 
   public static State getState() {

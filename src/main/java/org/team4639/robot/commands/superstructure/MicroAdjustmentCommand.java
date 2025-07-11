@@ -28,19 +28,20 @@ public final class MicroAdjustmentCommand extends SuperstructureCommandBase {
 
   public void execute() {
     super.execute();
-    if (Controls.elevatorUp.getAsBoolean()) elevatorSetpoint.mut_plus(Value.of(0.001));
-    else if (Controls.elevatorDown.getAsBoolean()) elevatorSetpoint.mut_minus(Value.of(0.001));
+    if (Controls.ELEVATOR_UP.getAsBoolean()) elevatorSetpoint.mut_plus(Value.of(0.001));
+    else if (Controls.ELEVATOR_DOWN.getAsBoolean()) elevatorSetpoint.mut_minus(Value.of(0.001));
 
-    if (Controls.wristUp.getAsBoolean())
+    if (Controls.WRIST_UP.getAsBoolean())
       wristSetpoint = wristSetpoint.plus(Rotation2d.fromDegrees(0.1));
-    else if (Controls.wristDown.getAsBoolean())
+    else if (Controls.WRIST_DOWN.getAsBoolean())
       wristSetpoint = wristSetpoint.minus(Rotation2d.fromDegrees(0.1));
 
     Subsystems.elevator.setPercentageRaw(elevatorSetpoint);
     Subsystems.wrist.setWristSetpoint(wristSetpoint);
 
     // UNTUNED
-    if (Controls.outtake.getAsBoolean()) Subsystems.roller.setDutyCycle(Value.of(0.5));
+    if (Controls.MICRO_ADJUSTMENTS_OUTTAKE.getAsBoolean())
+      Subsystems.roller.setDutyCycle(Value.of(0.5));
   }
 
   @Override

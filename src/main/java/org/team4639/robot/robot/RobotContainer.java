@@ -22,7 +22,6 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import java.util.Set;
@@ -40,6 +39,7 @@ import org.team4639.lib.io.vision.VisionIOLimelight;
 import org.team4639.lib.io.vision.VisionIOPhotonVisionSim;
 import org.team4639.lib.led.subsystem.PhysicalLEDStrip;
 import org.team4639.lib.oi.OI;
+import org.team4639.lib.oi.RSXboxController;
 import org.team4639.lib.util.AllianceFlipUtil;
 import org.team4639.lib.util.DriverStationUtil;
 import org.team4639.robot.Constants;
@@ -75,8 +75,8 @@ import org.team4639.robot.subsystems.vision.*;
  */
 public final class RobotContainer {
   // Controller
-  public static final CommandXboxController driver = OI.driver;
-  public static final CommandXboxController operator = OI.operator;
+  public static final RSXboxController driver = OI.driver;
+  public static final RSXboxController operator = OI.operator;
 
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser;

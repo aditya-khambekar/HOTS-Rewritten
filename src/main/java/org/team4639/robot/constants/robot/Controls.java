@@ -1,71 +1,56 @@
 package org.team4639.robot.constants.robot;
 
+import static org.team4639.robot.robot.RobotContainer.driver;
+import static org.team4639.robot.robot.RobotContainer.operator;
+
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import org.team4639.robot.robot.RobotContainer;
+import org.team4639.robot.constants.reefscape.FieldPoseUtil;
+import org.team4639.robot.statemachine.competition.ReefscapeStates;
 import org.team4639.robot.statemachine.demo.VisionDemo;
 
 public final class Controls {
-  public static final Trigger intake = RobotContainer.driver.a();
-  public static final Trigger secondIntake = RobotContainer.driver.a();
-  public static final Trigger emergency = RobotContainer.driver.y();
+  public static final Trigger EMERGENCY = driver.y();
 
-  public static final Trigger alignLeft = RobotContainer.driver.leftBumper();
-  public static final Trigger alignRight = RobotContainer.driver.rightBumper();
+  public static final Trigger ALIGN_LEFT = driver.povLeft();
+  public static final Trigger ALIGN_RIGHT = driver.povRight();
 
-  public static final Trigger resetGyro = RobotContainer.driver.leftStick();
+  public static final Trigger RESET_GYRO = driver.ab();
 
-  public static final Trigger L1Coral = RobotContainer.operator.leftTrigger();
-  public static final Trigger L2Coral = RobotContainer.operator.leftBumper();
-  public static final Trigger L3Coral = RobotContainer.operator.rightBumper();
-  public static final Trigger L4Coral = RobotContainer.operator.rightTrigger();
+  public static final Trigger L1_CORAL = driver.leftTrigger().or(operator.leftTrigger());
+  public static final Trigger L2_CORAL = driver.leftBumper().or(operator.leftBumper());
+  public static final Trigger L3_CORAL = driver.rightBumper().or(operator.leftBumper());
+  public static final Trigger L4_CORAL = driver.rightTrigger().or(operator.rightTrigger());
 
-  public static final Trigger outtake = RobotContainer.driver.a();
+  public static final Trigger PROCESSOR = driver.leftTrigger().or(operator.leftTrigger());
+  public static final Trigger ALGAE_INTAKE =
+      driver
+          .leftBumper()
+          .or(operator.leftBumper())
+          .or(driver.rightBumper())
+          .or(operator.leftBumper());
 
-  public static final Trigger elevatorUp = RobotContainer.operator.povUp();
-  public static final Trigger elevatorDown = RobotContainer.operator.povDown();
+  public static final Trigger BARGE_SCORE = driver.rightTrigger().or(operator.rightTrigger());
 
-  public static final Trigger wristUp = RobotContainer.operator.povLeft();
-  public static final Trigger wristDown = RobotContainer.operator.povRight();
+  public static final Trigger MICRO_ADJUSTMENTS_OUTTAKE =
+      ReefscapeStates.getInstance().MICROADJUSTMENTS.and(operator.a());
 
-  public static final Trigger REEF_A =
-      RobotContainer.driver.povDown().and(RobotContainer.driver.leftBumper());
-  public static final Trigger REEF_B =
-      RobotContainer.driver.povDown().and(RobotContainer.driver.rightBumper());
-  public static final Trigger REEF_C =
-      RobotContainer.driver.povDownRight().and(RobotContainer.driver.leftBumper());
-  public static final Trigger REEF_D =
-      RobotContainer.driver.povDownRight().and(RobotContainer.driver.rightBumper());
-  public static final Trigger REEF_E =
-      RobotContainer.driver.povUpRight().and(RobotContainer.driver.leftBumper());
-  public static final Trigger REEF_F =
-      RobotContainer.driver.povUpRight().and(RobotContainer.driver.rightBumper());
-  public static final Trigger REEF_G =
-      RobotContainer.driver.povUp().and(RobotContainer.driver.leftBumper());
-  public static final Trigger REEF_H =
-      RobotContainer.driver.povUp().and(RobotContainer.driver.rightBumper());
-  public static final Trigger REEF_I =
-      RobotContainer.driver.povUpLeft().and(RobotContainer.driver.leftBumper());
-  public static final Trigger REEF_J =
-      RobotContainer.driver.povUpLeft().and(RobotContainer.driver.rightBumper());
-  public static final Trigger REEF_K =
-      RobotContainer.driver.povDownLeft().and(RobotContainer.driver.leftBumper());
-  public static final Trigger REEF_L =
-      RobotContainer.driver.povDownLeft().and(RobotContainer.driver.rightBumper());
+  // TODO: figure out what to do with these
+  // Microadjustment triggers
+  public static final Trigger ELEVATOR_UP = operator.povUp();
+  public static final Trigger ELEVATOR_DOWN = operator.povDown();
 
-  public static final Trigger REEF_AB = RobotContainer.driver.povDown();
-  public static final Trigger REEF_CD = RobotContainer.driver.povDownRight();
-  public static final Trigger REEF_EF = RobotContainer.driver.povUpRight();
-  public static final Trigger REEF_GH = RobotContainer.driver.povUp();
-  public static final Trigger REEF_IJ = RobotContainer.driver.povUpLeft();
-  public static final Trigger REEF_KL = RobotContainer.driver.povDownLeft();
+  public static final Trigger WRIST_UP = operator.povLeft();
+  public static final Trigger WRIST_DOWN = operator.povRight();
 
-  public static final Trigger LEFT_HP = RobotContainer.driver.leftBumper();
-  public static final Trigger RIGHT_HP = RobotContainer.driver.rightBumper();
+  private static final Trigger HP_ALIGN = driver.x();
+
+  public static final Trigger LEFT_HP = HP_ALIGN.and(FieldPoseUtil::closerToLeftStation);
+  public static final Trigger RIGHT_HP = HP_ALIGN.and(FieldPoseUtil::closerToRightStation);
+
+  public static final Trigger DEFENSE_TOGGLE = driver.rightStick();
 
   public static final class VisionDemoControls {
     public static final Trigger DEMO_ON =
-        RobotContainer.driver
-            .x()
-            .and(VisionDemo.DEMO_ON.getTrigger().or(VisionDemo.DEMO_OFF.getTrigger()));
+        driver.x().and(VisionDemo.DEMO_ON.getTrigger().or(VisionDemo.DEMO_OFF.getTrigger()));
   }
 }
