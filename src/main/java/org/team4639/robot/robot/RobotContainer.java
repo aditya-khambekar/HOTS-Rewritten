@@ -200,13 +200,15 @@ public final class RobotContainer {
     // Set up SysId routines
     autoChooser.addOption("TEST_1MTR", AutoFactory.TEST_1MTR());
     autoChooser.addOption(
-        "MS_G_ALGH_ALGSC1_ALIJ_ALGSC2", AutoFactory.MS_G_ALGH_ALGSC1_ALIJ_ALGSC2());
-    autoChooser.addOption("RS-F-E-D-C", AutoFactory.RS_F_E_D_C());
-    autoChooser.addOption("RS-F-E-D", AutoFactory.RS_F_E_D());
-    autoChooser.addOption("RS-E-D-C", AutoFactory.RS_E_D_C());
-    autoChooser.addOption("LS-I-J-K-L", AutoFactory.LS_I_J_K_L());
-    autoChooser.addOption("LS-I-J-K", AutoFactory.LS_I_J_K());
-    autoChooser.addOption("LS-J-K-L", AutoFactory.LS_J_K_L());
+        "(ALGAE_LEFT) MS_G4_ALGH_ALGSC1_ALIJ_ALGSC2", AutoFactory.MS_G4_ALGH_ALGSC1_ALIJ_ALGSC2());
+    autoChooser.addOption("(R4-1) RS-F4-E4-D4-C4", AutoFactory.RS_F4_E4_D4_C4());
+    autoChooser.addOption("(R3-1) RS-F4-E4-D4", AutoFactory.RS_F4_E4_D4());
+    autoChooser.addOption("(R3-2) RS-E4-D4-C4", AutoFactory.RS_E4_D4_C4());
+    autoChooser.addOption("(1678R) RS-F4-D4-C4-E4", AutoFactory.RS_F4_D4_C4_E4());
+    autoChooser.addOption("(L4-1) LS-I4-J4-K4-L4", AutoFactory.LS_I4_J4_K4_L4());
+    autoChooser.addOption("(L3-1) LS-I4-J4-K4", AutoFactory.LS_I4_J4_K4());
+    autoChooser.addOption("(L3-2) LS-J4-K4-L4", AutoFactory.LS_J4_K4_L4());
+    autoChooser.addOption("(1678L) LS-I4-K4-L4-J4", AutoFactory.LS_I4_K4_L4_J4());
     autoChooser.addOption(
         "Drive Wheel Radius Characterization", DriveCommands.wheelRadiusCharacterization());
     autoChooser.addOption(

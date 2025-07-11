@@ -33,6 +33,40 @@ public final class AutoCommands {
         .finallyDo(Subsystems.reefTracker::scoreL4Raw);
   }
 
+  public static Command scoreL3(Pose2d pose) {
+    return (Subsystems.reefTracker.setCurrentReefPoseCommand(pose))
+        .andThen(
+            ((Subsystems.drive
+                        .defer(() -> DriveCommands.PIDToReef(pose))
+                        .deadlineFor(SuperstructureCommands.elevatorReady()))
+                    .andThen(
+                        Subsystems.drive
+                            .defer(DriveCommands::stopWithX)
+                            .alongWith(SuperstructureCommands.l3()))
+                    .until(Subsystems.wrist::doesNotHaveCoral))
+                .andThen(
+                    SuperstructureCommands.idle()
+                        .until(() -> Subsystems.elevator.getPercentage().lte(Value.of(0.5)))))
+        .finallyDo(Subsystems.reefTracker::scoreL3Raw);
+  }
+
+  public static Command scoreL2(Pose2d pose) {
+    return (Subsystems.reefTracker.setCurrentReefPoseCommand(pose))
+        .andThen(
+            ((Subsystems.drive
+                        .defer(() -> DriveCommands.PIDToReef(pose))
+                        .deadlineFor(SuperstructureCommands.coralStow()))
+                    .andThen(
+                        Subsystems.drive
+                            .defer(DriveCommands::stopWithX)
+                            .alongWith(SuperstructureCommands.l2()))
+                    .until(Subsystems.wrist::doesNotHaveCoral))
+                .andThen(
+                    SuperstructureCommands.idle()
+                        .until(() -> Subsystems.elevator.getPercentage().lte(Value.of(0.5)))))
+        .finallyDo(Subsystems.reefTracker::scoreL2Raw);
+  }
+
   public static Command scoreBarge(Pose2d pose) {
     return (Subsystems.drive
             .defer(() -> DriveCommands.PIDTo(pose))

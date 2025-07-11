@@ -13,78 +13,71 @@ import org.json.simple.parser.ParseException;
 import org.team4639.robot.robot.Subsystems;
 
 public final class AutoFactory {
-  public static Command RS_F_E_D_C() {
+  public static Command RS_F4_E4_D4_C4() {
     return compileAuto(
         Location.RS,
-        Location.F,
+        Location.F4,
         Location.RHP,
-        Location.E,
+        Location.E4,
         Location.RHP,
-        Location.D,
+        Location.D4,
         Location.RHP,
-        Location.C);
+        Location.C4);
   }
 
-  public static Command RS_F_E_D() {
+  public static Command RS_F4_E4_D4() {
     return compileAuto(
-        Location.RS,
-        Location.F,
-        Location.RHP,
-        Location.E,
-        Location.RHP,
-        Location.D);
+        Location.RS, Location.F4, Location.RHP, Location.E4, Location.RHP, Location.D4);
   }
 
-  public static Command RS_E_D_C() {
+  public static Command RS_E4_D4_C4() {
     return compileAuto(
-        Location.RS,
-        Location.E,
-        Location.RHP,
-        Location.D,
-        Location.RHP,
-        Location.C);
+        Location.RS, Location.E4, Location.RHP, Location.D4, Location.RHP, Location.C4);
   }
 
-  public static Command LS_I_J_K_L() {
+  public static Command RS_F4_D4_C4_E4() {
+    return compileAuto(
+            Location.RS, Location.F4, Location.RHP, Location.D4, Location.RHP, Location.C4, Location.RHP, Location.E4
+    );
+  }
+
+  public static Command LS_I4_J4_K4_L4() {
     return compileAuto(
         Location.LS,
-        Location.I,
+        Location.I4,
         Location.LHP,
-        Location.J,
+        Location.J4,
         Location.LHP,
-        Location.K,
+        Location.K4,
         Location.LHP,
-        Location.L);
+        Location.L4);
   }
 
-  public static Command LS_I_J_K() {
+  public static Command LS_I4_J4_K4() {
     return compileAuto(
-        Location.LS,
-        Location.I,
-        Location.LHP,
-        Location.J,
-        Location.LHP,
-        Location.K);
+        Location.LS, Location.I4, Location.LHP, Location.J4, Location.LHP, Location.K4);
   }
 
-  public static Command LS_J_K_L() {
+  public static Command LS_J4_K4_L4() {
     return compileAuto(
-        Location.LS,
-        Location.J,
-        Location.LHP,
-        Location.K,
-        Location.LHP,
-        Location.L);
+        Location.LS, Location.J4, Location.LHP, Location.K4, Location.LHP, Location.L4);
   }
 
-  public static Command MS_G_ALGH_ALGSC1_ALIJ_ALGSC2() {
+  public static Command LS_I4_K4_L4_J4() {
     return compileAuto(
-        Location.MS,
-        Location.G,
-        Location.ALGH,
-        Location.ALGSC1,
-        Location.ALIJ,
-        Location.ALGSC2);
+            Location.LS,
+            Location.I4,
+            Location.LHP,
+            Location.K4,
+            Location.LHP,
+            Location.L4,
+            Location.LHP,
+            Location.J4);
+  }
+
+  public static Command MS_G4_ALGH_ALGSC1_ALIJ_ALGSC2() {
+    return compileAuto(
+        Location.MS, Location.G4, Location.ALGH, Location.ALGSC1, Location.ALIJ, Location.ALGSC2);
   }
 
   public static Command TEST_1MTR() {
